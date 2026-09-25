@@ -11,5 +11,5 @@
 #include "xfsm.h"
 
 const char *xfsmGetImplementationStatus(void) {
-  return "Profile 1 actor runtime not available";
+  return "Profile 1 M4 actor execution vertical slice";
 }
