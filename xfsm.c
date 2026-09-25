@@ -11,5 +11,5 @@
 #include "xfsm.h"
 
 const char *xfsmGetImplementationStatus(void) {
-  return "Profile 1 implementation not available";
+  return "Profile 1 actor runtime not available";
 }
