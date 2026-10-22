@@ -15,10 +15,12 @@ XState runs, Stately exports, SCXML, historical reports, and older project
 material are evidence unless the specification explicitly adopts them.
 
 Canonical implementation code is under `xfsm/`. That directory maps unchanged
-to `libs/xfsm/` in an Espruino checkout. Do not add a duplicate engine elsewhere
-in this repository. Record both repository revisions in new build, resource, or
-conformance evidence, and do not rewrite historical result records merely to
-reflect current paths.
+to `libs/xfsm/` in an Espruino checkout. Make library changes here, then use
+`tools/export-to-espruino.sh` to export committed source; do not develop the
+library independently in the Espruino mirror. Do not add a duplicate engine
+elsewhere in this repository. Record both repository revisions in new build,
+resource, or conformance evidence, and do not rewrite historical result records
+merely to reflect current paths.
 
 MPL-2.0 is the repository default. The `examples/` directory is the MIT-licensed
 exception. Follow `THIRD_PARTY_NOTICES.md` for XState and other upstream

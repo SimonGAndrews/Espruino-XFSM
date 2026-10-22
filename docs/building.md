@@ -52,14 +52,22 @@ git remote add upstream https://github.com/espruino/Espruino.git
 git fetch upstream
 ```
 
-Before a build, synchronize the reviewed canonical library into a clean
-Espruino integration worktree and inspect the result:
+Before a build, commit the reviewed canonical library, export it into a clean
+Espruino integration checkout, and inspect the result:
 
 ```bash
-rsync -a --delete \
-  /home/simon/Espruino-XFSM/xfsm/ \
-  /home/simon/Espruino-XFSM-Profile1/libs/xfsm/
+/home/simon/Espruino-XFSM/tools/export-to-espruino.sh \
+  /home/simon/Espruino-XFSM-Profile1
 git -C /home/simon/Espruino-XFSM-Profile1 diff -- libs/xfsm
+```
+
+The exporter reports the canonical commit. Include it in the Espruino mirror
+commit as `XFSM-Source: <commit>`. Once that commit is clean, the following
+read-only check must pass:
+
+```bash
+/home/simon/Espruino-XFSM/tools/export-to-espruino.sh --check \
+  /home/simon/Espruino-XFSM-Profile1
 ```
 
 Confirm the expected remotes and branch:

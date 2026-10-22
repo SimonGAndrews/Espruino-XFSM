@@ -93,10 +93,15 @@ example, record the tool or source, version where known, and all adaptations in
 
 ## Espruino Integration
 
-Make engine, wrapper, and library-local test changes in `xfsm/`. Validate them
-inside an Espruino checkout after synchronizing that directory to
-`libs/xfsm/`. Changes to Espruino build files remain separate host-integration
-changes and should be suitable for review by the Espruino maintainers.
+Make engine, wrapper, and library-local test changes in `xfsm/`, commit them in
+this repository, and export them with `tools/export-to-espruino.sh`. Do not
+author or commit an independent version under Espruino's `libs/xfsm/`. A change
+found while debugging the integration must be applied here and exported again.
+
+Changes to Espruino build files remain separate host-integration changes and
+should be suitable for review by the Espruino maintainers. Each Espruino mirror
+commit must identify its canonical source with an `XFSM-Source: <commit>`
+trailer.
 
 Record both the XFSM and Espruino revisions for conformance or resource
 evidence. See [Espruino integration](docs/espruino-integration.md) for the

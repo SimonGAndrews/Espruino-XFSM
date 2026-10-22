@@ -47,6 +47,7 @@ specification explicitly adopts them.
 - [`tests/`](tests/) - conformance definitions, differential runners, and
   recorded results
 - [`examples/`](examples/) - reusable MIT-licensed application examples
+- [`tools/`](tools/) - canonical-to-Espruino export and verification tooling
 
 The [build guide](docs/building.md) explains how to place the library in an
 Espruino checkout and build firmware with `USE_XFSM=1`.

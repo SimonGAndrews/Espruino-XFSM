@@ -13,27 +13,46 @@ whole Espruino tree.
 ## Development Flow
 
 1. Make and review library-local changes under `xfsm/` in this repository.
-2. Copy the complete `xfsm/` tree to `libs/xfsm/` in a clean Espruino feature
-   branch.
-3. Keep any required Espruino Makefile, CI, or board-file changes as separate
+2. Commit the reviewed changes so the canonical checkout is clean.
+3. Export that commit to `libs/xfsm/` in a clean Espruino feature branch with
+   `tools/export-to-espruino.sh`.
+4. Inspect the Espruino diff and commit the mirror with the reported
+   `XFSM-Source: <commit>` trailer.
+5. Keep any required Espruino Makefile, CI, or board-file changes as separate
    commits in that feature branch.
-4. Build and test through Espruino using the commands in
+6. Build and test through Espruino using the commands in
    [building.md](building.md).
-5. Record both the XFSM commit and Espruino commit in new result evidence.
-6. Bring reviewed library changes back here before treating them as canonical.
+7. Record both the XFSM commit and Espruino commit in new result evidence.
 
-For a local synchronization where both directories are clean and reviewed:
+For a local export where both repositories are clean:
 
 ```bash
-rsync -a --delete \
-  /path/to/Espruino-XFSM/xfsm/ \
-  /path/to/Espruino/libs/xfsm/
+/path/to/Espruino-XFSM/tools/export-to-espruino.sh \
+  /path/to/Espruino
 ```
 
-Always inspect `git diff` in the destination before committing. The `--delete`
-option is intentional because the destination must represent the complete
-canonical library tree, but it must not be used against an unreviewed or dirty
-destination.
+The exporter rejects dirty source and destination repositories. It builds the
+mirror from the committed `xfsm/` tree rather than the working directory, so
+ignored build products and other untracked files cannot enter the integration
+commit. Deletion is limited to `libs/xfsm/`, and the resulting tree is verified
+before the command succeeds.
+
+After committing the exported tree in Espruino, verify the clean mirror without
+changing it:
+
+```bash
+/path/to/Espruino-XFSM/tools/export-to-espruino.sh --check \
+  /path/to/Espruino
+```
+
+`--check` also requires both repositories to be clean and reports the exact
+canonical commit being compared.
+
+`libs/xfsm/` is a deployment mirror, not a second development location. If
+integration or upstream review reveals a required library change, apply and
+commit it in this repository, then export it again. Espruino Makefile, CI,
+board, and release changes remain native Espruino work and are not copied back
+into XFSM.
 
 ## Upstream Contribution Shape
 
