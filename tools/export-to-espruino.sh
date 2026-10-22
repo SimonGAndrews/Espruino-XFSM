@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: MPL-2.0
+#
+# Export the canonical, committed xfsm/ tree into an Espruino checkout. The
+# source and destination must both be clean so the resulting mirror always has
+# an identifiable XFSM commit and never includes local working files.
 
 set -euo pipefail
 
@@ -40,6 +44,8 @@ for command_name in git tar rsync; do
     fail "required command not found: $command_name"
 done
 
+# Locate the canonical repository from this script rather than from the shell's
+# current directory. Only committed HEAD content is eligible for export.
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
 expected_source_root=$(cd "$script_dir/.." && pwd -P)
 source_root=$(git -C "$expected_source_root" rev-parse --show-toplevel 2>/dev/null) || \
@@ -56,6 +62,8 @@ source_commit=$(git -C "$source_root" rev-parse --verify 'HEAD^{commit}')
 git -C "$source_root" cat-file -e "$source_commit:xfsm" || \
   fail "commit $source_commit does not contain xfsm/"
 
+# Validate the host before constructing a path that can be updated. Requiring
+# the repository root and rejecting a symlink keeps deletion inside libs/xfsm.
 destination_arg=$1
 [[ -d "$destination_arg" ]] || fail "destination is not a directory: $destination_arg"
 destination_root=$(git -C "$destination_arg" rev-parse --show-toplevel 2>/dev/null) || \
@@ -80,6 +88,8 @@ mirror_root="$destination_root/libs/xfsm"
 [[ ! -e "$mirror_root" || -d "$mirror_root" ]] || \
   fail "libs/xfsm exists but is not a directory"
 
+# Git archive supplies exactly the files and executable bits stored in the
+# selected commit. Ignored build output in the canonical checkout is excluded.
 stage_parent=$(mktemp -d "${TMPDIR:-/tmp}/xfsm-export.XXXXXX")
 stage_root="$stage_parent/xfsm"
 mkdir -m 755 "$stage_root"
@@ -90,6 +100,8 @@ git -C "$source_root" archive --format=tar "$source_commit:xfsm" |
 compare_trees() {
   [[ -d "$mirror_root" ]] || return 1
   local changes
+  # Compare paths, contents, links, and executable bits. Git does not track
+  # directory permissions, so local directory modes are intentionally ignored.
   changes=$(rsync -rlcEni --delete --out-format='%i %n%L' -- \
     "$stage_root/" "$mirror_root/")
   if [[ -n "$changes" ]]; then
@@ -106,17 +118,23 @@ if [[ "$mode" == check ]]; then
   fail "libs/xfsm does not match committed source $source_commit"
 fi
 
+# Replace only the deployment mirror, then verify the result before reporting
+# the source commit that must be recorded by the Espruino integration commit.
 mkdir -p "$mirror_root"
 rsync -rltE --omit-dir-times --delete -- "$stage_root/" "$mirror_root/"
 compare_trees >/dev/null || fail "post-export verification failed"
 
+printf -v destination_command_path '%q' "$destination_root"
+
 cat <<EOF
-Exported committed XFSM source to:
+Exported committed XFSM source $source_commit to:
   $mirror_root
 
-Source commit:
-  $source_commit
-
-Inspect and commit the Espruino change with this trailer:
-  XFSM-Source: $source_commit
+Review and commit the exported files:
+  cd $destination_command_path
+  git add -A -- libs/xfsm
+  git diff --cached -- libs/xfsm
+  git commit \\
+    -m 'Update XFSM library' \\
+    -m 'XFSM-Source: $source_commit'
 EOF
