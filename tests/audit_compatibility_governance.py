@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MPL-2.0
 """Audit the Profile 1 compatibility register and Stately corpus."""
 
 from __future__ import annotations

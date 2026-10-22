@@ -20,7 +20,31 @@ right to do so.
 Files under `examples/` are MIT licensed. Contributions there are submitted
 under the MIT License in [`examples/LICENSE`](examples/LICENSE).
 
-New C implementation files must include the MPL-2.0 Exhibit A notice:
+### Documentation Submitted To EspruinoDocs
+
+Documentation remains MPL-2.0 in this repository. A contribution intended for
+submission to EspruinoDocs must identify the prose and code to be submitted and
+include this declaration in its pull-request description or another retained
+contribution record:
+
+```text
+I additionally license the identified documentation prose under the Creative
+Commons Attribution-ShareAlike 3.0 Unported License and its identified code
+sections under the MIT License. I confirm that I have the right to grant these
+licences. This permission allows the material to be submitted to and
+distributed by EspruinoDocs.
+```
+
+These are the current [EspruinoDocs licence terms](https://github.com/espruino/EspruinoDocs/blob/master/LICENSE).
+Recheck them when preparing the upstream submission and update the declaration
+if they have changed. Do not relicense another contributor's work for
+EspruinoDocs without their express agreement. The additional licence does not
+change the licence applied to the repository copy by
+[`LICENSING.md`](LICENSING.md).
+
+New project-authored source, test, measurement, tool, and build-profile files
+must carry an MPL-2.0 notice. C implementation files use the full Exhibit A
+notice:
 
 ```text
 This Source Code Form is subject to the terms of the Mozilla Public
@@ -29,6 +53,18 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ```
 
 Do not add the Exhibit B "Incompatible With Secondary Licenses" notice.
+
+JavaScript, Python, Make, and similar supporting files may use the shorter
+comment appropriate to their format:
+
+```text
+SPDX-License-Identifier: MPL-2.0
+```
+
+Keep an interpreter shebang as the first line. Specifications and other
+documentation are covered by the repository licence map and do not require a
+per-file notice. Preserve generated compatibility fixtures unchanged and retain
+all notices supplied with third-party material.
 
 ## Provenance
 

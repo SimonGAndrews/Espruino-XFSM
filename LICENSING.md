@@ -21,7 +21,15 @@ unrelated XFSM files.
 Code fragments outside `examples/` follow the licence of the document that
 contains them unless the fragment is explicitly marked otherwise.
 
-When documentation is proposed to EspruinoDocs, the submitted prose and code
-may be licensed separately under the terms required by EspruinoDocs. That
-upstream contribution does not change this repository's path-based licence
-map.
+Documentation remains MPL-2.0 in this repository unless the licence map above
+says otherwise. The current [EspruinoDocs licence](https://github.com/espruino/EspruinoDocs/blob/master/LICENSE)
+places code sections under the MIT License and its remaining documentation
+under the Creative Commons Attribution-ShareAlike 3.0 Unported License
+(`CC BY-SA 3.0`).
+
+Before material is submitted to EspruinoDocs, its contributors must expressly
+license the identified prose and code under the applicable EspruinoDocs
+licences, using the declaration in [CONTRIBUTING.md](CONTRIBUTING.md). The
+upstream licences must be checked again when the submission is prepared. This
+additional permission applies to the identified material and does not change
+this repository's path-based licence map.
