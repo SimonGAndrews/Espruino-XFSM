@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "bench_id": "xfsm_service_coexistence_local",
+  "operating_mode": "STANDALONE",
+  "positions": [
+    {
+      "position_id": "esp32_v1",
+      "label": "Original ESP32",
+      "control_role": "console",
+      "usb_roles": {
+        "console": {
+          "path": "/dev/serial/by-id/REPLACE_WITH_ORIGINAL_ESP32",
+          "baud": 115200
+        }
+      },
+      "expected_firmware": {
+        "board": "ESP32_IDF5",
+        "version": "REPLACE_WITH_PROCESS_VERSION",
+        "git_commit": "REPLACE_WITH_PROCESS_ENV_GIT_COMMIT"
+      }
+    },
+    {
+      "position_id": "esp32_c3_v1",
+      "label": "ESP32-C3",
+      "control_role": "console",
+      "usb_roles": {
+        "console": {
+          "path": "/dev/serial/by-id/REPLACE_WITH_ESP32_C3",
+          "baud": 115200
+        }
+      },
+      "expected_firmware": {
+        "board": "ESP32C3_IDF5",
+        "version": "REPLACE_WITH_PROCESS_VERSION",
+        "git_commit": "REPLACE_WITH_PROCESS_ENV_GIT_COMMIT"
+      }
+    }
+  ]
+}

@@ -8,6 +8,19 @@ by [XState](https://github.com/statelyai/xstate).
 XFSM is an independent implementation. It is not affiliated with or endorsed
 by Espruino, Stately, or the XState maintainers.
 
+## Names
+
+| Use | Name |
+| --- | --- |
+| Standalone repository | `Espruino-XFSM` |
+| Project, implementation, and specification | `Xstate-fsm-c` |
+| Espruino module and build-library identifier | `XFSM` |
+| Build variable | `USE_XFSM` |
+| Internal C, native-format, diagnostic, and conformance prefix | `XFC` |
+
+Application code normally sees only the public `XFSM` name through
+`require("XFSM")`.
+
 ## Status
 
 Profile 2 is the current public profile. It retains the completed Profile 1
@@ -47,10 +60,26 @@ specification explicitly adopts them.
 - [`tests/`](tests/) - conformance definitions, differential runners, and
   recorded results
 - [`examples/`](examples/) - reusable MIT-licensed application examples
-- [`tools/`](tools/) - canonical-to-Espruino export and verification tooling
+- [`tools/`](tools/) - canonical export, verification, and physical-test
+  tooling
 
 The [build guide](docs/building.md) explains how to place the library in an
 Espruino checkout and build firmware with `USE_XFSM=1`.
+
+## Development
+
+- [Contributing](CONTRIBUTING.md) defines the contract, licensing, provenance,
+  and source-notice rules.
+- [Espruino integration](docs/espruino-integration.md) explains how committed
+  library source is exported and tested in an Espruino checkout.
+- [Building](docs/building.md) records verified host and target commands.
+- [Physical device testing](docs/device-testing.md) records flashing, serial,
+  recovery, and evidence procedures for the supported target families.
+- [Tests](tests/README.md) explains conformance, differential references, and
+  recorded evidence.
+- [Examples](examples/README.md) defines reusable application-example rules.
+- [Tutorials](docs/tutorials/README.md) defines the local authoring and
+  EspruinoDocs contribution workflow.
 
 ## Licensing
 

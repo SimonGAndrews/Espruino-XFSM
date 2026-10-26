@@ -34,6 +34,11 @@ with the canonical implementation under [`xfsm/tests/`](../xfsm/tests/). That
 tree is deployed as `libs/xfsm/` in an Espruino feature branch. The conformance
 matrix links those tests to the cases and results held here without duplicating
 the library source.
+
+Host-side physical-test fixtures that do not belong in the deployed library
+live under [`device/`](device/). The project-owned serial and multi-board
+runners are under [`../tools/repl/`](../tools/repl/), with procedures indexed
+from [Physical Device Testing](../docs/device-testing.md).
 The M2 native-format suite is recorded in the
 [Linux result](results/linux/2026-09-25-native-format.json).
 The M3 machine-construction, arena-decoding, diagnostic-path, source-isolation,

@@ -11,6 +11,16 @@ The canonical deployable library is [`xfsm/`](xfsm/). Its contents map
 unchanged to `libs/xfsm/` in an Espruino checkout. Do not create a second engine
 implementation under `docs/` or elsewhere in this repository.
 
+For reusable application code, follow the
+[`examples/` guidance](examples/README.md). For tutorial prose and its
+EspruinoDocs workflow, follow the
+[tutorial guidance](docs/tutorials/README.md).
+
+For physical evidence, follow the common and target-specific procedures linked
+from [Physical Device Testing](docs/device-testing.md). New host-side runners
+belong under `tools/`; do not make current tests depend on an unversioned local
+project.
+
 ## Contribution Licence
 
 MPL-2.0 is the repository default. By submitting a contribution outside

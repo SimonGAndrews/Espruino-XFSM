@@ -154,7 +154,9 @@ CI changes used only to test the development fork do not need to be included
 in the upstream pull request.
 
 Tutorials and examples can be maintained here and proposed separately to
-EspruinoDocs under that repository's documentation and example licences.
+EspruinoDocs under that repository's documentation and example licences. The
+[tutorial guidance](tutorials/README.md) defines the local source locations and
+upstream adaptation workflow.
 
 ## Earlier XFSM Commits
 

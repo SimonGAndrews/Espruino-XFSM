@@ -2,20 +2,17 @@
 
 ## Status And Provenance
 
-- Last reviewed: 2026-09-27
+- Last reviewed: 2026-10-26
 - XFSM target: original ESP32 using Espruino `ESP32_IDF5`
 - Verified device: ESP32-D0WD-V3 revision 3.1, 4 MB flash
 - Verified implementation branch: `feature/xfsm-profile2`
 
 This is the Xstate-fsm-c procedure for building, flashing, and testing a
-locally connected original ESP32 over USB-UART. It is adapted from the local
-handover document
-`/home/simon/MaBecker/ESP32_SGATest/docs/handoff/2026-09-25-classic-esp32-flashing-and-direct-test-practice.md`
-after the first physical XFSM M5 run. SGA-specific wiring, selector, and
-wireless-test instructions are intentionally excluded.
-
-This guide owns the XFSM procedure. The source handover remains useful
-background but is not an Xstate-fsm-c requirement.
+locally connected original ESP32 over USB-UART. It incorporates the reusable
+lessons from the project's earlier ESP32 bench work. Bench-specific wiring and
+selector instructions are intentionally excluded. This guide and the tools in
+this repository are the maintained XFSM procedure; the earlier bench repository
+is not required.
 
 ## Operating Rules
 
@@ -41,9 +38,10 @@ external supply unintentionally.
 
 ## Repository And Device Identity
 
-Use the canonical implementation checkout:
+Keep the canonical XFSM and Espruino integration checkouts distinct:
 
 ```bash
+export XFSM_ROOT=/home/simon/Espruino-XFSM
 export ESPRUINO_XFSM_ROOT=/home/simon/Espruino-XFSM-Profile1
 ```
 
@@ -177,25 +175,17 @@ surface, or instrumentation state differs from the intended image.
 
 ## Direct Serial Runner
 
-The paced direct runner used for the first XFSM physical evidence currently
-lives in another local project:
-
-```text
-/home/simon/MaBecker/ESP32_SGATest/tools/repl/run_test.py
-```
-
-That path is an interim test-tool dependency, not an XFSM implementation or
-specification dependency. Its recorded revision for the first run was
-`1b740f5e3cb2a0ace6c57bd729a24c9c71b875d3`. A future project-owned runner
-should preserve the same synchronization, metadata, pacing, structured-output,
-and raw-transcript behavior.
+The project-owned paced runner is `tools/repl/run_test.py` in the standalone
+XFSM repository. It preserves the synchronization, metadata, pacing,
+structured-output, and raw-transcript behaviour used for the original physical
+evidence.
 
 Run a focused test from the runner repository root:
 
 ```bash
-cd /home/simon/MaBecker/ESP32_SGATest
+cd "$XFSM_ROOT"
 python3 tools/repl/run_test.py \
-  "$ESPRUINO_XFSM_ROOT/libs/xfsm/tests/measure_m5_gc_relocation.js" \
+  xfsm/tests/measure_m5_gc_relocation.js \
   --port "$ESP32_PORT" \
   --baud 115200 \
   --timeout 30 \
@@ -207,19 +197,18 @@ synchronizes the REPL, resets ordinary JavaScript state, paces multiline
 uploads, captures metadata, and retains raw output. Use `--show-raw` while
 investigating missing output, resets, or parse failures.
 
-The current runner fails its process exit status when it sees an explicit
-`FAIL ` assertion line. Tests must therefore emit assertion lines as well as a
-final `DONE=` marker; `DONE=FAIL` alone is not sufficient protection against a
-misleading zero exit status.
+The runner requires exactly one final `DONE=` marker. It returns a failure for
+either an explicit `FAIL ` assertion or `DONE=FAIL`. Tests should still emit
+assertion lines so the failed behaviour is identifiable from the transcript.
 
 The M7.1 application-integration fixture is physical-target-only. It uses the
 original ESP32 board's `LED1`/GPIO2, writes and removes a temporary `xfc_m7`
 Storage module, and leaves the output low:
 
 ```bash
-cd /home/simon/MaBecker/ESP32_SGATest
+cd "$XFSM_ROOT"
 python3 tools/repl/run_test.py \
-  "$ESPRUINO_XFSM_ROOT/libs/xfsm/tests/test_host_application.js" \
+  xfsm/tests/test_host_application.js \
   --port "$ESP32_PORT" \
   --baud 115200 \
   --timeout 45 \
@@ -231,10 +220,10 @@ runner and require no private firmware instrumentation:
 
 ```bash
 python3 tools/repl/run_test.py \
-  "$ESPRUINO_XFSM_ROOT/libs/xfsm/tests/test_host_memory_cleanup.js" \
+  xfsm/tests/test_host_memory_cleanup.js \
   --port "$ESP32_PORT" --baud 115200 --timeout 60 --show-raw
 python3 tools/repl/run_test.py \
-  "$ESPRUINO_XFSM_ROOT/libs/xfsm/tests/test_host_event_serialization.js" \
+  xfsm/tests/test_host_event_serialization.js \
   --port "$ESP32_PORT" --baud 115200 --timeout 60 --show-raw
 ```
 
@@ -249,7 +238,7 @@ for test in \
   test_host_allocation_pressure.js \
   test_host_diagnostic_pressure.js; do
   python3 tools/repl/run_test.py \
-    "$ESPRUINO_XFSM_ROOT/libs/xfsm/tests/$test" \
+    "xfsm/tests/$test" \
     --port "$ESP32_PORT" --baud 115200 --timeout 180 --show-raw
 done
 ```

@@ -2,3 +2,5 @@
 **/node_modules/
 *.pyc
 .DS_Store
+tests/device/**/bench-config.local.json
+tests/device/**/credentials.local.json

@@ -1,6 +1,6 @@
 # Espruino XFSM Implementation Status
 
-- Last reviewed: 2026-10-22
+- Last reviewed: 2026-10-26
 - Overall status: public Profile 2 created from the completed Profile 1 base
   plus qualified shallow and deep history; Native Format Version 2 is frozen
 - Profile 1 milestone: M8 release readiness complete; all 704 applicable
@@ -20,9 +20,11 @@
   event-serialization, maximum-depth product-profile, and production
   allocation-pressure coverage, and shallow/deep history with transactional
   actor-owned restoration
-- Current active gate: repeat target builds and physical qualification after
-  the 2026-10-22 upstream merge; then repeat the Profile 2 history runtime
-  qualification on Pico and MDBT42Q when target access is next available
+- Current active gate: repeat full target qualification after the 2026-10-22
+  upstream merge; the current ESP32-C3 integration head has passed a clean
+  build, flash, module, machine, and actor smoke check, but not the complete
+  qualification suite. Repeat the Profile 2 history runtime qualification on
+  Pico and MDBT42Q when target access is next available
 
 This is the living status dashboard. The stable milestone definitions and exit
 criteria are in the [Implementation Plan](implementation-plan.md). The [test
@@ -48,12 +50,24 @@ measurement records a 62-byte representative arena increase, 4 actor bytes per
 history owner, and no measured
 restore-time JsVar or coordinator-stack increase.
 
-Current public revision `55f45513f` merges official upstream `master` at
-`3b5c8d97f` and adapts XFSM to the extended `jsvCompareString` API without
-changing comparison semantics. Its clean Linux build, all 26 portable suites,
-96 sanitizer-backed native checks, and static contract audit pass. Physical
-target and capacity results below remain tied to qualified revision
-`6f4214534` until repeated against the current public revision.
+The latest functional engine change is Espruino revision `55f45513f`. It merges
+official upstream `master` at `3b5c8d97f` and adapts XFSM to the extended
+`jsvCompareString` API without changing comparison semantics. Its clean Linux
+build, all 26 portable suites, 96 sanitizer-backed native checks, and static
+contract audit pass.
+
+The last exported standalone revision is
+`6a1f744d147c0a86be01e4b65770470280084832`. It is exported unchanged at
+Espruino integration revision
+`f90002aba937402388d6cb5f99f8b380e08ddd1e`. Changes after `55f45513f` establish
+the standalone workflow, licensing notices, and documentation; they do not
+change engine semantics. A clean ESP32-C3 build and flash of `f90002aba` reports
+Espruino `2v29.533`, includes `XFSM`, and passes a machine-and-actor smoke check.
+The new standalone paced runner also identifies that image and passes
+`xfsm/tests/test_shell.js` with `PASS shell` and one `DONE=PASS`. This verifies
+the export, build, and single-device test workflow, not the complete
+conformance suite. Physical target and capacity qualification therefore
+remains tied to `6f4214534` until the applicable suites are repeated.
 
 The current Profile 2 implementation removes the redundant compiler-only
 history-slot value from every state. On Linux, the representative base/history
@@ -104,17 +118,19 @@ with physical layout in [Native Format Version 2](native-format-v2.md).
 | Current specification version | Profile 2 document version `1.0`; Profile 1 base version `0.52` |
 | Local canonical clone | `/home/simon/Espruino-XFSM` |
 | Canonical branch | `main` |
+| Last exported canonical XFSM revision | `6a1f744d147c0a86be01e4b65770470280084832` |
 | Documentation migration source | `SimonGAndrews/XState-Espruino-Project` revision `ecfe27accc966d429491834cd229221728ffd338` |
 | Espruino integration repository | [`SimonGAndrews/Espruino`](https://github.com/SimonGAndrews/Espruino) |
 | Profile 1 branch | [`feature/xfsm-profile1`](https://github.com/SimonGAndrews/Espruino/tree/feature/xfsm-profile1) |
 | Profile 2 branch | [`feature/xfsm-profile2`](https://github.com/SimonGAndrews/Espruino/tree/feature/xfsm-profile2) |
 | Preserved experiment branch | [`experiment/xfsm-history`](https://github.com/SimonGAndrews/Espruino/tree/experiment/xfsm-history) |
 | Local Espruino integration clone | `/home/simon/Espruino-XFSM-Profile1` |
+| Current Espruino integration revision | `f90002aba937402388d6cb5f99f8b380e08ddd1e` |
 | Official upstream base | `espruino/Espruino` `master` at `3b5c8d97fa0678ec1da49a322f5f1fa990374a7a` |
 | Qualified implementation revision | `6f42145347d8f4018b2a1ec221b3834bf9561a24` |
-| Current public implementation | `55f45513f1e0024bd032d4bcc506c3573067fc57` (current-upstream merge and string-comparison API adaptation; Linux verified) |
+| Latest functional engine change | `55f45513f1e0024bd032d4bcc506c3573067fc57` (current-upstream merge and string-comparison API adaptation; Linux verified) |
 | Canonical source path | `xfsm/`; deployed unchanged as Espruino `libs/xfsm/` |
-| Original ESP32 procedure | [Device testing guide](esp32-device-testing.md) |
+| Physical-device procedures | [Device testing index](device-testing.md) |
 
 The complete M6 implementation is committed through `319adfef5`; post-M6
 measurement support and the revised coordinator reserve are committed in
@@ -350,9 +366,10 @@ report](reports/2026-09-29-m8-mdbt42q-physical-qualification.md).
   measured coordinator stack. Its sampled peak uses about 87.75% of all 2,799
   blocks, explaining why the larger action-heavy test source can exhaust
   application headroom without making hierarchy depth itself unsupported.
-- The original ESP32 USB-UART, Make flashing, direct-runner, reset, evidence,
-  and recovery procedure is retained in the project-local
-  [device-testing guide](esp32-device-testing.md).
+- Project-local physical procedures cover the original ESP32, ESP32-C3, Pico,
+  MDBT42Q, common serial testing, recovery and evidence, and the two-board
+  service workload. The maintained runners no longer depend on the earlier
+  bench repository. See the [device-testing index](device-testing.md).
 - The production post-M6 ESP32 image builds at 1,523,424 bytes with 524,576
   app-partition bytes free. Its compact strict-validation suite and focused
   runtime, subscription, completion, and lifecycle regressions pass; the full
@@ -395,8 +412,9 @@ fourteen audit-derived closure cases pass.
 
 Immediate tasks:
 
-1. repeat the target builds and physical qualification against the current
-   post-upstream-merge implementation;
+1. repeat the complete target qualification against the current
+   post-upstream-merge implementation; the current C3 integration head has
+   passed only the clean build, flash, and API smoke check;
 2. repeat the Profile 2 history runtime cases on Pico and MDBT42Q when those
    targets are next available; and
 3. prepare the standalone-to-Espruino integration change series for maintainer
@@ -441,6 +459,8 @@ alone can advance a target only to `Build verified`.
 
 | Date | Change |
 | --- | --- |
+| 2026-10-26 | Consolidated physical-device context into the standalone repository: common, original ESP32, ESP32-C3, Pico/MDBT42Q, and service-coexistence procedures are indexed locally; the paced serial runner and focused two-board WiFi/BLE/HTTPS harness are now project-owned; static, configuration, link, licence, and documentation checks pass; the standalone runner then physically passed `test_shell.js` on the current C3 image, while the relocated two-board service runner still awaits its physical rerun |
+| 2026-10-26 | Verified the standalone export workflow end to end: canonical revision `6a1f744d147c0a86be01e4b65770470280084832` exports exactly to Espruino integration revision `f90002aba937402388d6cb5f99f8b380e08ddd1e`; a provisioned clean ESP32-C3 IDF5 build and flash reports Espruino `2v29.533`, commit `f90002aba`, and the `XFSM` module, while `createMachine()` and `createActor()` pass a manual smoke check; this is workflow evidence rather than a replacement for the qualified Profile 2 suite |
 | 2026-10-22 | Merged 68 official upstream commits through `3b5c8d97f` into `feature/xfsm-profile2` without changing fork `master`; adapted the one XFSM call affected by the extended `jsvCompareString` API; clean Linux build, all 26 portable suites with zero GC residue, 96 native sanitizer checks, and the static contract audit pass at `55f45513f`; physical target evidence remains assigned to `6f4214534` pending repetition |
 | 2026-10-21 | Public Profile 2 created: the frozen Profile 1 contract is retained, qualified shallow/deep history is adopted, Native Format Version 2 is frozen, and `feature/xfsm-profile2` becomes the active project and implementation branch; Linux, original ESP32 and ESP32-C3 are Conformance verified, while Pico and MDBT42Q are Build verified pending physical history-runtime repetition |
 | 2026-10-21 | The exact optimized history candidate passed the final physical promotion rerun on stock original ESP32 and ESP32-C3 IDF5: shallow/deep semantics, diagnostics, save/reboot/reset lifecycle, private-format validation, resource measurement, and production timing pass; production firmware was restored; reduced Pico and constrained Bluetooth MDBT42Q builds also pass with 11,024 and 1,408 bytes free respectively, completing the technical promotion gate while retaining the MDBT42Q margin as a release constraint |

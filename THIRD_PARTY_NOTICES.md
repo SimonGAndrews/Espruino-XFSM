@@ -61,11 +61,12 @@ combining XFSM with Espruino must comply with MPL-2.0 for all covered files.
 
 ## Stately Exports
 
-The fixtures under `docs/compatibility/` and the layout metadata in the
-project-authored thermostat example were exported by Stately tooling from
-project-authored machine models. Fixture source, tool profile, and adaptations
-are recorded in `docs/compatibility/register.json`. They do not copy Stately
-documentation or implementation source.
+The fixtures under `docs/compatibility/`, the layout metadata in the
+project-authored thermostat example, and the Quick Start statechart image were
+exported or rendered by Stately tooling from project-authored machine models.
+Fixture source, tool profile, and adaptations are recorded in
+`docs/compatibility/register.json`. They do not copy Stately documentation or
+implementation source.
 
 ## Standards And Tools
 

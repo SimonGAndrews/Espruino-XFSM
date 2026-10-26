@@ -16,13 +16,19 @@ after it has been run successfully against the recorded revision.
 
 - Build-document status: Profile 2 production and measurement builds are
   verified on original ESP32 and ESP32-C3; current reduced Pico and constrained
-  Bluetooth MDBT42Q Profile 2 capacity builds pass
+  Bluetooth MDBT42Q Profile 2 capacity builds pass. The current integration
+  head also passes a clean ESP32-C3 build, flash, API smoke check, and the
+  standalone paced-runner shell test
 - Canonical XFSM branch: `main`
+- Last exported canonical XFSM revision:
+  `6a1f744d147c0a86be01e4b65770470280084832`
 - Current Espruino integration branch: `feature/xfsm-profile2`
 - Frozen Profile 1 branch: `feature/xfsm-profile1`
 - Preserved history experiment branch: `experiment/xfsm-history`
 - Current implementation base: `3b5c8d97fa0678ec1da49a322f5f1fa990374a7a`
-- Current Espruino integration revision: `55f45513f`
+- Current Espruino integration revision:
+  `f90002aba937402388d6cb5f99f8b380e08ddd1e`
+- Latest functional engine change: `55f45513f`
 - Exact functionally qualified Espruino revision: `6f4214534`
 - Base source: official `espruino/Espruino` `master`
 
@@ -41,6 +47,9 @@ after it has been run successfully against the recorded revision.
 - Branch: `feature/xfsm-profile2`
 - Current local clone: `/home/simon/Espruino-XFSM-Profile1`
 - Deployed library directory: `libs/xfsm/`
+
+The local directory name predates Profile 2. Its checked-out branch, not the
+directory suffix, identifies the active integration profile.
 
 The C engine, wrapper, and library-local tests are edited in the canonical
 `xfsm/` tree and synchronized unchanged to the Espruino host's `libs/xfsm/`.
@@ -97,7 +106,6 @@ The current machine may use these convenience variables:
 ```bash
 export XFSM_ROOT=/home/simon/Espruino-XFSM
 export ESPRUINO_XFSM_ROOT=/home/simon/Espruino-XFSM-Profile1
-export ESP32_SGA_BENCH_ROOT=/home/simon/MaBecker/ESP32_SGATest
 ```
 
 Scripts and committed tests must derive repository-relative paths or accept an
@@ -221,8 +229,8 @@ sequential fixture with the paced direct runner:
 ```bash
 env -u DEBUG make BOARD=ESP32C3_IDF5 clean
 env -u DEBUG make BOARD=ESP32C3_IDF5 RELEASE=1 USE_XFSM=1 XFC_TEST=1 -j2
-python3 tools/repl/run_test.py \
-  /home/simon/Espruino-XFSM-Profile1/libs/xfsm/tests/test_fault_injection_embedded.js \
+python3 "$XFSM_ROOT/tools/repl/run_test.py" \
+  "$XFSM_ROOT/xfsm/tests/test_fault_injection_embedded.js" \
   --port /dev/ttyACM0 --timeout 60
 ```
 
@@ -529,27 +537,22 @@ optimization report](reports/2026-09-27-compiler-jsvar-optimization.md) and earl
 [physical baseline report](reports/2026-09-27-m7-esp32-c3-physical-baseline.md).
 
 With the XFSM image flashed on the C3 and the matching classic ESP32 connected
-as its GATT peer, verify the exact bench configuration and run the combined
-service test from the external bench repository:
+as its GATT peer, run the project-owned combined service test:
 
 ```bash
-cd "$ESP32_SGA_BENCH_ROOT"
-python3 tools/repl/verify_bench_config.py \
-  tests/WIFI_BLE/xfsm_profile1_bench_config.json
-python3 tools/repl/run_ble_https_test.py \
-  --config tests/WIFI_BLE/xfsm_profile1_bench_config.json \
+cd "$XFSM_ROOT"
+python3 tools/repl/run_service_coexistence.py \
+  --config tests/device/esp32-service/bench-config.local.json \
+  --credentials tests/device/esp32-service/credentials.local.json \
   --direction c3-target \
-  --target-preload-script \
-    "$ESPRUINO_XFSM_ROOT/libs/xfsm/tests/prepare_host_service_coexistence.js" \
-  --target-script \
-    "$ESPRUINO_XFSM_ROOT/libs/xfsm/tests/test_host_service_coexistence.js" \
   --target-script-storage \
-  --local-server-address 192.168.50.101 \
+  --local-server-address HOST_IPV4 \
   --timeout 90
 ```
 
-The LAN address is local-bench data and must be replaced when the host uses a
-different address. The four-run result is in the [C3 service-coexistence
+Prepare the ignored local configuration and credentials as described in
+[Service-Coexistence Testing](service-coexistence-testing.md). The four-run
+result is in the [C3 service-coexistence
 report](reports/2026-09-28-m7-esp32-c3-service-coexistence.md).
 
 At complete implementation revision `1589218d3`, the same clean comparison
@@ -629,13 +632,12 @@ After flashing, query the running `process.env.BOARD`, `process.version`, and
 `process.env.GIT_COMMIT`; build output alone does not prove which image is on
 the attached board.
 
-Routine automated tests should use paced direct serial transport. On the
-current development machine the shared runner is invoked from
-`/home/simon/MaBecker/ESP32_SGATest`:
+Routine automated tests should use the standalone repository's paced direct
+serial runner:
 
 ```bash
-python3 tools/repl/run_test.py \
-  "$ESPRUINO_XFSM_ROOT/libs/xfsm/tests/measure_m5_gc_relocation.js" \
+python3 "$XFSM_ROOT/tools/repl/run_test.py" \
+  "$XFSM_ROOT/xfsm/tests/measure_m5_gc_relocation.js" \
   --port "$ESP32_PORT" --baud 115200 --timeout 30 --show-raw
 ```
 

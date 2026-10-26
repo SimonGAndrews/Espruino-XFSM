@@ -25,8 +25,8 @@ Examples include `2026-10-15-linux-vertical-slice.md` and
 
 Every report must identify:
 
-- the XState-Espruino-Project revision and specification version;
-- the Espruino implementation revision and upstream base;
+- the canonical Espruino-XFSM revision and specification version;
+- the Espruino integration revision and official upstream base;
 - target, board definition, toolchain, and relevant build flags;
 - the referenced conformance case IDs;
 - the commands or procedure used;
@@ -38,6 +38,13 @@ Every report must identify:
 Do not paste large raw logs into a report. Retain stable result files and
 summarize the significant measurements and diagnostics here.
 
-The first vertical-slice report must address every M5 measurement and review
-gate in the [Implementation Plan](../implementation-plan.md), even where the
-outcome is that further evidence is required.
+Migrated reports retain their original `XState-Espruino-Project` and Espruino
+revisions. New reports use the current repositories and follow the applicable
+gates in the [Implementation Plan](../implementation-plan.md), current profile
+specification, and test inventory.
+
+Some historical reports also name the earlier ESP32 bench repository or a
+temporary flashing helper. Those paths identify how the recorded run was made;
+they are not current dependencies. Use the maintained procedures indexed by
+[Physical Device Testing](../device-testing.md) and the runners under
+`tools/repl/` for new work.

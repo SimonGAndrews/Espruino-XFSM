@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Project-authored XFSM example; not adapted from XState documentation.
 // Stately Editor generated the layout metadata for this project-authored model.
+// Requires an Espruino build with XFSM enabled.
 
 var XFSM = require("XFSM");
 
