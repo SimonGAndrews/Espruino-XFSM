@@ -63,11 +63,12 @@ Espruino `master`, the integration branch is 40 commits ahead and 0 behind;
 the upstream base remains `3b5c8d97f`.
 
 The last exported standalone revision is
-`74987aeaa1f700bfd5b79aaf35defea171918905`. It is exported unchanged at
+`b2ae6b4c85ef8f4e2053d9639c36dc09064ac4c2`. It is exported unchanged at
 Espruino integration revision
-`0cab2c6755e2959672209c11ac5b1d60c46cd1e0`. This final export changes only the
-physical compatibility-trace fixture; it does not change the native engine or
-the qualified firmware. The complete Linux qualification passes 26 JavaScript
+`47c8a155df285e0264373c6578646f80981b8ae3`. This final export changes only the
+physical diagnostic-trace fixture; it does not change the native engine or
+the qualified firmware at `0cab2c6755e2959672209c11ac5b1d60c46cd1e0`. The
+complete Linux qualification passes 26 JavaScript
 suites, nine canonical traces, both pinned XState environments, 96 sanitizer
 checks, repository audits, deterministic allocation faults, and normal-build
 restoration. The exact result is in the
@@ -129,14 +130,14 @@ with physical layout in [Native Format Version 2](native-format-v2.md).
 | Current specification version | Profile 2 document version `1.0`; Profile 1 base version `0.52` |
 | Local canonical clone | `/home/simon/Espruino-XFSM` |
 | Canonical branch | `main` |
-| Last exported canonical XFSM revision | `74987aeaa1f700bfd5b79aaf35defea171918905` |
+| Last exported canonical XFSM revision | `b2ae6b4c85ef8f4e2053d9639c36dc09064ac4c2` |
 | Documentation migration source | `SimonGAndrews/XState-Espruino-Project` revision `ecfe27accc966d429491834cd229221728ffd338` |
 | Espruino integration repository | [`SimonGAndrews/Espruino`](https://github.com/SimonGAndrews/Espruino) |
 | Profile 1 branch | [`feature/xfsm-profile1`](https://github.com/SimonGAndrews/Espruino/tree/feature/xfsm-profile1) |
 | Profile 2 branch | [`feature/xfsm-profile2`](https://github.com/SimonGAndrews/Espruino/tree/feature/xfsm-profile2) |
 | Preserved experiment branch | [`experiment/xfsm-history`](https://github.com/SimonGAndrews/Espruino/tree/experiment/xfsm-history) |
 | Local Espruino integration clone | `/home/simon/Espruino-XFSM-Profile1` |
-| Current Espruino integration revision | `0cab2c6755e2959672209c11ac5b1d60c46cd1e0` |
+| Current Espruino integration revision | `47c8a155df285e0264373c6578646f80981b8ae3` |
 | Official upstream base | `espruino/Espruino` `master` at `3b5c8d97fa0678ec1da49a322f5f1fa990374a7a` |
 | Qualified implementation revision | `6f42145347d8f4018b2a1ec221b3834bf9561a24` |
 | Latest functional engine change | `0e8d14c8ee6c4132fb598a43b6299ebd08000607` (specified detached-receiver diagnostic paths; complete Linux qualification passes) |
