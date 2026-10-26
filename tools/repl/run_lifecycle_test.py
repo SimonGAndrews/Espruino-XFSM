@@ -17,6 +17,7 @@ import serial
 from run_test import (
     collect_metadata,
     filter_structured_lines,
+    has_done_marker,
     open_serial,
     read_until_prompt,
     send_and_capture,
@@ -70,7 +71,7 @@ def read_across_reconnect(
     output = initial
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
-        if any(line.strip().startswith("DONE=") for line in output.splitlines()):
+        if has_done_marker(output):
             return output, repl
         if repl is None:
             try:

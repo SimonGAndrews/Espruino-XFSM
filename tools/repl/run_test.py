@@ -27,6 +27,14 @@ STRUCTURED_PREFIXES = (
 )
 
 
+def has_done_marker(text: str) -> bool:
+    """Return true only for a completed test line, not echoed source text."""
+    return any(
+        line.strip() in ("DONE=PASS", "DONE=FAIL")
+        for line in text.splitlines()
+    )
+
+
 def open_serial(port: str, baud: int) -> serial.Serial:
     """Open an Espruino console while honoring its XON/XOFF backpressure."""
     return serial.Serial(port, baud, timeout=0.1, xonxoff=True)
@@ -54,14 +62,17 @@ def send_and_capture(ser: serial.Serial, text: str, settle: float = 0.2) -> str:
 def send_script_paced(ser: serial.Serial, text: str) -> str:
     lines = text.splitlines()
     chunks: list[str] = []
+    slow_console = ser.baudrate <= 9600
+    lines_per_pause = 1 if slow_console else 8
+    pause = 0.2 if slow_console else 0.04
 
     for idx, line in enumerate(lines):
         ser.write((line + "\n").encode("utf-8"))
         ser.flush()
 
-        # Pace multi-line REPL uploads so larger tests do not overrun the console.
-        if idx == len(lines) - 1 or idx % 8 == 7:
-            chunks.append(read_available(ser, 0.04))
+        # Slow UART consoles need time to execute each submitted source line.
+        if idx == len(lines) - 1 or (idx + 1) % lines_per_pause == 0:
+            chunks.append(read_available(ser, pause))
         else:
             time.sleep(0.005)
 
@@ -76,7 +87,7 @@ def read_until_done(ser: serial.Serial, timeout: float) -> str:
         if waiting:
             chunks.append(ser.read(waiting))
             text = b"".join(chunks).decode("utf-8", "replace")
-            if "DONE=" in text:
+            if has_done_marker(text):
                 return text + read_available(ser, 0.25)
         else:
             time.sleep(0.02)
@@ -150,7 +161,7 @@ def run_direct(test_path: Path, port: str, baud: int, timeout: float) -> str:
         send_and_capture(ser, "echo(true);\n", settle=0.2)
         ser.reset_input_buffer()
         raw_output = send_script_paced(ser, js_test)
-        if "DONE=" in raw_output:
+        if has_done_marker(raw_output):
             return raw_output + read_available(ser, 0.25)
         return raw_output + read_until_done(ser, timeout)
 
