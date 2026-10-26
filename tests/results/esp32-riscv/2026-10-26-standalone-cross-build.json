@@ -1,0 +1,24 @@
+{
+  "schema": "xfc.target-build-result",
+  "version": 1,
+  "date": "2026-10-26",
+  "canonicalRevision": "d77d1cc6015eadd0711c8aa4bc8b0800fef35bd1",
+  "espruinoRevision": "0e8d14c8ee6c4132fb598a43b6299ebd08000607",
+  "upstreamBase": "3b5c8d97fa0678ec1da49a322f5f1fa990374a7a",
+  "target": {
+    "board": "ESP32C3_IDF5",
+    "architecture": "RV32IMC",
+    "runtimeVersion": "2v29.534"
+  },
+  "build": {
+    "flags": "BOARD=ESP32C3_IDF5 RELEASE=1 USE_XFSM=1",
+    "imageBytes": 1724480,
+    "imageSha256": "5a84f785b215a068131795661d29045f9294c3777530f5ce6f4c9888672b08d2",
+    "freeAppPartitionBytes": 323520,
+    "freeAppPartitionPercent": 16,
+    "result": "pass"
+  },
+  "physicalRuntimeExecuted": false,
+  "result": "pass",
+  "report": "../../../docs/reports/2026-10-26-standalone-qualification.md"
+}

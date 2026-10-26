@@ -109,7 +109,9 @@ python3 tools/repl/run_lifecycle_test.py \
 The runner uploads `test_save_restore.js`, follows the device across a USB
 disconnect or UART-backed reboot, collects the restored result, waits for its
 scheduled `reset(true)`, reconnects, and runs `test_reset_lifecycle.js`. A
-transport failure is not a lifecycle pass even if the board later returns.
+transport failure is not a lifecycle pass even if the board later returns. Its
+JSON summary records both the runtime firmware identity and the canonical XFSM
+revision and dirty state.
 
 ## Reset Levels
 

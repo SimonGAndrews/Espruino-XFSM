@@ -1,0 +1,24 @@
+{
+  "schema": "xfc.target-build-result",
+  "version": 1,
+  "date": "2026-10-26",
+  "canonicalRevision": "d77d1cc6015eadd0711c8aa4bc8b0800fef35bd1",
+  "espruinoRevision": "0e8d14c8ee6c4132fb598a43b6299ebd08000607",
+  "upstreamBase": "3b5c8d97fa0678ec1da49a322f5f1fa990374a7a",
+  "target": {
+    "board": "ESP32_IDF5",
+    "architecture": "Xtensa",
+    "runtimeVersion": "2v29.534"
+  },
+  "build": {
+    "flags": "BOARD=ESP32_IDF5 RELEASE=1 USE_XFSM=1",
+    "imageBytes": 1574048,
+    "imageSha256": "14764acc1aafb9a62c083766c2af99991cc3a7c0bcc09b6a01be51f0b303fd1c",
+    "freeAppPartitionBytes": 473952,
+    "freeAppPartitionPercent": 23,
+    "result": "pass"
+  },
+  "physicalRuntimeExecuted": false,
+  "result": "pass",
+  "report": "../../../docs/reports/2026-10-26-standalone-qualification.md"
+}

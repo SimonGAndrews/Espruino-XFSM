@@ -5,8 +5,10 @@
 from __future__ import annotations
 
 import argparse
+from datetime import datetime, timezone
 import json
 from pathlib import Path
+import subprocess
 import sys
 import time
 
@@ -25,6 +27,24 @@ from run_test import (
 REPOSITORY = Path(__file__).resolve().parents[2]
 SAVE_TEST = REPOSITORY / "xfsm/tests/test_save_restore.js"
 RESET_TEST = REPOSITORY / "xfsm/tests/test_reset_lifecycle.js"
+
+
+def repository_state(path: Path) -> dict[str, object]:
+    commit = subprocess.run(
+        ["git", "-C", str(path), "rev-parse", "HEAD"],
+        text=True,
+        capture_output=True,
+        check=True,
+    ).stdout.strip()
+    dirty = bool(
+        subprocess.run(
+            ["git", "-C", str(path), "status", "--porcelain=v1"],
+            text=True,
+            capture_output=True,
+            check=True,
+        ).stdout.strip()
+    )
+    return {"commit": commit, "dirty": dirty}
 
 
 def open_when_available(port: str, baud: int, deadline: float) -> serial.Serial:
@@ -183,7 +203,9 @@ def main() -> int:
     passed = save_pass and reset_pass
     summary = {
         "schema_version": 1,
+        "created_utc": datetime.now(timezone.utc).isoformat(),
         "runtime": metadata,
+        "canonical_source": repository_state(REPOSITORY),
         "port": args.port,
         "baud": args.baud,
         "save_restore": "pass" if save_pass else "fail",

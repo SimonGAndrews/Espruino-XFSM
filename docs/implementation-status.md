@@ -21,10 +21,10 @@
   allocation-pressure coverage, and shallow/deep history with transactional
   actor-owned restoration
 - Current active gate: repeat full target qualification after the 2026-10-22
-  upstream merge; the current ESP32-C3 integration head has passed a clean
-  build, flash, module, machine, and actor smoke check, but not the complete
-  qualification suite. Repeat the Profile 2 history runtime qualification on
-  Pico and MDBT42Q when target access is next available
+  upstream merge; the current Linux integration head passes the complete
+  standalone host qualification. Repeat the complete production-firmware and
+  lifecycle suites on physical targets, including Profile 2 history runtime
+  qualification on Pico and MDBT42Q when target access is next available
 
 This is the living status dashboard. The stable milestone definitions and exit
 criteria are in the [Implementation Plan](implementation-plan.md). The [test
@@ -50,24 +50,28 @@ measurement records a 62-byte representative arena increase, 4 actor bytes per
 history owner, and no measured
 restore-time JsVar or coordinator-stack increase.
 
-The latest functional engine change is Espruino revision `55f45513f`. It merges
-official upstream `master` at `3b5c8d97f` and adapts XFSM to the extended
-`jsvCompareString` API without changing comparison semantics. Its clean Linux
-build, all 26 portable suites, 96 sanitizer-backed native checks, and static
-contract audit pass.
+The latest functional engine change is Espruino revision `0e8d14c8e`. It keeps
+the official upstream base at `3b5c8d97f`, retains the extended
+`jsvCompareString` adaptation, and corrects the detached actor, snapshot, and
+subscription diagnostic positions to include the specified `.this` suffix.
+Its complete standalone host qualification passes.
+
+Clean production cross-builds of that revision also pass for original ESP32
+IDF5 and ESP32-C3 IDF5. They leave 473,952 bytes (23%) and 323,520 bytes (16%)
+of their application partitions respectively. After fetching official
+Espruino `master`, the integration branch is 40 commits ahead and 0 behind;
+the upstream base remains `3b5c8d97f`.
 
 The last exported standalone revision is
-`6a1f744d147c0a86be01e4b65770470280084832`. It is exported unchanged at
+`d77d1cc6015eadd0711c8aa4bc8b0800fef35bd1`. It is exported unchanged at
 Espruino integration revision
-`f90002aba937402388d6cb5f99f8b380e08ddd1e`. Changes after `55f45513f` establish
-the standalone workflow, licensing notices, and documentation; they do not
-change engine semantics. A clean ESP32-C3 build and flash of `f90002aba` reports
-Espruino `2v29.533`, includes `XFSM`, and passes a machine-and-actor smoke check.
-The new standalone paced runner also identifies that image and passes
-`xfsm/tests/test_shell.js` with `PASS shell` and one `DONE=PASS`. This verifies
-the export, build, and single-device test workflow, not the complete
-conformance suite. Physical target and capacity qualification therefore
-remains tied to `6f4214534` until the applicable suites are repeated.
+`0e8d14c8ee6c4132fb598a43b6299ebd08000607`. The complete Linux qualification
+passes 26 JavaScript suites, nine canonical traces, both pinned XState
+environments, 96 sanitizer checks, repository audits, deterministic allocation
+faults, and normal-build restoration. The exact result is in the
+[standalone qualification report](reports/2026-10-26-standalone-qualification.md).
+Physical target and capacity qualification remains tied to `6f4214534` until
+the applicable suites are repeated on the current integration revision.
 
 The current Profile 2 implementation removes the redundant compiler-only
 history-slot value from every state. On Linux, the representative base/history
@@ -118,17 +122,17 @@ with physical layout in [Native Format Version 2](native-format-v2.md).
 | Current specification version | Profile 2 document version `1.0`; Profile 1 base version `0.52` |
 | Local canonical clone | `/home/simon/Espruino-XFSM` |
 | Canonical branch | `main` |
-| Last exported canonical XFSM revision | `6a1f744d147c0a86be01e4b65770470280084832` |
+| Last exported canonical XFSM revision | `d77d1cc6015eadd0711c8aa4bc8b0800fef35bd1` |
 | Documentation migration source | `SimonGAndrews/XState-Espruino-Project` revision `ecfe27accc966d429491834cd229221728ffd338` |
 | Espruino integration repository | [`SimonGAndrews/Espruino`](https://github.com/SimonGAndrews/Espruino) |
 | Profile 1 branch | [`feature/xfsm-profile1`](https://github.com/SimonGAndrews/Espruino/tree/feature/xfsm-profile1) |
 | Profile 2 branch | [`feature/xfsm-profile2`](https://github.com/SimonGAndrews/Espruino/tree/feature/xfsm-profile2) |
 | Preserved experiment branch | [`experiment/xfsm-history`](https://github.com/SimonGAndrews/Espruino/tree/experiment/xfsm-history) |
 | Local Espruino integration clone | `/home/simon/Espruino-XFSM-Profile1` |
-| Current Espruino integration revision | `f90002aba937402388d6cb5f99f8b380e08ddd1e` |
+| Current Espruino integration revision | `0e8d14c8ee6c4132fb598a43b6299ebd08000607` |
 | Official upstream base | `espruino/Espruino` `master` at `3b5c8d97fa0678ec1da49a322f5f1fa990374a7a` |
 | Qualified implementation revision | `6f42145347d8f4018b2a1ec221b3834bf9561a24` |
-| Latest functional engine change | `55f45513f1e0024bd032d4bcc506c3573067fc57` (current-upstream merge and string-comparison API adaptation; Linux verified) |
+| Latest functional engine change | `0e8d14c8ee6c4132fb598a43b6299ebd08000607` (specified detached-receiver diagnostic paths; complete Linux qualification passes) |
 | Canonical source path | `xfsm/`; deployed unchanged as Espruino `libs/xfsm/` |
 | Physical-device procedures | [Device testing index](device-testing.md) |
 

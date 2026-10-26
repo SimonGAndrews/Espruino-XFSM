@@ -232,11 +232,11 @@ link the complete host and target result records.
 | --- | --- | --- |
 | Linux build with XFSM disabled | Pass | Repeat at release candidate |
 | Linux build with XFSM enabled | Pass | Repeat at release candidate |
-| Linux semantic, fault, sanitizer and static CI | Configured on fork branch | Preserve all 26 normal suites, base canonical traces, shallow/deep pinned references, the 96-check sanitizer suite, static audit, separate `XFC_TEST=1` fault build, and disabled build |
-| Original ESP32 IDF5 enabled build | Profile 2 physical qualification passes; normal image leaves 520,160 app-partition bytes free | Retain as fork-development coverage |
+| Linux semantic, fault, sanitizer and static CI | Complete standalone host command passes at canonical `d77d1cc` / Espruino `0e8d14c`; standalone workflow and fork integration workflow configured | Preserve all 26 normal suites, nine canonical traces, shallow/deep pinned references, the 96-check sanitizer suite, repository audits, separate `XFC_TEST=1` fault build, normal-build restoration, and disabled build |
+| Original ESP32 IDF5 enabled build | Current standalone candidate cross-build passes with 473,952 app-partition bytes free; earlier Profile 2 physical qualification passes | Repeat current physical suite; retain as fork-development coverage |
 | Pico reduced-profile build and physical qualification | Profile 2 build passes; Profile 1 physical qualification retained | Add Profile 2 physical history repetition when the board is available |
 | MDBT42Q constrained Bluetooth build and physical qualification | Profile 2 build passes with narrow margin; Profile 1 physical qualification retained | Recheck every size change and add Profile 2 physical history repetition |
-| ESP32-C3 IDF5 enabled build | Profile 2 physical qualification passes; normal image leaves 330,000 app-partition bytes free | Optional fork CI remains useful but is not part of the target's local conformance result |
+| ESP32-C3 IDF5 enabled build | Current standalone candidate cross-build passes with 323,520 app-partition bytes free; earlier Profile 2 physical qualification passes | Repeat current physical suite; optional fork CI remains useful but is not part of the target's local conformance result |
 
 ## Final Review Closure Checklist
 

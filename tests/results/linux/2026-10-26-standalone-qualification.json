@@ -1,0 +1,55 @@
+{
+  "schema": "xfc.qualification-result",
+  "version": 1,
+  "date": "2026-10-26",
+  "target": "Linux Espruino",
+  "canonicalRevision": "d77d1cc6015eadd0711c8aa4bc8b0800fef35bd1",
+  "espruinoRevision": "0e8d14c8ee6c4132fb598a43b6299ebd08000607",
+  "upstreamBase": "3b5c8d97fa0678ec1da49a322f5f1fa990374a7a",
+  "command": "./tools/run-host-qualification.sh /home/simon/Espruino-XFSM-Profile1",
+  "result": "pass",
+  "checks": {
+    "canonicalMirrorExact": "pass",
+    "xfsmDisabledBuild": "pass",
+    "xfsmEnabledBuild": "pass",
+    "javascriptSuites": {
+      "passed": 26,
+      "failed": 0
+    },
+    "canonicalTraces": {
+      "passed": 9,
+      "failed": 0
+    },
+    "xstateReferences": {
+      "v5Version": "5.33.2",
+      "v5Basic": "pass",
+      "v5ShallowHistory": "pass",
+      "v5DeepHistory": "pass",
+      "v4Version": "4.38.3",
+      "v4Migration": "pass"
+    },
+    "nativeSanitizerChecks": {
+      "passed": 96,
+      "failed": 0,
+      "sanitizers": [
+        "address",
+        "undefined-behaviour"
+      ]
+    },
+    "staticContractAudit": "pass",
+    "compatibilityGovernanceAudit": "pass",
+    "normativeRequirementsAudit": {
+      "reviewed": 707,
+      "pass": 704,
+      "notApplicable": 3
+    },
+    "allocationFaultBuild": "pass",
+    "normalBuildRestored": "pass",
+    "restoredBuildStrictValidation": "pass"
+  },
+  "notes": [
+    "The first consolidated run exposed detached-receiver diagnostic positions that omitted the specification's .this suffix.",
+    "Canonical commit dddac30 corrected the runtime and API trace; the complete rerun then passed.",
+    "This is host evidence. Physical target qualification is recorded separately."
+  ]
+}
