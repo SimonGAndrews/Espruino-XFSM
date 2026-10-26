@@ -1,0 +1,51 @@
+{
+  "schema": "xfc.target-qualification-summary",
+  "version": 1,
+  "date": "2026-10-26",
+  "target": {
+    "board": "ESP32_IDF5",
+    "architecture": "Xtensa LX6",
+    "chipRevision": "3.1",
+    "runtimeVersion": "2v29.536"
+  },
+  "espruinoRevision": "0cab2c6755e2959672209c11ac5b1d60c46cd1e0",
+  "exportedCanonicalRevision": "74987aeaa1f700bfd5b79aaf35defea171918905",
+  "upstreamBase": "3b5c8d97fa0678ec1da49a322f5f1fa990374a7a",
+  "build": {
+    "flags": "BOARD=ESP32_IDF5 RELEASE=1 USE_XFSM=1",
+    "imageBytes": 1574048,
+    "imageSha256": "2576b8c20d39f359a98bc1246e7a0d6688550891fab1de1012cdedd444625051",
+    "freeAppPartitionBytes": 473952,
+    "freeAppPartitionPercent": 23,
+    "result": "pass"
+  },
+  "productionSuites": {
+    "passed": 29,
+    "total": 29,
+    "canonicalSourceRevision": "ee5be3b21bc825c05d359a865ddf70f86955e057",
+    "resultFile": "2026-10-26-standalone-production-suites.json",
+    "result": "pass"
+  },
+  "canonicalTraces": {
+    "passed": 9,
+    "total": 9,
+    "canonicalSourceRevision": "6019270fbe768f3543a872849f9e9bb5065b0359",
+    "diagnosticTrace": "physically partitioned, merged, resequenced, and compared once with the canonical 58-record expected trace",
+    "largeCompatibilityTrace": "physically partitioned, merged, resequenced, and compared once with the canonical 56-record expected trace",
+    "resultFile": "2026-10-26-standalone-traces.json",
+    "result": "pass"
+  },
+  "lifecycle": {
+    "canonicalSourceRevision": "6019270fbe768f3543a872849f9e9bb5065b0359",
+    "saveRestore": "pass",
+    "resetCleanup": "pass",
+    "savedInterpreterBytes": 40012,
+    "compressedSavedBytes": 10121,
+    "resultFile": "2026-10-26-standalone-lifecycle.json",
+    "result": "pass"
+  },
+  "nativeEngineChangedBetweenRuns": false,
+  "serviceCoexistenceExecuted": false,
+  "result": "pass",
+  "report": "../../../docs/reports/2026-10-26-original-esp32-standalone-qualification.md"
+}

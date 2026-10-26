@@ -46,8 +46,10 @@ matched build](mdbt42q/2026-09-29-product-profile-build.json), with its
 
 Current standalone-workflow evidence is the [complete Linux host
 qualification](linux/2026-10-26-standalone-qualification.json), the [original
-ESP32 cross-build](esp32-xtensa/2026-10-26-standalone-cross-build.json), and
-the [ESP32-C3 physical qualification](esp32-riscv/2026-10-26-standalone-qualification.json).
-The C3 summary links its separate production-suite, exact-trace, and lifecycle
-records. The implementation status identifies which current-candidate physical
-runs remain outstanding.
+ESP32 physical
+qualification](esp32-xtensa/2026-10-26-standalone-qualification.json), and the
+[ESP32-C3 physical
+qualification](esp32-riscv/2026-10-26-standalone-qualification.json).
+Each target summary links its separate production-suite, exact-trace, and
+lifecycle records. The implementation status identifies which
+current-candidate physical runs remain outstanding.

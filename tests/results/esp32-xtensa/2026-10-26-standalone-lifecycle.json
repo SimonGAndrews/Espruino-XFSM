@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-26T17:54:50.487946+00:00",
+  "runtime": {
+    "board": "ESP32_IDF5",
+    "version": "2v29.536",
+    "git_commit": "0cab2c675"
+  },
+  "canonical_source": {
+    "commit": "6019270fbe768f3543a872849f9e9bb5065b0359",
+    "dirty": false
+  },
+  "port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+  "baud": 115200,
+  "save_restore": "pass",
+  "reset_cleanup": "pass",
+  "pass": true
+}

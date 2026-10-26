@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-26T17:54:20.222929+00:00",
+  "profile": "esp32-idf5",
+  "port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+  "baud": 115200,
+  "runtime": {
+    "board": "ESP32_IDF5",
+    "version": "2v29.536",
+    "git_commit": "0cab2c675"
+  },
+  "canonical_source": {
+    "commit": "6019270fbe768f3543a872849f9e9bb5065b0359",
+    "dirty": false
+  },
+  "groups": [],
+  "traces_requested": true,
+  "trace_storage": true,
+  "results": [
+    {
+      "kind": "trace",
+      "name": "api_002",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "config_004",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "config_005",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "action_002",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "snapshot_002",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "transition_005",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "diagnostic_006",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "compat_006",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "compat_006_v4",
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "lifecycle_required_separately": true
+}

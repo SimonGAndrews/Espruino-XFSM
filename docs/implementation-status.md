@@ -21,11 +21,10 @@
   allocation-pressure coverage, and shallow/deep history with transactional
   actor-owned restoration
 - Current active gate: the current Linux integration head passes the complete
-  standalone host qualification, and the current ESP32-C3 candidate passes its
-  complete production, trace, and lifecycle qualification. Repeat the current
-  candidate on original ESP32, Pico, and MDBT42Q, including Profile 2 history
-  runtime qualification on the constrained boards, when target access is next
-  available
+  standalone host qualification, and the current original ESP32 and ESP32-C3
+  candidates pass their complete production, trace, and lifecycle
+  qualification. Repeat the current candidate on Pico and MDBT42Q, including
+  Profile 2 history runtime qualification, when target access is next available
 
 This is the living status dashboard. The stable milestone definitions and exit
 criteria are in the [Implementation Plan](implementation-plan.md). The [test
@@ -73,11 +72,12 @@ suites, nine canonical traces, both pinned XState environments, 96 sanitizer
 checks, repository audits, deterministic allocation faults, and normal-build
 restoration. The exact result is in the
 [standalone qualification report](reports/2026-10-26-standalone-qualification.md).
-The current ESP32-C3 physical qualification passes 29 production suites, nine
-exact canonical traces, and the save/reboot/reset lifecycle at integration
-revision `215fe4e16`; see the [current C3 qualification
-report](reports/2026-10-26-c3-standalone-qualification.md). Current-candidate
-physical evidence for original ESP32, Pico, and MDBT42Q remains tied to the
+The current original ESP32 and ESP32-C3 physical qualifications each pass 29
+production suites, nine exact canonical traces, and the save/reboot/reset
+lifecycle. See the [current original ESP32
+report](reports/2026-10-26-original-esp32-standalone-qualification.md) and
+[current C3 report](reports/2026-10-26-c3-standalone-qualification.md).
+Current-candidate physical evidence for Pico and MDBT42Q remains tied to the
 earlier qualified revision until their applicable suites are repeated.
 
 The current Profile 2 implementation removes the redundant compiler-only
@@ -423,12 +423,11 @@ fourteen audit-derived closure cases pass.
 
 Immediate tasks:
 
-1. repeat the current-candidate physical qualification on original ESP32;
-2. repeat the Profile 2 history runtime and lifecycle cases on Pico and
+1. repeat the Profile 2 history runtime and lifecycle cases on Pico and
    MDBT42Q when those targets are next available;
-3. repeat the two-board WiFi, HTTPS/TLS, and BLE coexistence check against the
+2. repeat the two-board WiFi, HTTPS/TLS, and BLE coexistence check against the
    current candidate when its bench arrangement is available; and
-4. prepare the standalone-to-Espruino integration change series for maintainer
+3. prepare the standalone-to-Espruino integration change series for maintainer
    review, keeping host build changes separate from the deployable library.
 
 ## Open Issues And Blockers
@@ -459,7 +458,7 @@ These are specified review gates, not unresolved Profile 1 semantics:
 | Linux Espruino | Profile 2 Conformance verified | [Profile 2 conformance record](../tests/profile-2-conformance.md) |
 | Espruino Pico | Profile 2 Build verified; Profile 1 Conformance verified | [Profile 2 capacity result](../tests/results/pico/2026-10-21-history-capacity.json) |
 | MDBT42Q | Profile 2 Build verified; Profile 1 Conformance verified | [Profile 2 capacity result](../tests/results/mdbt42q/2026-10-21-history-capacity.json) |
-| Original ESP32 IDF5 | Profile 2 Conformance verified on the stock full-feature 70 KB profile | [Profile 2 promotion result](../tests/results/esp32-xtensa/2026-10-21-history-promotion-rerun.json) |
+| Original ESP32 IDF5 | Current standalone Profile 2 candidate Conformance verified on the stock full-feature 70 KB profile | [Current standalone qualification](../tests/results/esp32-xtensa/2026-10-26-standalone-qualification.json) |
 | ESP32-C3 IDF5 | Current standalone Profile 2 candidate Conformance verified on the stock full-feature 70 KB profile | [Current standalone qualification](../tests/results/esp32-riscv/2026-10-26-standalone-qualification.json) |
 | ESP32-S3 IDF5 | Not yet verified | Later Profile 2 expansion target |
 
@@ -470,6 +469,7 @@ alone can advance a target only to `Build verified`.
 
 | Date | Change |
 | --- | --- |
+| 2026-10-26 | Current standalone original-ESP32 qualification passed on stock production firmware: 29 production suites, nine exact canonical traces, and save/reboot/restoration/reset lifecycle pass at runtime revision `0cab2c675`; the image is 1,574,048 bytes with 473,952 application-partition bytes free; Storage-backed trace loading, XON/XOFF handling, and physical diagnostic partitioning corrected harness assumptions without a native engine change |
 | 2026-10-26 | Current standalone ESP32-C3 qualification passed on stock production firmware: 29 production suites, nine exact canonical traces, and save/reboot/restoration/reset lifecycle all pass at runtime revision `215fe4e16`; the image is 1,724,480 bytes with 323,520 application-partition bytes free; physical-runner corrections required no native engine change |
 | 2026-10-26 | Consolidated physical-device context into the standalone repository: common, original ESP32, ESP32-C3, Pico/MDBT42Q, and service-coexistence procedures are indexed locally; the paced serial runner and focused two-board WiFi/BLE/HTTPS harness are now project-owned; static, configuration, link, licence, and documentation checks pass; the standalone runner then physically passed `test_shell.js` on the current C3 image, while the relocated two-board service runner still awaits its physical rerun |
 | 2026-10-26 | Verified the standalone export workflow end to end: canonical revision `6a1f744d147c0a86be01e4b65770470280084832` exports exactly to Espruino integration revision `f90002aba937402388d6cb5f99f8b380e08ddd1e`; a provisioned clean ESP32-C3 IDF5 build and flash reports Espruino `2v29.533`, commit `f90002aba`, and the `XFSM` module, while `createMachine()` and `createActor()` pass a manual smoke check; this is workflow evidence rather than a replacement for the qualified Profile 2 suite |

@@ -118,6 +118,10 @@ summary](results/esp32-riscv/2026-10-26-standalone-qualification.json).
 The corresponding stock full-feature original-ESP32 release qualification is
 recorded in the [M7.4
 result](results/esp32-xtensa/2026-09-28-m7-release-candidate.json).
+The current standalone candidate's original-ESP32 production suites, nine
+exact canonical traces, and save/reboot/reset lifecycle are recorded in the
+[standalone original-ESP32 qualification
+summary](results/esp32-xtensa/2026-10-26-standalone-qualification.json).
 The first four M8 grouped closure packages and their nine canonical streamed
 traces are recorded in the [public/configuration
 result](results/linux/2026-09-28-closure-public-configuration.json) and the
