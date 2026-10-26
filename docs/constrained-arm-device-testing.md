@@ -87,5 +87,7 @@ Storage files are gone. The MDBT42Q profile has little flash margin, so rebuild
 and recheck capacity after any engine or upstream Espruino growth.
 
 The detailed historical measurements remain in the
-[Pico](reports/2026-09-29-m8-pico-physical-qualification.md) and
+[Pico](reports/2026-09-29-m8-pico-physical-qualification.md) and earlier
 [MDBT42Q](reports/2026-09-29-m8-mdbt42q-physical-qualification.md) reports.
+The current Profile 2 MDBT42Q procedure and result are in the
+[standalone qualification report](reports/2026-10-26-mdbt42q-standalone-qualification.md).

@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-26T23:01:45.774738+00:00",
+  "runtime": {
+    "board": "MDBT42Q",
+    "version": "2v29.537",
+    "git_commit": "47c8a155d"
+  },
+  "canonical_source": {
+    "commit": "008de0bc2c42765e28f5a527247de057fd699eb3",
+    "dirty": false
+  },
+  "port": "/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_A50285BI-if00-port0",
+  "baud": 9600,
+  "save_restore": "pass",
+  "reset_cleanup": "pass",
+  "pass": true
+}

@@ -14,22 +14,21 @@ after it has been run successfully against the recorded revision.
 
 ## Status
 
-- Build-document status: Profile 2 production and measurement builds are
-  verified on original ESP32 and ESP32-C3; current reduced Pico and constrained
-  Bluetooth MDBT42Q Profile 2 capacity builds pass. The current integration
-  head also passes a clean ESP32-C3 build, flash, API smoke check, and the
-  standalone paced-runner shell test
+- Build-document status: Profile 2 production builds and physical qualification
+  pass on original ESP32, ESP32-C3, and the constrained Bluetooth MDBT42Q
+  profile. The current reduced Pico Profile 2 capacity build passes and still
+  awaits physical repetition
 - Canonical XFSM branch: `main`
 - Last exported canonical XFSM revision:
-  `6a1f744d147c0a86be01e4b65770470280084832`
+  `b2ae6b4c85ef8f4e2053d9639c36dc09064ac4c2`
 - Current Espruino integration branch: `feature/xfsm-profile2`
 - Frozen Profile 1 branch: `feature/xfsm-profile1`
 - Preserved history experiment branch: `experiment/xfsm-history`
 - Current implementation base: `3b5c8d97fa0678ec1da49a322f5f1fa990374a7a`
 - Current Espruino integration revision:
-  `f90002aba937402388d6cb5f99f8b380e08ddd1e`
-- Latest functional engine change: `55f45513f`
-- Exact functionally qualified Espruino revision: `6f4214534`
+  `47c8a155df285e0264373c6578646f80981b8ae3`
+- Latest functional engine change: `0e8d14c8e`
+- Current physically qualified MDBT42Q revision: `47c8a155d`
 - Base source: official `espruino/Espruino` `master`
 
 ## Repository Locations
@@ -469,23 +468,22 @@ make BOARD=MDBT42Q RELEASE=1 DFU_UPDATE_BUILD=1 USE_XFSM=1 \
 
 The selected profile retains Bluetooth, filesystem, graphics, network/HTTP,
 crypto/SHA-256, and NeoPixel while omitting JIT, debugger, tab completion,
-vector font, JavaScript-backed networking, and NFC. At Profile 2 implementation
-revision `6f4214534`, the enabled build reports 313,832 code bytes, leaves
-1,408 bytes before reserved Storage, and produces a DFU ZIP. The stock board
+vector font, JavaScript-backed networking, and NFC. At Espruino integration
+revision `47c8a155d`, the enabled build reports 312,728 code bytes, leaves
+2,512 bytes before reserved Storage, and produces a DFU ZIP. The stock board
 definition remains unchanged. The narrow margin must be rechecked after XFSM
-or upstream Espruino growth. See the [Profile 2 capacity
-result](../tests/results/mdbt42q/2026-10-21-history-capacity.json).
+or upstream Espruino growth. See the [current Profile 2 qualification
+summary](../tests/results/mdbt42q/2026-10-26-standalone-qualification.json).
 
-The Profile 1 production profile is physically qualified in the [MDBT42Q
-result](../tests/results/mdbt42q/2026-09-29-m8-physical-qualification.json).
-It passes 20 portable suites, nine canonical traces, direct and Storage-backed
-maximum depth, production and deterministic allocation faults, callbacks,
-GPIO/timer integration, exact cleanup, GC, save/reboot/reset, and instrumented
-stack and timing measurements. Large trace source is temporarily loaded from
-Storage on this 2,950-block target and erased after execution. Production
-firmware was restored after the `XFC_MEASURE=1 XFC_TEST=1` run. Profile 2 is
-Build verified on MDBT42Q; its history runtime cases have not yet been repeated
-physically there.
+The current Profile 2 production profile is physically qualified in the
+[MDBT42Q report](reports/2026-10-26-mdbt42q-standalone-qualification.md). It
+passes 29 production suites, nine canonical traces, direct and Storage-backed
+maximum depth, shallow and deep history, production allocation pressure,
+callbacks, GPIO/timer integration, exact cleanup, GC, and save/reboot/reset.
+Large trace source is temporarily loaded from Storage on this 2,950-block
+target and erased after execution. Earlier instrumented stack, timing, and
+deterministic allocation-fault evidence remains in the [Profile 1
+report](reports/2026-09-29-m8-mdbt42q-physical-qualification.md).
 
 The original ESP32 comparison uses ESP-IDF 5.5.3 and the provisioned Xtensa
 GCC 14.2.0 toolchain. Both builds use the same implementation revision and

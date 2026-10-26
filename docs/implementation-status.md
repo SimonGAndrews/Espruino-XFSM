@@ -6,9 +6,9 @@
 - Profile 1 milestone: M8 release readiness complete; all 704 applicable
   normative requirements pass and all four physical target profiles remain
   Profile 1 Conformance verified
-- Profile 2 milestone: qualified revision `6f4214534` is Conformance verified
-  on Linux, original ESP32 IDF5, and ESP32-C3 IDF5; Pico and MDBT42Q are Build
-  verified
+- Profile 2 milestone: Conformance verified on Linux, original ESP32 IDF5,
+  ESP32-C3 IDF5, and the constrained Bluetooth MDBT42Q profile; Pico remains
+  Build verified
 - Implementation code status: M4 runtime plus final/completion behavior, full
   Profile 1 target forms, wildcard event lookup, v4 migration aliases, all
   Profile 1 context and assignment forms, complete transition-domain and
@@ -23,8 +23,8 @@
 - Current active gate: the current Linux integration head passes the complete
   standalone host qualification, and the current original ESP32 and ESP32-C3
   candidates pass their complete production, trace, and lifecycle
-  qualification. Repeat the current candidate on Pico and MDBT42Q, including
-  Profile 2 history runtime qualification, when target access is next available
+  qualification. The current MDBT42Q candidate also passes that qualification;
+  repeat the current candidate on Pico when target access is next available
 
 This is the living status dashboard. The stable milestone definitions and exit
 criteria are in the [Implementation Plan](implementation-plan.md). The [test
@@ -73,16 +73,17 @@ suites, nine canonical traces, both pinned XState environments, 96 sanitizer
 checks, repository audits, deterministic allocation faults, and normal-build
 restoration. The exact result is in the
 [standalone qualification report](reports/2026-10-26-standalone-qualification.md).
-The current original ESP32 and ESP32-C3 physical qualifications each pass 29
-production suites, nine exact canonical traces, and the save/reboot/reset
-lifecycle. See the [current original ESP32
+The current original ESP32, ESP32-C3, and MDBT42Q physical qualifications each
+pass 29 production suites, nine exact canonical traces, and the
+save/reboot/reset lifecycle. See the [current original ESP32
 report](reports/2026-10-26-original-esp32-standalone-qualification.md) and
-[current C3 report](reports/2026-10-26-c3-standalone-qualification.md).
+[current C3 report](reports/2026-10-26-c3-standalone-qualification.md), and the
+[current MDBT42Q report](reports/2026-10-26-mdbt42q-standalone-qualification.md).
 The current two-board service repetition also passes twice in each target
 direction; see the [service-coexistence
 report](reports/2026-10-26-esp32-service-coexistence.md).
-Current-candidate physical evidence for Pico and MDBT42Q remains tied to the
-earlier qualified revision until their applicable suites are repeated.
+Current-candidate physical evidence for Pico remains tied to the earlier
+qualified revision until its applicable suites are repeated.
 
 The current Profile 2 implementation removes the redundant compiler-only
 history-slot value from every state. On Linux, the representative base/history
@@ -107,8 +108,9 @@ shallow machine. Exact deep restoration, nested owners, descendant fallback,
 final completion, fault rollback, save/reboot persistence, and physical timing
 pass on both architectures. Both boards were restored to production firmware
 after instrumentation. The current reduced Pico profile builds with 11,024
-bytes free. The constrained Bluetooth MDBT42Q profile builds with 1,408 bytes
-before Storage, which is a release constraint to recheck after any XFSM or
+bytes free. The current constrained Bluetooth MDBT42Q profile builds with
+2,512 bytes before Storage and passes Profile 2 physical qualification. Its
+narrow margin remains a release constraint to recheck after any XFSM or
 upstream growth.
 
 The full records are in the [shallow-history qualification
@@ -427,8 +429,8 @@ fourteen audit-derived closure cases pass.
 
 Immediate tasks:
 
-1. repeat the Profile 2 history runtime and lifecycle cases on Pico and
-   MDBT42Q when those targets are next available;
+1. repeat the Profile 2 history runtime and lifecycle cases on Pico when that
+   target is next available;
 2. prepare the standalone-to-Espruino integration change series for maintainer
    review, keeping host build changes separate from the deployable library.
 
@@ -459,7 +461,7 @@ These are specified review gates, not unresolved Profile 1 semantics:
 | --- | --- | --- |
 | Linux Espruino | Profile 2 Conformance verified | [Profile 2 conformance record](../tests/profile-2-conformance.md) |
 | Espruino Pico | Profile 2 Build verified; Profile 1 Conformance verified | [Profile 2 capacity result](../tests/results/pico/2026-10-21-history-capacity.json) |
-| MDBT42Q | Profile 2 Build verified; Profile 1 Conformance verified | [Profile 2 capacity result](../tests/results/mdbt42q/2026-10-21-history-capacity.json) |
+| MDBT42Q | Current standalone Profile 2 candidate Conformance verified on the constrained Bluetooth profile | [Current standalone qualification](../tests/results/mdbt42q/2026-10-26-standalone-qualification.json) |
 | Original ESP32 IDF5 | Current standalone Profile 2 candidate Conformance verified on the stock full-feature 70 KB profile | [Current standalone qualification](../tests/results/esp32-xtensa/2026-10-26-standalone-qualification.json) |
 | ESP32-C3 IDF5 | Current standalone Profile 2 candidate Conformance verified on the stock full-feature 70 KB profile | [Current standalone qualification](../tests/results/esp32-riscv/2026-10-26-standalone-qualification.json) |
 | ESP32-S3 IDF5 | Not yet verified | Later Profile 2 expansion target |
@@ -471,6 +473,7 @@ alone can advance a target only to `Build verified`.
 
 | Date | Change |
 | --- | --- |
+| 2026-10-26 | Current standalone MDBT42Q qualification passed on the constrained Bluetooth production profile: the clean 312,728-byte image leaves 2,512 bytes before Storage; 29 production suites, nine exact canonical traces, and save/reboot/restoration/reset lifecycle pass at runtime revision `47c8a155d`; low-speed pacing and exact completion-marker handling corrected runner faults without a native engine change |
 | 2026-10-26 | Current standalone two-board service qualification passed twice in each direction: original ESP32 and ESP32-C3 each ran the depth-24 XFSM actor while BLE GATT remained connected across WiFi association and TLS 1.2 HTTPS; the original ESP32 retained at least 22,672 native-heap bytes and the C3 retained 48,384 bytes; hardened Storage upload and verification corrected pre-workload serial transport faults without a native engine change |
 | 2026-10-26 | Current standalone original-ESP32 qualification passed on stock production firmware: 29 production suites, nine exact canonical traces, and save/reboot/restoration/reset lifecycle pass at runtime revision `0cab2c675`; the image is 1,574,048 bytes with 473,952 application-partition bytes free; Storage-backed trace loading, XON/XOFF handling, and physical diagnostic partitioning corrected harness assumptions without a native engine change |
 | 2026-10-26 | Current standalone ESP32-C3 qualification passed on stock production firmware: 29 production suites, nine exact canonical traces, and save/reboot/restoration/reset lifecycle all pass at runtime revision `215fe4e16`; the image is 1,724,480 bytes with 323,520 application-partition bytes free; physical-runner corrections required no native engine change |

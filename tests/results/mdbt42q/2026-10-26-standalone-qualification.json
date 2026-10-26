@@ -1,0 +1,48 @@
+{
+  "schema": "xfc.target-qualification-summary",
+  "version": 1,
+  "date": "2026-10-26",
+  "target": {
+    "board": "MDBT42Q",
+    "architecture": "ARM Cortex-M4F",
+    "runtimeVersion": "2v29.537",
+    "console": "FTDI UART at 9600 baud"
+  },
+  "espruinoRevision": "47c8a155df285e0264373c6578646f80981b8ae3",
+  "exportedCanonicalRevision": "b2ae6b4c85ef8f4e2053d9639c36dc09064ac4c2",
+  "qualificationToolRevision": "008de0bc2c42765e28f5a527247de057fd699eb3",
+  "upstreamBase": "3b5c8d97fa0678ec1da49a322f5f1fa990374a7a",
+  "build": {
+    "profile": "Constrained Bluetooth profile without JIT, debugger, tab completion, vector font, JavaScript-backed networking, or NFC",
+    "flags": "BOARD=MDBT42Q RELEASE=1 DFU_UPDATE_BUILD=1 USE_XFSM=1 USE_JIT=0 USE_DEBUGGER=0 USE_TAB_COMPLETE=0 USE_NETWORK_JS=0 USE_NFC=0 SETDEFINES=<NO_VECTOR_FONT> -j2",
+    "codeBytes": 312728,
+    "storageStart": "0x6c000",
+    "freeBytesBeforeStorage": 2512,
+    "elfSha256": "3edb3d9d842ded983bac63b206eead96501eb95f88d1ea173bb25fd04ec36f46",
+    "dfuZipSha256": "d90104b0a49a2867b353f9f1515a0687d3a9559ee62e447d280bedc083458d18",
+    "result": "pass"
+  },
+  "productionSuites": {
+    "passed": 29,
+    "total": 29,
+    "result": "pass"
+  },
+  "canonicalTraces": {
+    "passed": 9,
+    "total": 9,
+    "storageBacked": true,
+    "result": "pass"
+  },
+  "lifecycle": {
+    "saveRestore": "pass",
+    "resetCleanup": "pass",
+    "result": "pass"
+  },
+  "resultFiles": {
+    "productionAndTraces": "2026-10-26-standalone-production-traces.json",
+    "lifecycle": "2026-10-26-standalone-lifecycle.json"
+  },
+  "nativeEngineChangedDuringQualification": false,
+  "result": "pass",
+  "report": "../../../docs/reports/2026-10-26-mdbt42q-standalone-qualification.md"
+}

@@ -28,9 +28,9 @@ contract and adds qualified shallow and deep history states. Native Format
 Version 2 is frozen.
 
 The implementation is Profile 2 Conformance verified on Linux Espruino,
-original ESP32 IDF5, and ESP32-C3 IDF5. Reduced Espruino Pico and constrained
-MDBT42Q profiles are Profile 2 Build verified; their earlier Profile 1 physical
-qualification remains recorded.
+original ESP32 IDF5, ESP32-C3 IDF5, and the constrained Bluetooth MDBT42Q
+profile. The reduced Espruino Pico profile is Profile 2 Build verified; its
+earlier Profile 1 physical qualification remains recorded.
 
 See the [implementation status](docs/implementation-status.md) for the exact
 qualified revisions, target status, and remaining work.
