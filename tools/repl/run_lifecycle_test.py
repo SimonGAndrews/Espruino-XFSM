@@ -157,6 +157,19 @@ def main() -> int:
         reset_text = send_and_capture(repl, "reset();\n", settle=0.2)
         if not reset_text.rstrip().endswith(">"):
             read_until_prompt(repl, min(args.timeout, 8.0))
+        cleanup_text = send_and_capture(
+            repl,
+            'var __xfcS=require("Storage");'
+            '__xfcS.erase(".bootcde");__xfcS.erase(".varimg");'
+            'print("XFC_LIFECYCLE_STORAGE_CLEAN="+'
+            '(__xfcS.read(".bootcde")===undefined&&'
+            '__xfcS.read(".varimg")===undefined));'
+            'delete __xfcS;\n',
+            settle=0.2,
+        )
+        if "XFC_LIFECYCLE_STORAGE_CLEAN=true" not in cleanup_text:
+            print("Cannot establish clean saved-image state.", file=sys.stderr)
+            return 2
         send_and_capture(repl, "echo(true);\n", settle=0.2)
         repl.reset_input_buffer()
         initial = send_script_paced(

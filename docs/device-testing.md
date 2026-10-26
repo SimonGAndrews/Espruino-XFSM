@@ -117,7 +117,9 @@ disconnect or UART-backed reboot, collects the restored result, waits for its
 scheduled `reset(true)`, reconnects, and runs `test_reset_lifecycle.js`. A
 transport failure is not a lifecycle pass even if the board later returns. Its
 JSON summary records both the runtime firmware identity and the canonical XFSM
-revision and dirty state.
+revision and dirty state. Before starting, it erases stale `.bootcde` and
+`.varimg` files and verifies that the saved-image area is clear; do not use it
+when an existing saved program must be retained.
 
 ## Reset Levels
 
