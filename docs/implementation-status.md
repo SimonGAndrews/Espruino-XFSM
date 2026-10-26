@@ -20,11 +20,12 @@
   event-serialization, maximum-depth product-profile, and production
   allocation-pressure coverage, and shallow/deep history with transactional
   actor-owned restoration
-- Current active gate: repeat full target qualification after the 2026-10-22
-  upstream merge; the current Linux integration head passes the complete
-  standalone host qualification. Repeat the complete production-firmware and
-  lifecycle suites on physical targets, including Profile 2 history runtime
-  qualification on Pico and MDBT42Q when target access is next available
+- Current active gate: the current Linux integration head passes the complete
+  standalone host qualification, and the current ESP32-C3 candidate passes its
+  complete production, trace, and lifecycle qualification. Repeat the current
+  candidate on original ESP32, Pico, and MDBT42Q, including Profile 2 history
+  runtime qualification on the constrained boards, when target access is next
+  available
 
 This is the living status dashboard. The stable milestone definitions and exit
 criteria are in the [Implementation Plan](implementation-plan.md). The [test
@@ -70,8 +71,12 @@ passes 26 JavaScript suites, nine canonical traces, both pinned XState
 environments, 96 sanitizer checks, repository audits, deterministic allocation
 faults, and normal-build restoration. The exact result is in the
 [standalone qualification report](reports/2026-10-26-standalone-qualification.md).
-Physical target and capacity qualification remains tied to `6f4214534` until
-the applicable suites are repeated on the current integration revision.
+The current ESP32-C3 physical qualification passes 29 production suites, nine
+exact canonical traces, and the save/reboot/reset lifecycle at integration
+revision `215fe4e16`; see the [current C3 qualification
+report](reports/2026-10-26-c3-standalone-qualification.md). Current-candidate
+physical evidence for original ESP32, Pico, and MDBT42Q remains tied to the
+earlier qualified revision until their applicable suites are repeated.
 
 The current Profile 2 implementation removes the redundant compiler-only
 history-slot value from every state. On Linux, the representative base/history
@@ -416,12 +421,12 @@ fourteen audit-derived closure cases pass.
 
 Immediate tasks:
 
-1. repeat the complete target qualification against the current
-   post-upstream-merge implementation; the current C3 integration head has
-   passed only the clean build, flash, and API smoke check;
-2. repeat the Profile 2 history runtime cases on Pico and MDBT42Q when those
-   targets are next available; and
-3. prepare the standalone-to-Espruino integration change series for maintainer
+1. repeat the current-candidate physical qualification on original ESP32;
+2. repeat the Profile 2 history runtime and lifecycle cases on Pico and
+   MDBT42Q when those targets are next available;
+3. repeat the two-board WiFi, HTTPS/TLS, and BLE coexistence check against the
+   current candidate when its bench arrangement is available; and
+4. prepare the standalone-to-Espruino integration change series for maintainer
    review, keeping host build changes separate from the deployable library.
 
 ## Open Issues And Blockers
@@ -453,7 +458,7 @@ These are specified review gates, not unresolved Profile 1 semantics:
 | Espruino Pico | Profile 2 Build verified; Profile 1 Conformance verified | [Profile 2 capacity result](../tests/results/pico/2026-10-21-history-capacity.json) |
 | MDBT42Q | Profile 2 Build verified; Profile 1 Conformance verified | [Profile 2 capacity result](../tests/results/mdbt42q/2026-10-21-history-capacity.json) |
 | Original ESP32 IDF5 | Profile 2 Conformance verified on the stock full-feature 70 KB profile | [Profile 2 promotion result](../tests/results/esp32-xtensa/2026-10-21-history-promotion-rerun.json) |
-| ESP32-C3 IDF5 | Profile 2 Conformance verified on the stock full-feature 70 KB profile | [Profile 2 promotion result](../tests/results/esp32-riscv/2026-10-21-history-promotion-rerun.json) |
+| ESP32-C3 IDF5 | Current standalone Profile 2 candidate Conformance verified on the stock full-feature 70 KB profile | [Current standalone qualification](../tests/results/esp32-riscv/2026-10-26-standalone-qualification.json) |
 | ESP32-S3 IDF5 | Not yet verified | Later Profile 2 expansion target |
 
 Statuses retain the meanings defined by the Profile 1 base. A successful build
@@ -463,6 +468,7 @@ alone can advance a target only to `Build verified`.
 
 | Date | Change |
 | --- | --- |
+| 2026-10-26 | Current standalone ESP32-C3 qualification passed on stock production firmware: 29 production suites, nine exact canonical traces, and save/reboot/restoration/reset lifecycle all pass at runtime revision `215fe4e16`; the image is 1,724,480 bytes with 323,520 application-partition bytes free; physical-runner corrections required no native engine change |
 | 2026-10-26 | Consolidated physical-device context into the standalone repository: common, original ESP32, ESP32-C3, Pico/MDBT42Q, and service-coexistence procedures are indexed locally; the paced serial runner and focused two-board WiFi/BLE/HTTPS harness are now project-owned; static, configuration, link, licence, and documentation checks pass; the standalone runner then physically passed `test_shell.js` on the current C3 image, while the relocated two-board service runner still awaits its physical rerun |
 | 2026-10-26 | Verified the standalone export workflow end to end: canonical revision `6a1f744d147c0a86be01e4b65770470280084832` exports exactly to Espruino integration revision `f90002aba937402388d6cb5f99f8b380e08ddd1e`; a provisioned clean ESP32-C3 IDF5 build and flash reports Espruino `2v29.533`, commit `f90002aba`, and the `XFSM` module, while `createMachine()` and `createActor()` pass a manual smoke check; this is workflow evidence rather than a replacement for the qualified Profile 2 suite |
 | 2026-10-22 | Merged 68 official upstream commits through `3b5c8d97f` into `feature/xfsm-profile2` without changing fork `master`; adapted the one XFSM call affected by the extended `jsvCompareString` API; clean Linux build, all 26 portable suites with zero GC residue, 96 native sanitizer checks, and the static contract audit pass at `55f45513f`; physical target evidence remains assigned to `6f4214534` pending repetition |

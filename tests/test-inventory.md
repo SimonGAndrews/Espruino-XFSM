@@ -223,7 +223,7 @@ link the complete host and target result records.
 | Original ESP32 IDF5 | [Profile 2 promotion result](results/esp32-xtensa/2026-10-21-history-promotion-rerun.json) passes; Conformance verified | Profile 1 corpus plus target-sized shallow/deep history, diagnostics, save/reboot/reset, resource measurement and production timing | Maintain exact-candidate physical rerun |
 | Espruino Pico | Profile 2 Build verified; Profile 1 Conformance verified | Exact Profile 2 candidate builds with 11,024 bytes free; complete Profile 1 physical qualification retained | Repeat target-sized Profile 2 history runtime and lifecycle cases physically |
 | MDBT42Q | Profile 2 Build verified; Profile 1 Conformance verified | Exact Profile 2 candidate builds with 1,408 bytes before Storage; complete Profile 1 physical qualification retained | Recheck capacity and repeat target-sized Profile 2 history runtime and lifecycle cases physically |
-| ESP32-C3 IDF5 | [Profile 2 promotion result](results/esp32-riscv/2026-10-21-history-promotion-rerun.json) passes; Conformance verified | Profile 1 corpus plus target-sized shallow/deep history, diagnostics, save/reboot/reset, resource measurement and production timing | Maintain exact-candidate physical rerun |
+| ESP32-C3 IDF5 | [Current standalone qualification](results/esp32-riscv/2026-10-26-standalone-qualification.json) passes; Conformance verified | Current stock candidate: 29 production suites, nine exact canonical traces, shallow/deep history, diagnostics, host integration, pressure cases, and save/reboot/reset lifecycle; 323,520 application-partition bytes free | Repeat service coexistence with the current candidate when the two-board bench is available |
 | ESP32-S3 IDF5 | Later expansion target | None required for Profile 2 | Optional after the Espruino port reaches the required maturity |
 
 ## Build And CI Register
@@ -236,7 +236,7 @@ link the complete host and target result records.
 | Original ESP32 IDF5 enabled build | Current standalone candidate cross-build passes with 473,952 app-partition bytes free; earlier Profile 2 physical qualification passes | Repeat current physical suite; retain as fork-development coverage |
 | Pico reduced-profile build and physical qualification | Profile 2 build passes; Profile 1 physical qualification retained | Add Profile 2 physical history repetition when the board is available |
 | MDBT42Q constrained Bluetooth build and physical qualification | Profile 2 build passes with narrow margin; Profile 1 physical qualification retained | Recheck every size change and add Profile 2 physical history repetition |
-| ESP32-C3 IDF5 enabled build | Current standalone candidate cross-build passes with 323,520 app-partition bytes free; earlier Profile 2 physical qualification passes | Repeat current physical suite; optional fork CI remains useful but is not part of the target's local conformance result |
+| ESP32-C3 IDF5 enabled build | Current standalone candidate cross-build and physical production, trace, and lifecycle qualification pass with 323,520 app-partition bytes free | Repeat current two-board service coexistence; optional fork CI remains useful but is not part of the target's local conformance result |
 
 ## Final Review Closure Checklist
 

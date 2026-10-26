@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-26T16:55:24.198307+00:00",
+  "profile": "esp32c3-idf5",
+  "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_9C:9E:6E:F7:41:64-if00",
+  "baud": 115200,
+  "runtime": {
+    "board": "ESP32C3_IDF5",
+    "version": "2v29.535",
+    "git_commit": "215fe4e16"
+  },
+  "canonical_source": {
+    "commit": "563a3a0a36fc83aab84515481f516dc5738cca9b",
+    "dirty": false
+  },
+  "groups": [
+    "portable",
+    "profile2-history",
+    "host-integration",
+    "production-pressure"
+  ],
+  "traces_requested": false,
+  "trace_storage": false,
+  "results": [
+    {
+      "kind": "suite",
+      "name": "test_shell.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_compile.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_diagnostics.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_runtime.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_completion.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_completion_cascade.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_targets.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_events_migration.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_profile1_diagnostics.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_context_ownership.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_assign_forms.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_context_diagnostics.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_transition_domains.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_transition_depth.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_lifecycle_complete.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_subscriber_complete.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_cross_actor_gc.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_runtime_errors.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_subscriptions.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_strict_validation_embedded.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_history_embedded.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_deep_history.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_history_diagnostics.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_host_application.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_host_memory_cleanup.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_host_event_serialization.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_transition_depth_storage.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_host_allocation_pressure.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_host_diagnostic_pressure.js",
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "lifecycle_required_separately": true,
+  "notes": [
+    "This reviewed record retains only the 29 production-suite results from the full manifest run.",
+    "The trace phase exposed physical-runner resource assumptions and was rerun after harness correction; its passing result is recorded separately.",
+    "No native XFSM engine change occurred between the production-suite, trace, and lifecycle runs."
+  ]
+}

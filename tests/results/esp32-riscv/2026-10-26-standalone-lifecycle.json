@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-26T17:14:12.589711+00:00",
+  "runtime": {
+    "board": "ESP32C3_IDF5",
+    "version": "2v29.535",
+    "git_commit": "215fe4e16"
+  },
+  "canonical_source": {
+    "commit": "58e2c5254d3dc6b9d67a0cb41828d1563ef3578a",
+    "dirty": false
+  },
+  "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_9C:9E:6E:F7:41:64-if00",
+  "baud": 115200,
+  "save_restore": "pass",
+  "reset_cleanup": "pass",
+  "pass": true
+}

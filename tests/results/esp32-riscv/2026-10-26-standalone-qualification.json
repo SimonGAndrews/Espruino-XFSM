@@ -1,0 +1,50 @@
+{
+  "schema": "xfc.target-qualification-summary",
+  "version": 1,
+  "date": "2026-10-26",
+  "target": {
+    "board": "ESP32C3_IDF5",
+    "architecture": "RV32IMC",
+    "chipRevision": "0.4",
+    "runtimeVersion": "2v29.535"
+  },
+  "espruinoRevision": "215fe4e16",
+  "exportedCanonicalRevision": "563a3a0a36fc83aab84515481f516dc5738cca9b",
+  "upstreamBase": "3b5c8d97fa0678ec1da49a322f5f1fa990374a7a",
+  "build": {
+    "flags": "BOARD=ESP32C3_IDF5 RELEASE=1 USE_XFSM=1",
+    "imageBytes": 1724480,
+    "imageSha256": "0f6b04105ed76f286d06e990f29f30f4b15fbf17004b45ee1c6a36da9ea490eb",
+    "freeAppPartitionBytes": 323520,
+    "freeAppPartitionPercent": 16,
+    "result": "pass"
+  },
+  "productionSuites": {
+    "passed": 29,
+    "total": 29,
+    "canonicalSourceRevision": "563a3a0a36fc83aab84515481f516dc5738cca9b",
+    "resultFile": "2026-10-26-standalone-production-suites.json",
+    "result": "pass"
+  },
+  "canonicalTraces": {
+    "passed": 9,
+    "total": 9,
+    "canonicalSourceRevision": "af99a0f3c776153173779f5703651a370169e936",
+    "largeCompatibilityTrace": "physically partitioned, merged, resequenced, and compared once with the canonical 56-record expected trace",
+    "resultFile": "2026-10-26-standalone-traces.json",
+    "result": "pass"
+  },
+  "lifecycle": {
+    "canonicalSourceRevision": "58e2c5254d3dc6b9d67a0cb41828d1563ef3578a",
+    "saveRestore": "pass",
+    "resetCleanup": "pass",
+    "savedInterpreterBytes": 53235,
+    "compressedSavedBytes": 10372,
+    "resultFile": "2026-10-26-standalone-lifecycle.json",
+    "result": "pass"
+  },
+  "nativeEngineChangedBetweenRuns": false,
+  "serviceCoexistenceExecuted": false,
+  "result": "pass",
+  "report": "../../../docs/reports/2026-10-26-c3-standalone-qualification.md"
+}
