@@ -1,5 +1,17 @@
 # Building Espruino XFSM
 
+## Purpose
+
+This guide explains how to prepare, build, and test Espruino with XFSM
+enabled. It records the repository arrangement, build commands, target
+profiles, and validation steps used for Linux and supported microcontroller
+boards so that results can be reproduced against named source revisions.
+
+The process for copying a committed XFSM library into an Espruino source
+repository is described in the [Espruino Integration
+Workflow](espruino-integration.md). Add or update a command in this guide only
+after it has been run successfully against the recorded revision.
+
 ## Status
 
 - Build-document status: Profile 2 production and measurement builds are
@@ -13,10 +25,6 @@
 - Current Espruino integration revision: `55f45513f`
 - Exact functionally qualified Espruino revision: `6f4214534`
 - Base source: official `espruino/Espruino` `master`
-
-This document records the reproducible standalone-XFSM plus Espruino-host build
-arrangement. Add a command here only after it has been run successfully against
-the recorded revision.
 
 ## Repository Locations
 
