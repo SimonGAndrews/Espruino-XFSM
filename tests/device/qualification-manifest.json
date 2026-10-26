@@ -61,7 +61,7 @@
       "board": "ESP32C3_IDF5",
       "baud": 115200,
       "groups": ["portable", "profile2-history", "host-integration", "production-pressure"],
-      "trace_storage": false
+      "trace_storage": true
     },
     "pico-reduced": {
       "board": "PICO_R1_3",

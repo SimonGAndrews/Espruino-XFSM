@@ -66,3 +66,8 @@ The complete Profile 2 history workload and the two-board service workload are
 separate qualification steps. Follow
 [Service-Coexistence Testing](service-coexistence-testing.md) when WiFi, BLE,
 HTTPS, and XFSM must be active together.
+
+The complete qualification runner loads canonical traces from a temporary
+Storage file on ESP32-C3. This keeps the large `DIAG-006` and `COMPAT-006`
+source text out of the finite JsVar pool while their machines execute. The
+runner erases the temporary file after each trace.

@@ -149,6 +149,7 @@ def main() -> int:
 
     results: list[dict[str, object]] = []
     overall_pass = True
+    use_trace_storage = args.trace_storage or profile.get("trace_storage", False)
 
     for suite in suites:
         test_path = TESTS_DIR / suite
@@ -175,7 +176,6 @@ def main() -> int:
 
     run_traces = overall_pass or args.keep_going
     if not args.skip_traces and run_traces:
-        use_storage = args.trace_storage or profile.get("trace_storage", False)
         for case_id in manifest["traces"]:
             print(f"\n== Canonical trace: {case_id} ==")
             with tempfile.TemporaryDirectory(prefix="xfsm-trace-") as temp_dir:
@@ -193,7 +193,7 @@ def main() -> int:
                         "--compose-done-marker",
                     ]
                 )
-                if compose_status == 0 and use_storage:
+                if compose_status == 0 and use_trace_storage:
                     storage_loader(composed, physical)
                 elif compose_status == 0:
                     physical.write_text(composed.read_text(encoding="utf-8"))
@@ -243,6 +243,7 @@ def main() -> int:
         "canonical_source": repository_state(REPOSITORY),
         "groups": groups,
         "traces_requested": not args.skip_traces,
+        "trace_storage": use_trace_storage,
         "results": results,
         "pass": overall_pass,
         "lifecycle_required_separately": True,
