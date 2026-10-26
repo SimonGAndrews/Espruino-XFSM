@@ -113,6 +113,27 @@ explicit path; they must not require these machine-specific absolute paths.
 
 ## Linux Reference Build
 
+### Complete Host Qualification
+
+The authoritative Profile 2 host test list is maintained in one project-owned
+command:
+
+```bash
+cd "$XFSM_ROOT"
+./tools/run-host-qualification.sh "$ESPRUINO_XFSM_ROOT"
+```
+
+It verifies that canonical `xfsm/` matches the deployed `libs/xfsm/`, records
+both commits, builds Linux Espruino with XFSM disabled and enabled, runs all 26
+normal JavaScript suites and nine canonical traces, runs the pinned XState v4
+and v5 references including shallow and deep history, runs the native sanitizer
+suite and repository audits, runs the separate fault-injection build, and
+restores and verifies a normal build. `XFSM_JOBS` controls Make parallelism and
+defaults to two.
+
+Use the individual commands below for focused investigation. Do not use a
+hand-maintained subset as evidence that the complete host qualification passed.
+
 The pristine baseline and committed disabled/enabled commands were verified on
 2026-09-25. They produce `bin/espruino`; complete metadata is recorded in the
 [baseline result](../tests/results/linux/2026-09-25-baseline-build.json) and
@@ -662,6 +683,13 @@ the `**` branch pattern so pushes to slash-named branches such as
 This workflow is branch-development infrastructure. It can remain fork-local
 or be excluded from a future upstream implementation pull request without
 changing the XFSM library or its optional build mechanism.
+
+The standalone repository also contains
+`.github/workflows/qualification.yml`. It checks out the compatible Espruino
+integration branch, exports the canonical library, calls the same complete host
+qualification used locally, and cross-builds original ESP32 and ESP32-C3. Until
+the small XFSM Make integration reaches official Espruino, the workflow pins
+`SimonGAndrews/Espruino` `feature/xfsm-profile2` explicitly.
 
 ## Required Build Record
 

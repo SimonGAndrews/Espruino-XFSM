@@ -1,0 +1,95 @@
+name: XFSM qualification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: xfsm-qualification-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  ESPRUINO_REPOSITORY: SimonGAndrews/Espruino
+  ESPRUINO_REF: feature/xfsm-profile2
+
+jobs:
+  host:
+    name: Complete Linux qualification
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out canonical XFSM
+        uses: actions/checkout@v4
+        with:
+          path: xfsm-project
+          fetch-depth: 0
+
+      - name: Check out Espruino integration branch
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.ESPRUINO_REPOSITORY }}
+          ref: ${{ env.ESPRUINO_REF }}
+          path: espruino
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Export and identify the canonical library
+        working-directory: xfsm-project
+        run: |
+          ./tools/export-to-espruino.sh "$GITHUB_WORKSPACE/espruino"
+          if ! git -C "$GITHUB_WORKSPACE/espruino" diff --quiet -- libs/xfsm; then
+            git -C "$GITHUB_WORKSPACE/espruino" add -A -- libs/xfsm
+            git -C "$GITHUB_WORKSPACE/espruino" \
+              -c user.name='XFSM CI' -c user.email='xfsm-ci@example.invalid' \
+              commit -m 'Test canonical XFSM export' \
+              -m "XFSM-Source: $GITHUB_SHA"
+          fi
+
+      - name: Run complete host qualification
+        working-directory: xfsm-project
+        run: ./tools/run-host-qualification.sh "$GITHUB_WORKSPACE/espruino"
+
+  esp32-builds:
+    name: ${{ matrix.board }} cross-build
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        board: [ESP32_IDF5, ESP32C3_IDF5]
+    steps:
+      - name: Check out canonical XFSM
+        uses: actions/checkout@v4
+        with:
+          path: xfsm-project
+
+      - name: Check out Espruino integration branch
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.ESPRUINO_REPOSITORY }}
+          ref: ${{ env.ESPRUINO_REF }}
+          path: espruino
+
+      - name: Export canonical XFSM
+        working-directory: xfsm-project
+        run: ./tools/export-to-espruino.sh "$GITHUB_WORKSPACE/espruino"
+
+      - name: Provision and cross-build
+        working-directory: espruino
+        run: |
+          source scripts/provision.sh ESP32_IDF5
+          env -u DEBUG make BOARD=${{ matrix.board }} clean
+          env -u DEBUG make BOARD=${{ matrix.board }} \
+            RELEASE=1 USE_XFSM=1 -j2
+          test -f bin/build/espruino.elf
+          test -f bin/build/espruino.bin

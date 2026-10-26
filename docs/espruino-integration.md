@@ -142,6 +142,42 @@ changes, or a new blocker affects the planned work. Routine exports and test
 runs only need an update when they change that overall status; their detailed
 results belong in the relevant test record or report.
 
+## Refreshing The Espruino Base
+
+Refresh official Espruino changes in the integration checkout without updating
+the fork's `master` branch. Begin with clean canonical and integration trees,
+then inspect and merge the official upstream branch into the active XFSM
+integration branch:
+
+```bash
+cd /path/to/Espruino
+git status --short --branch
+git switch feature/xfsm-profile2
+git fetch upstream master
+git log --oneline --left-right HEAD...upstream/master
+git merge --no-ff upstream/master
+```
+
+Do not merge the XFSM feature branch into fork `master` merely to bring it up to
+date. If an upstream API change requires an XFSM correction, make and commit the
+library change in `Espruino-XFSM`, export it, and commit the mirror with its
+`XFSM-Source` reference. Do not repair the exported `libs/xfsm/` copy directly.
+
+After resolving the merge, record the new upstream base in
+[Implementation Status](implementation-status.md), then run the complete host
+qualification:
+
+```bash
+cd /path/to/Espruino-XFSM
+./tools/run-host-qualification.sh /path/to/Espruino
+```
+
+Cross-build original ESP32 and ESP32-C3 before accepting the refreshed base.
+Repeat physical qualification when the upstream change affects the interpreter,
+garbage collector, wrapper API, save/restoration, target runtime, build flags,
+or another boundary used by XFSM. Push the integration branch normally; do not
+force-update its history merely to match upstream `master`.
+
 ## Contributing To Espruino
 Changes to XFSM should be shared with espruino master https://github.com/espruino/Espruino via a pull request.
 

@@ -18,6 +18,17 @@ Compatibility provenance, pins, adaptations and exclusions are checked with:
 python3 tests/audit_compatibility_governance.py
 ```
 
+Run the complete Linux build, semantic, trace, reference, sanitizer, static,
+governance, fault-injection, and production-restoration sequence with:
+
+```bash
+./tools/run-host-qualification.sh /path/to/Espruino
+```
+
+This script is the authoritative current host-suite list. Physical production
+suites use `tools/repl/run_qualification_suite.py` and the manifest under
+`tests/device/`; save/reboot/reset uses the separate lifecycle runner.
+
 The suite distinguishes normative Profile 1 and Profile 2 cases, pinned Node XState
 differential cases, intentional compatibility differences, native-format and
 fault-injection cases, and legacy evidence. Portable behaviour cases emit the

@@ -66,6 +66,51 @@ lines, and exactly one final `DONE=PASS` or `DONE=FAIL`. Asynchronous tests must
 have their own bounded timeout and must release actors, subscriptions, timers,
 listeners, Storage files, and hardware outputs.
 
+## Complete Production-Firmware Suite
+
+The board qualification manifest is
+[`tests/device/qualification-manifest.json`](../tests/device/qualification-manifest.json).
+It owns the applicable production-firmware suite groups, expected board names,
+baud rates, and nine canonical traces for each qualified target profile. Run it
+with:
+
+```bash
+python3 tools/repl/run_qualification_suite.py esp32c3-idf5 \
+  --port /dev/serial/by-id/DEVICE \
+  --expected-git-commit COMMIT \
+  --output /tmp/xfsm-c3-qualification.json
+```
+
+The runner verifies runtime identity, executes each applicable test through the
+paced single-test transport, composes and compares every canonical trace, uses
+flash-backed trace loading where the profile requires it, and can write a JSON
+summary for review. Use repeated `--group` options for a focused group and
+`--skip-traces` only when the resulting evidence is explicitly scoped. A full
+qualification uses the profile defaults.
+
+Measurement and deterministic fault-injection suites require their matching
+temporary firmware and remain separate from this production-firmware run. The
+whole-interpreter lifecycle is also separate because it must reconnect across a
+reboot.
+
+## Save And Reset Lifecycle
+
+Run the two-phase save/restoration and cleanup test with the reconnect-aware
+runner:
+
+```bash
+python3 tools/repl/run_lifecycle_test.py \
+  --port /dev/serial/by-id/DEVICE --baud 115200 \
+  --expected-board ESP32C3_IDF5 \
+  --expected-git-commit COMMIT \
+  --output /tmp/xfsm-c3-lifecycle.json
+```
+
+The runner uploads `test_save_restore.js`, follows the device across a USB
+disconnect or UART-backed reboot, collects the restored result, waits for its
+scheduled `reset(true)`, reconnects, and runs `test_reset_lifecycle.js`. A
+transport failure is not a lifecycle pass even if the board later returns.
+
 ## Reset Levels
 
 Use the least reset that establishes the required starting condition:

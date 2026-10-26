@@ -12,7 +12,9 @@ the work being performed:
   3. `docs/native-format-v2.md` when physical layout is relevant
   4. `docs/implementation-status.md` and `docs/building.md`
 - For tests, measurements, or evidence, also read `tests/README.md`, the test
-  inventory, and `docs/reports/README.md`.
+  inventory, and `docs/reports/README.md`. Use
+  `tools/run-host-qualification.sh` as the authoritative complete host suite;
+  do not maintain a separate test list in an ad hoc command.
 - For application examples, read `examples/README.md` and the applicable
   public contract before authoring or adapting code.
 - For tutorials, read `docs/tutorials/README.md`; keep reusable executable
@@ -36,6 +38,11 @@ library independently in the Espruino mirror. Do not add a duplicate engine
 elsewhere in this repository. Record both repository revisions in new build,
 resource, or conformance evidence, and do not rewrite historical result records
 merely to reflect current paths.
+
+Implementation comments must explain non-obvious ownership, bounds, lifetime,
+transaction, callback, and control-flow constraints. Do not narrate routine C
+statements or duplicate the specification. The complete commenting objectives
+are in `CONTRIBUTING.md`.
 
 MPL-2.0 is the repository default. The `examples/` directory is the MIT-licensed
 exception. Follow `THIRD_PARTY_NOTICES.md` for XState and other upstream

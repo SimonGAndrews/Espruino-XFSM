@@ -23,6 +23,17 @@ and XFSM workload described in
 [`docs/service-coexistence-testing.md`](../../docs/service-coexistence-testing.md).
 `bench_support.py` contains its shared transport and cleanup operations.
 
+`run_qualification_suite.py` reads
+`tests/device/qualification-manifest.json` and runs the applicable
+production-firmware suites and canonical traces on one board. It records a JSON
+summary when `--output` is supplied. It deliberately leaves measurement,
+fault-injection, lifecycle, and multi-board service runs as separate firmware
+or reset domains.
+
+`run_lifecycle_test.py` runs the save/reboot/restoration fixture and its
+subsequent `reset(true)` cleanup check as one reconnect-aware operation. Use it
+instead of the ordinary single-test runner for `test_save_restore.js`.
+
 These runners were brought into this repository from the project author's
 earlier ESP32 bench work and are now maintained here under MPL-2.0. They do not
 depend on the earlier repository.

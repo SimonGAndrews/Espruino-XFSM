@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "suite_groups": {
+    "portable": [
+      "test_shell.js",
+      "test_compile.js",
+      "test_diagnostics.js",
+      "test_runtime.js",
+      "test_completion.js",
+      "test_completion_cascade.js",
+      "test_targets.js",
+      "test_events_migration.js",
+      "test_profile1_diagnostics.js",
+      "test_context_ownership.js",
+      "test_assign_forms.js",
+      "test_context_diagnostics.js",
+      "test_transition_domains.js",
+      "test_transition_depth.js",
+      "test_lifecycle_complete.js",
+      "test_subscriber_complete.js",
+      "test_cross_actor_gc.js",
+      "test_runtime_errors.js",
+      "test_subscriptions.js",
+      "test_strict_validation_embedded.js"
+    ],
+    "profile2-history": [
+      "test_history_embedded.js",
+      "test_deep_history.js",
+      "test_history_diagnostics.js"
+    ],
+    "host-integration": [
+      "test_host_application.js",
+      "test_host_memory_cleanup.js",
+      "test_host_event_serialization.js"
+    ],
+    "production-pressure": [
+      "test_transition_depth_storage.js",
+      "test_host_allocation_pressure.js",
+      "test_host_diagnostic_pressure.js"
+    ]
+  },
+  "traces": [
+    "api_002",
+    "config_004",
+    "config_005",
+    "action_002",
+    "snapshot_002",
+    "transition_005",
+    "diagnostic_006",
+    "compat_006",
+    "compat_006_v4"
+  ],
+  "profiles": {
+    "esp32-idf5": {
+      "board": "ESP32_IDF5",
+      "baud": 115200,
+      "groups": ["portable", "profile2-history", "host-integration", "production-pressure"],
+      "trace_storage": false
+    },
+    "esp32c3-idf5": {
+      "board": "ESP32C3_IDF5",
+      "baud": 115200,
+      "groups": ["portable", "profile2-history", "host-integration", "production-pressure"],
+      "trace_storage": false
+    },
+    "pico-reduced": {
+      "board": "PICO_R1_3",
+      "baud": 115200,
+      "groups": ["portable", "profile2-history", "host-integration", "production-pressure"],
+      "trace_storage": false
+    },
+    "mdbt42q-bluetooth": {
+      "board": "MDBT42Q",
+      "baud": 9600,
+      "groups": ["portable", "profile2-history", "host-integration", "production-pressure"],
+      "trace_storage": true
+    }
+  }
+}

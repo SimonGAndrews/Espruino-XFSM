@@ -116,3 +116,25 @@ trailer.
 Record both the XFSM and Espruino revisions for conformance or resource
 evidence. See [Espruino integration](docs/espruino-integration.md) for the
 maintainer workflow.
+
+## Implementation Comments
+
+Comments should make the implementation flow visible where the code alone does
+not make it clear. In particular, document:
+
+- ownership and lifetime of Espruino values, arena bytes, borrowed pointers,
+  locks, and call-local native data;
+- index, offset, size, stack, and allocation invariants that prevent unsafe
+  access;
+- compiler and runtime prepare, execute, commit, rollback, publication, and
+  cleanup boundaries;
+- points where JavaScript callbacks may move values, throw, re-enter XFSM, or
+  invalidate borrowed data; and
+- production versus measurement or fault-injection interfaces.
+
+Give each substantial source file a short statement of its role. Describe data
+structures whose purpose or ownership is not apparent from their fields. Add
+short orienting comments around selection, fallback, early-exit, notification,
+and shared-cleanup paths when that makes the flow easier to follow. Do not
+narrate self-explanatory statements or copy normative prose from the
+specification into the source.
