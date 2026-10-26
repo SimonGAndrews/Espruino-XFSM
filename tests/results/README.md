@@ -53,3 +53,7 @@ qualification](esp32-riscv/2026-10-26-standalone-qualification.json).
 Each target summary links its separate production-suite, exact-trace, and
 lifecycle records. The implementation status identifies which
 current-candidate physical runs remain outstanding.
+
+The current two-board XFSM, BLE, WiFi, and HTTPS/TLS repetition is recorded in
+the [ESP32 service-coexistence
+result](esp32-service/2026-10-26-standalone-service-coexistence.json).

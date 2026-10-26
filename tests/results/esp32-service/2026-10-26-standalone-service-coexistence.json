@@ -1,0 +1,140 @@
+{
+  "schema": "xfc.service-coexistence",
+  "version": 1,
+  "date": "2026-10-26",
+  "caseIds": [
+    "XFC-CF-RESOURCE-002",
+    "XFC-CF-HOST-001",
+    "XFC-CF-HOST-006"
+  ],
+  "runnerRevision": "eaa0e01d3c4e06c2d9dd431aa70fe938af0bea96",
+  "upstreamBase": "3b5c8d97fa0678ec1da49a322f5f1fa990374a7a",
+  "firmware": {
+    "classic": {
+      "board": "ESP32_IDF5",
+      "version": "2v29.536",
+      "integrationRevision": "0cab2c6755e2959672209c11ac5b1d60c46cd1e0",
+      "exportedCanonicalRevision": "74987aeaa1f700bfd5b79aaf35defea171918905"
+    },
+    "c3": {
+      "board": "ESP32C3_IDF5",
+      "version": "2v29.535",
+      "integrationRevision": "215fe4e16",
+      "exportedCanonicalRevision": "563a3a0a36fc83aab84515481f516dc5738cca9b"
+    }
+  },
+  "host": {
+    "networkClass": "private IPv4 /24",
+    "opensslVersion": "3.0.13",
+    "tlsVersion": "TLS 1.2",
+    "credentialsLogged": false
+  },
+  "fixtureSha256": {
+    "run_service_coexistence.py": "35464b307b65861e83dbcd75283d739ca5db39fbe97951e8c51f90e5b8582ee5",
+    "bench_support.py": "fc4ed35bb60a9d2f7ef3f2ff08e9032522b077faa4d4960c3f579ea7d1acf25e",
+    "run_test.py": "6a7d5bb2191b6561a931bafaf78d55151de5b9f8995ecc1fa456418f16501e20",
+    "prepare_host_service_coexistence.js": "5b9bbc6d6850684c56edd21e9ead1ff97c93249affa5593bef5e1257f05d0907",
+    "test_host_service_coexistence.js": "3f74d0fe14b4a85da97a2db910182fce3754af2a0444b678df17ce9b4bdcbdcf",
+    "ble_gatt_hold_client.js": "4b5324599449b1ea96f0485c5ab6a9542d9edbaf3da2136477b4f6e64f8aa0b1"
+  },
+  "workload": {
+    "targetRoles": [
+      "xfsm_actor",
+      "gatt_peripheral",
+      "wifi_station",
+      "https_client"
+    ],
+    "peerRole": "gatt_central",
+    "hierarchyDepth": 24,
+    "transitionActions": 49,
+    "serviceEvents": 5,
+    "snapshotPublications": 7,
+    "finalState": "Complete",
+    "trace": "BLE_CONNECTED:1|GATT_ACK:2|WIFI_CONNECTED:3|HTTPS_COMPLETE:4|BLE_CONFIRMED:5"
+  },
+  "successfulRuns": [
+    {
+      "runId": "20261026T175915Z",
+      "direction": "c3-target",
+      "targetChecks": 11,
+      "peerChecks": 7,
+      "httpsRequests": 1,
+      "actorReadyJsVarsUsed": 1523,
+      "maximumRuntimeJsVarsUsed": 1118,
+      "minimumNativeHeapBytes": 48788,
+      "nativeHeapAfterCleanupBytes": 66464,
+      "result": "pass"
+    },
+    {
+      "runId": "20261026T180109Z",
+      "direction": "classic-target",
+      "targetChecks": 11,
+      "peerChecks": 7,
+      "httpsRequests": 1,
+      "actorReadyJsVarsUsed": 1422,
+      "maximumRuntimeJsVarsUsed": 1079,
+      "minimumNativeHeapBytes": 22928,
+      "nativeHeapAfterCleanupBytes": 59360,
+      "result": "pass"
+    },
+    {
+      "runId": "20261026T180452Z",
+      "direction": "classic-target",
+      "targetChecks": 11,
+      "peerChecks": 7,
+      "httpsRequests": 1,
+      "actorReadyJsVarsUsed": 1422,
+      "maximumRuntimeJsVarsUsed": 1079,
+      "minimumNativeHeapBytes": 22672,
+      "nativeHeapAfterCleanupBytes": 59360,
+      "result": "pass"
+    },
+    {
+      "runId": "20261026T180551Z",
+      "direction": "c3-target",
+      "targetChecks": 11,
+      "peerChecks": 7,
+      "httpsRequests": 1,
+      "actorReadyJsVarsUsed": 1523,
+      "maximumRuntimeJsVarsUsed": 1118,
+      "minimumNativeHeapBytes": 48384,
+      "nativeHeapAfterCleanupBytes": 66428,
+      "result": "pass"
+    }
+  ],
+  "preWorkloadHarnessFailures": [
+    {
+      "runId": "20261026T180012Z",
+      "direction": "classic-target",
+      "phase": "storage_upload_crc",
+      "serviceWorkloadStarted": false
+    },
+    {
+      "runId": "20261026T180323Z",
+      "direction": "classic-target",
+      "phase": "storage_write_response",
+      "serviceWorkloadStarted": false
+    }
+  ],
+  "correlatedAssertions": {
+    "bleConnectedBeforeHttps": true,
+    "bleConnectedAfterHttps": true,
+    "gattReadAndWriteBeforeHttps": true,
+    "gattWriteAfterHttps": true,
+    "wifiDhcp": true,
+    "exactlyOneHostHttpsRequestPerRun": true,
+    "xfsmLifecycleAndOrderedActions": true,
+    "temporaryStorageVerifiedBeforeExecutionAndErasedAfter": true
+  },
+  "runnerHardening": {
+    "xonXoff": true,
+    "storageChunkBytes": 192,
+    "explicitWriteResult": true,
+    "finalLengthAndCrc": true,
+    "completeUploadRetries": 1,
+    "nativeEngineChanged": false
+  },
+  "qualifiedRuns": 4,
+  "result": "pass",
+  "report": "../../../docs/reports/2026-10-26-esp32-service-coexistence.md"
+}

@@ -9,9 +9,9 @@ either board can be the target while the other acts as the GATT peer.
 The focused runner and fixtures are maintained in this repository. The earlier
 ESP32 bench repository is not required.
 
-The workload previously passed four physical runs. Its repository-local move
-has passed syntax, configuration, and path checks; repeat it on both connected
-boards before treating the relocated runner itself as fresh physical evidence.
+The current repository-local runner passes two physical runs in each direction
+on the current original ESP32 and ESP32-C3 candidates. See the [current
+service-coexistence report](reports/2026-10-26-esp32-service-coexistence.md).
 
 ## Requirements
 
@@ -92,6 +92,7 @@ exercise radio and TLS allocation more than once.
 
 Record both firmware identities, direction, host address class rather than
 network credentials, runner command, number of runs, structured results, and
-cleanup status. The original four-run evidence and its resource interpretation
-remain in the
-[service-coexistence report](reports/2026-09-28-m7-esp32-c3-service-coexistence.md).
+cleanup status. The current standalone result is in the [2026-10-26
+report](reports/2026-10-26-esp32-service-coexistence.md). The original C3-led
+four-run evidence and its resource interpretation remain in the [M7
+report](reports/2026-09-28-m7-esp32-c3-service-coexistence.md).

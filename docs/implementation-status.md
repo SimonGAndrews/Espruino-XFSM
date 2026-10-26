@@ -78,6 +78,9 @@ production suites, nine exact canonical traces, and the save/reboot/reset
 lifecycle. See the [current original ESP32
 report](reports/2026-10-26-original-esp32-standalone-qualification.md) and
 [current C3 report](reports/2026-10-26-c3-standalone-qualification.md).
+The current two-board service repetition also passes twice in each target
+direction; see the [service-coexistence
+report](reports/2026-10-26-esp32-service-coexistence.md).
 Current-candidate physical evidence for Pico and MDBT42Q remains tied to the
 earlier qualified revision until their applicable suites are repeated.
 
@@ -426,9 +429,7 @@ Immediate tasks:
 
 1. repeat the Profile 2 history runtime and lifecycle cases on Pico and
    MDBT42Q when those targets are next available;
-2. repeat the two-board WiFi, HTTPS/TLS, and BLE coexistence check against the
-   current candidate when its bench arrangement is available; and
-3. prepare the standalone-to-Espruino integration change series for maintainer
+2. prepare the standalone-to-Espruino integration change series for maintainer
    review, keeping host build changes separate from the deployable library.
 
 ## Open Issues And Blockers
@@ -470,6 +471,7 @@ alone can advance a target only to `Build verified`.
 
 | Date | Change |
 | --- | --- |
+| 2026-10-26 | Current standalone two-board service qualification passed twice in each direction: original ESP32 and ESP32-C3 each ran the depth-24 XFSM actor while BLE GATT remained connected across WiFi association and TLS 1.2 HTTPS; the original ESP32 retained at least 22,672 native-heap bytes and the C3 retained 48,384 bytes; hardened Storage upload and verification corrected pre-workload serial transport faults without a native engine change |
 | 2026-10-26 | Current standalone original-ESP32 qualification passed on stock production firmware: 29 production suites, nine exact canonical traces, and save/reboot/restoration/reset lifecycle pass at runtime revision `0cab2c675`; the image is 1,574,048 bytes with 473,952 application-partition bytes free; Storage-backed trace loading, XON/XOFF handling, and physical diagnostic partitioning corrected harness assumptions without a native engine change |
 | 2026-10-26 | Current standalone ESP32-C3 qualification passed on stock production firmware: 29 production suites, nine exact canonical traces, and save/reboot/restoration/reset lifecycle all pass at runtime revision `215fe4e16`; the image is 1,724,480 bytes with 323,520 application-partition bytes free; physical-runner corrections required no native engine change |
 | 2026-10-26 | Consolidated physical-device context into the standalone repository: common, original ESP32, ESP32-C3, Pico/MDBT42Q, and service-coexistence procedures are indexed locally; the paced serial runner and focused two-board WiFi/BLE/HTTPS harness are now project-owned; static, configuration, link, licence, and documentation checks pass; the standalone runner then physically passed `test_shell.js` on the current C3 image, while the relocated two-board service runner still awaits its physical rerun |
