@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-26T17:11:53.735546+00:00",
+  "profile": "esp32c3-idf5",
+  "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_9C:9E:6E:F7:41:64-if00",
+  "baud": 115200,
+  "runtime": {
+    "board": "ESP32C3_IDF5",
+    "version": "2v29.535",
+    "git_commit": "215fe4e16"
+  },
+  "canonical_source": {
+    "commit": "af99a0f3c776153173779f5703651a370169e936",
+    "dirty": false
+  },
+  "groups": [],
+  "traces_requested": true,
+  "trace_storage": true,
+  "results": [
+    {
+      "kind": "trace",
+      "name": "api_002",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "config_004",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "config_005",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "action_002",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "snapshot_002",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "transition_005",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "diagnostic_006",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "compat_006",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "compat_006_v4",
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "lifecycle_required_separately": true
+}
