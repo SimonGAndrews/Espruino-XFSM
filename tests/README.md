@@ -111,6 +111,10 @@ The stock full-feature ESP32-C3 release candidate's matched builds, portable
 runtime, maximum-depth, deterministic allocation-fault, cleanup,
 host-integration, save/restoration, and combined-service evidence is recorded
 in the [C3-D result](results/esp32-riscv/2026-09-28-m7-release-candidate.json).
+The current standalone candidate's ESP32-C3 production suites, nine exact
+canonical traces, and save/reboot/reset lifecycle are recorded in the
+[standalone C3 qualification
+summary](results/esp32-riscv/2026-10-26-standalone-qualification.json).
 The corresponding stock full-feature original-ESP32 release qualification is
 recorded in the [M7.4
 result](results/esp32-xtensa/2026-09-28-m7-release-candidate.json).

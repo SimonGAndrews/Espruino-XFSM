@@ -23,7 +23,7 @@ Each committed result record must identify:
 - conformance case ID or measurement name;
 - date and result state from the
   [conformance matrix](../conformance-matrix.md);
-- XState-Espruino-Project revision and specification version;
+- canonical Espruino-XFSM revision and specification version;
 - Espruino implementation revision and upstream base;
 - target, board definition, compiler and version, relevant build and
   optimization flags, CPU architecture, pointer width, byte order,
@@ -41,4 +41,13 @@ not belong in Git. Reviewed interpretations and resource decisions belong in
 The current constrained ARM records are the [Pico matched
 build](pico/2026-09-29-product-profile-build.json), [Pico physical
 qualification](pico/2026-09-29-m8-physical-qualification.json), and [MDBT42Q
-matched build](mdbt42q/2026-09-29-product-profile-build.json).
+matched build](mdbt42q/2026-09-29-product-profile-build.json), with its
+[physical qualification](mdbt42q/2026-09-29-m8-physical-qualification.json).
+
+Current standalone-workflow evidence is the [complete Linux host
+qualification](linux/2026-10-26-standalone-qualification.json), the [original
+ESP32 cross-build](esp32-xtensa/2026-10-26-standalone-cross-build.json), and
+the [ESP32-C3 physical qualification](esp32-riscv/2026-10-26-standalone-qualification.json).
+The C3 summary links its separate production-suite, exact-trace, and lifecycle
+records. The implementation status identifies which current-candidate physical
+runs remain outstanding.
