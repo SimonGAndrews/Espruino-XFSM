@@ -55,7 +55,7 @@
       "board": "ESP32_IDF5",
       "baud": 115200,
       "groups": ["portable", "profile2-history", "host-integration", "production-pressure"],
-      "trace_storage": false
+      "trace_storage": true
     },
     "esp32c3-idf5": {
       "board": "ESP32C3_IDF5",
