@@ -88,6 +88,12 @@ summary for review. Use repeated `--group` options for a focused group and
 `--skip-traces` only when the resulting evidence is explicitly scoped. A full
 qualification uses the profile defaults.
 
+Use `--traces-only` to repeat the canonical trace set without rerunning the
+production suite groups. A trace containing `XFC_PHYSICAL_BODY` and
+`XFC_PHYSICAL_SPLIT` markers is executed as memory-bounded physical parts; the
+runner merges their records and performs one exact comparison with the
+canonical expected trace. The unpartitioned source remains the Linux test.
+
 Measurement and deterministic fault-injection suites require their matching
 temporary firmware and remain separate from this production-firmware run. The
 whole-interpreter lifecycle is also separate because it must reconnect across a

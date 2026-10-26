@@ -22,6 +22,9 @@ DEFAULT_MANIFEST = REPOSITORY / "tests/device/qualification-manifest.json"
 TESTS_DIR = REPOSITORY / "xfsm/tests"
 RUN_TEST = Path(__file__).resolve().parent / "run_test.py"
 TRACE_RUNNER = TESTS_DIR / "run_trace_test.py"
+TRACE_SCHEMA = "xfc.trace"
+PHYSICAL_BODY_MARKER = "/* XFC_PHYSICAL_BODY */"
+PHYSICAL_SPLIT_MARKER = "/* XFC_PHYSICAL_SPLIT */"
 
 
 def load_manifest(path: Path) -> dict:
@@ -77,11 +80,80 @@ def storage_loader(source_path: Path, output_path: Path) -> None:
         lines.append(f"__xfcStorage.write(__xfcFile,{chunk},{offset},{len(data)});")
     lines.extend(
         [
-            "try{eval(__xfcStorage.read(__xfcFile));}",
-            "finally{__xfcStorage.erase(__xfcFile);}",
+            "try{eval(__xfcStorage.read(__xfcFile));}finally{__xfcStorage.erase(__xfcFile);}",
         ]
     )
     output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def physical_trace_fragments(source_path: Path) -> list[str]:
+    source = source_path.read_text(encoding="utf-8")
+    has_body = PHYSICAL_BODY_MARKER in source
+    has_split = PHYSICAL_SPLIT_MARKER in source
+    if not has_body and not has_split:
+        return [source]
+    if not has_body or not has_split:
+        raise ValueError(f"incomplete physical trace markers in {source_path}")
+
+    prefix, body = source.split(PHYSICAL_BODY_MARKER, 1)
+    first, second = body.split(PHYSICAL_SPLIT_MARKER, 1)
+    return [
+        prefix
+        + PHYSICAL_BODY_MARKER
+        + first
+        + "\n  XFCTrace.finish();\n})();\n",
+        prefix + PHYSICAL_BODY_MARKER + "\n" + second,
+    ]
+
+
+def transcript_records(path: Path) -> list[dict]:
+    records = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        try:
+            value = json.loads(line.strip())
+        except json.JSONDecodeError:
+            continue
+        if isinstance(value, dict) and value.get("schema") == TRACE_SCHEMA:
+            records.append(value)
+    if not records:
+        raise ValueError(f"no XFSM trace records in {path}")
+    return records
+
+
+def merge_trace_transcripts(paths: list[Path], output_path: Path) -> None:
+    parts = [transcript_records(path) for path in paths]
+    case_id = parts[0][0].get("case")
+    merged = parts[0][:-1]
+    for records in parts:
+        if (
+            records[0].get("kind") != "case"
+            or records[0].get("case") != case_id
+            or records[-1].get("kind") != "result"
+            or records[-1].get("pass") is not True
+        ):
+            raise ValueError("invalid partitioned physical trace")
+
+    for records in parts[1:]:
+        common = 0
+        while common < min(len(merged), len(records) - 1):
+            left = dict(merged[common])
+            right = dict(records[common])
+            left.pop("sequence", None)
+            right.pop("sequence", None)
+            if left != right:
+                break
+            common += 1
+        if common == 0:
+            raise ValueError("partitioned physical traces have no common header")
+        merged.extend(records[common:-1])
+
+    merged.append(parts[-1][-1])
+    for sequence, record in enumerate(merged):
+        record["sequence"] = sequence
+    output_path.write_text(
+        "".join(json.dumps(record, separators=(",", ":")) + "\n" for record in merged),
+        encoding="utf-8",
+    )
 
 
 def main() -> int:
@@ -101,6 +173,11 @@ def main() -> int:
     )
     parser.add_argument("--skip-traces", action="store_true")
     parser.add_argument("--trace-storage", action="store_true")
+    parser.add_argument(
+        "--traces-only",
+        action="store_true",
+        help="Run canonical traces without the production suite groups",
+    )
     parser.add_argument("--keep-going", action="store_true")
     parser.add_argument("--output", type=Path, help="Write a JSON run summary")
     args = parser.parse_args()
@@ -132,7 +209,11 @@ def main() -> int:
             )
             return 2
 
-    groups = args.groups or profile["groups"]
+    if args.traces_only and args.groups:
+        parser.error("--traces-only cannot be combined with --group")
+    if args.traces_only and args.skip_traces:
+        parser.error("--traces-only cannot be combined with --skip-traces")
+    groups = [] if args.traces_only else args.groups or profile["groups"]
     suites: list[str] = []
     try:
         for group in groups:
@@ -180,50 +261,77 @@ def main() -> int:
             print(f"\n== Canonical trace: {case_id} ==")
             with tempfile.TemporaryDirectory(prefix="xfsm-trace-") as temp_dir:
                 temp = Path(temp_dir)
-                composed = temp / f"trace_{case_id}.js"
-                physical = temp / f"trace_{case_id}_physical.js"
-                transcript = temp / f"trace_{case_id}.log"
-                compose_status = run_command(
-                    [
-                        sys.executable,
-                        str(TRACE_RUNNER),
-                        str(TESTS_DIR / f"trace_{case_id}.js"),
-                        "--compose-output",
-                        str(composed),
-                        "--compose-done-marker",
-                    ]
-                )
-                if compose_status == 0 and use_trace_storage:
-                    storage_loader(composed, physical)
-                elif compose_status == 0:
-                    physical.write_text(composed.read_text(encoding="utf-8"))
+                source_path = TESTS_DIR / f"trace_{case_id}.js"
+                transcripts = []
+                status = 0
+                try:
+                    fragments = physical_trace_fragments(source_path)
+                except (OSError, ValueError) as error:
+                    print(f"Cannot partition trace: {error}", file=sys.stderr)
+                    fragments = []
+                    status = 2
 
-                status = compose_status
-                if status == 0:
+                for part_number, fragment in enumerate(fragments, 1):
+                    fragment_path = temp / f"trace_{case_id}_part{part_number}.js"
+                    composed = temp / f"trace_{case_id}_part{part_number}_composed.js"
+                    physical = temp / f"trace_{case_id}_part{part_number}_physical.js"
+                    transcript = temp / f"trace_{case_id}_part{part_number}.log"
+                    fragment_path.write_text(fragment, encoding="utf-8")
                     status = run_command(
                         [
                             sys.executable,
-                            str(RUN_TEST),
-                            str(physical),
-                            "--port",
-                            args.port,
-                            "--baud",
-                            str(baud),
-                            "--timeout",
-                            str(args.timeout),
-                            "--show-raw",
-                        ],
-                        transcript,
+                            str(TRACE_RUNNER),
+                            str(fragment_path),
+                            "--compose-output",
+                            str(composed),
+                            "--compose-done-marker",
+                        ]
                     )
+                    if status == 0 and use_trace_storage:
+                        storage_loader(composed, physical)
+                    elif status == 0:
+                        physical.write_text(composed.read_text(encoding="utf-8"))
+                    if status == 0:
+                        status = run_command(
+                            [
+                                sys.executable,
+                                str(RUN_TEST),
+                                str(physical),
+                                "--port",
+                                args.port,
+                                "--baud",
+                                str(baud),
+                                "--timeout",
+                                str(args.timeout),
+                                "--show-raw",
+                            ],
+                            transcript,
+                        )
+                    if status != 0:
+                        break
+                    transcripts.append(transcript)
+
+                observed = temp / "merged.ndjson"
+                if status == 0 and len(transcripts) == 1:
+                    observed = transcripts[0]
+                elif status == 0 and len(transcripts) > 1:
+                    try:
+                        merge_trace_transcripts(transcripts, observed)
+                    except (OSError, ValueError) as error:
+                        print(f"Cannot merge trace parts: {error}", file=sys.stderr)
+                        status = 2
+                elif status == 0:
+                    print("Trace produced no physical transcripts", file=sys.stderr)
+                    status = 2
                 if status == 0:
                     status = run_command(
                         [
                             sys.executable,
                             str(TRACE_RUNNER),
-                            str(TESTS_DIR / f"trace_{case_id}.js"),
+                            str(source_path),
                             str(TESTS_DIR / "expected" / f"{case_id}.ndjson"),
                             "--observed-output",
-                            str(transcript),
+                            str(observed),
                         ]
                     )
 
