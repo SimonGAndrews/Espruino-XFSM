@@ -71,7 +71,8 @@ Use `--direction classic-target` to reverse the target and peer. The runner:
 3. starts a temporary TLS 1.2 HTTPS endpoint with a generated certificate;
 4. preloads the XFSM service actor on the target;
 5. stores and evaluates the larger target role from flash when
-   `--target-script-storage` is selected;
+   `--target-script-storage` is selected, using bounded writes and a final
+   length and CRC check;
 6. holds a GATT connection across WiFi association and the HTTPS request;
 7. confirms another GATT write after HTTPS;
 8. correlates both boards' structured results; and

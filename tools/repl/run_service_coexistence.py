@@ -26,7 +26,6 @@ from run_test import (
     open_serial,
     query_value,
     read_available,
-    read_until_prompt,
     send_and_capture,
     send_script_paced,
     sync_repl,
@@ -60,6 +59,7 @@ TARGET_PRELOAD_SCRIPT = (
     REPOSITORY_ROOT / "xfsm/tests/prepare_host_service_coexistence.js"
 )
 TARGET_STORAGE_FILE = "xftsvc"
+STORAGE_UPLOAD_CHUNK_BYTES = 192
 
 
 def make_https_handler(expected_path: str, body: bytes, observed: dict):
@@ -175,6 +175,62 @@ def warn_if_credentials_readable(path: Path) -> None:
         )
 
 
+def store_script(repl: serial.Serial, data: bytes) -> None:
+    expected_crc = zlib.crc32(data) & 0xFFFFFFFF
+    last_error = "target script Storage upload failed"
+
+    for attempt in range(1, 3):
+        send_and_capture(
+            repl,
+            f'require("Storage").erase("{TARGET_STORAGE_FILE}");\n',
+            settle=0.15,
+        )
+        write_error = None
+        # Keep each base64 command short enough for the original ESP32 console
+        # while XON/XOFF handles longer bursts across the complete upload.
+        for offset in range(0, len(data), STORAGE_UPLOAD_CHUNK_BYTES):
+            chunk = base64.b64encode(
+                data[offset : offset + STORAGE_UPLOAD_CHUNK_BYTES]
+            ).decode("ascii")
+            write_result = query_value(
+                repl,
+                f'require("Storage").write("{TARGET_STORAGE_FILE}",'
+                f'atob("{chunk}"),{offset},{len(data)})',
+                "TARGET_SCRIPT_WRITE",
+            )
+            if write_result != "True":
+                write_error = (
+                    f"target script Storage write failed at offset {offset}"
+                )
+                break
+
+        if write_error is None:
+            observed_size = query_value(
+                repl,
+                f'require("Storage").read("{TARGET_STORAGE_FILE}").length',
+                "TARGET_SCRIPT_BYTES",
+            )
+            observed_crc = query_value(
+                repl,
+                f'E.CRC32(require("Storage").read("{TARGET_STORAGE_FILE}"))',
+                "TARGET_SCRIPT_CRC32",
+            )
+            if observed_size == str(len(data)) and observed_crc == str(expected_crc):
+                return
+            last_error = (
+                "target script Storage verification failed: "
+                f"expected {len(data)} bytes/{expected_crc}, "
+                f"observed {observed_size} bytes/{observed_crc}"
+            )
+        else:
+            last_error = write_error
+
+        if attempt == 1:
+            print("RUNNER storage_upload_retry=1")
+
+    raise ValueError(last_error)
+
+
 def upload_secret_role(
     repl: serial.Serial,
     role_path: Path,
@@ -206,47 +262,7 @@ def upload_secret_role(
             return output
     if use_storage:
         data = role_path.read_bytes()
-        send_and_capture(
-            repl,
-            f'require("Storage").erase("{TARGET_STORAGE_FILE}");\n',
-            settle=0.15,
-        )
-        for offset in range(0, len(data), 256):
-            chunk = base64.b64encode(data[offset : offset + 256]).decode("ascii")
-            chunk_output = send_and_capture(
-                repl,
-                f'require("Storage").write("{TARGET_STORAGE_FILE}",'
-                f'atob("{chunk}"),{offset},{len(data)});\n',
-                settle=0.15,
-            )
-            if not chunk_output.rstrip().endswith(">"):
-                chunk_output += read_until_prompt(repl, 2.0)
-            output += chunk_output
-            if "=true" not in chunk_output or "Error" in chunk_output:
-                raise ValueError(
-                    f"target script Storage write failed at offset {offset}"
-                )
-        observed_size = query_value(
-            repl,
-            f'require("Storage").read("{TARGET_STORAGE_FILE}").length',
-            "TARGET_SCRIPT_BYTES",
-        )
-        if observed_size != str(len(data)):
-            raise ValueError(
-                "target script Storage length mismatch: "
-                f"expected {len(data)}, observed {observed_size}"
-            )
-        expected_crc = zlib.crc32(data) & 0xFFFFFFFF
-        observed_crc = query_value(
-            repl,
-            f'E.CRC32(require("Storage").read("{TARGET_STORAGE_FILE}"))',
-            "TARGET_SCRIPT_CRC32",
-        )
-        if observed_crc != str(expected_crc):
-            raise ValueError(
-                "target script Storage CRC32 mismatch: "
-                f"expected {expected_crc}, observed {observed_crc}"
-            )
+        store_script(repl, data)
         output += send_and_capture(
             repl,
             f'eval(require("Storage").read("{TARGET_STORAGE_FILE}"));\n',
