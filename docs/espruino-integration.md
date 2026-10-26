@@ -9,22 +9,24 @@ This repository is where XFSM is developed and maintained. It contains the
 XFSM library, specifications, tests, test results, examples, tools, and
 supporting documentation.
 
-The [`xfsm/`](../xfsm/) directory contains the files that are copied into
-Espruino's `libs/xfsm/` directory when XFSM is tested or built as part of
-Espruino. The two directories must contain the same files.
+This repository is separate from the Espruino source repository. The Espruino
+repository provides the interpreter source, build system, board definitions,
+and release process into which XFSM is integrated.
 
-The Espruino repository provides the interpreter, build system, board
-definitions, and release process into which XFSM is integrated. Changes to
-those parts are developed and reviewed in the Espruino repository.
+This repository's [`xfsm/`](../xfsm/) directory contains the files that are
+copied into Espruino's `libs/xfsm/` directory when XFSM is tested or built as
+part of Espruino. The two directories must contain the same files.
 
 ## Development Workflow
 
-In summary, XFSM changes are made and committed in this repository. The export
+In summary, XFSM changes are made and committed in this repository. An export
 tool then copies the committed XFSM library into a separate Espruino source
 repository. The standard Espruino build system is used there to build XFSM into
 the Linux version of Espruino or into firmware for a supported board. The Linux
 version can run automated tests, while the firmware can be flashed to a board
 for target testing.
+
+In detail:
 
 1. Develop the XFSM library and its tests in this repository. Update the
    specification and other project documents when the change requires it.
@@ -53,8 +55,20 @@ another branch must be used, identify it in the release or pull-request notes.
 
 ## Exporting XFSM
 
-The export tool requires Git, `tar`, and `rsync`. Both repositories must have
-clean working trees before it will run.
+The tool has two execution modes:
+
+- **Export (default)** copies the committed `xfsm/` directory from this
+  repository into the Espruino repository as `libs/xfsm/`. Use this mode when
+  an XFSM change is ready to be built and tested with Espruino.
+- **Check (`--check`)** compares the committed `xfsm/` directory with
+  Espruino's `libs/xfsm/` directory without changing either repository. Use
+  this mode to confirm that Espruino contains an exact copy of the currently
+  checked-out XFSM commit.
+
+Both modes require Git, `tar`, and `rsync`. Both repositories must also have
+clean working trees.
+
+### Export Mode
 
 From the root of this repository, run:
 
@@ -62,18 +76,13 @@ From the root of this repository, run:
 ./tools/export-to-espruino.sh /path/to/Espruino
 ```
 
-The tool copies the committed contents of `xfsm/`, not uncommitted or ignored
-files from the working directory. It makes `libs/xfsm/` an exact copy, so it
-also removes any extra files under that directory. Files elsewhere in the
-Espruino checkout are not changed.
+The tool copies the committed contents of this repository's `xfsm/` directory,
+not uncommitted or ignored files from the working directory. It makes
+`libs/xfsm/` in the Espruino source repository an exact copy, so it also
+removes any extra files under that directory. Files elsewhere in the Espruino
+checkout are not changed.
 
-Some tests create temporary files under `libs/xfsm/`, such as
-`tests/native/build/` and `tests/__pycache__/`. These files are not part of the
-XFSM source. The export command removes them, while `--check` reports that the
-directories differ if they are present. Run `--check` after committing the
-export and before running the tests, or remove the temporary files first.
-
-The tool prints the exact commands needed to enter the Espruino repository,
+The tool prints the exact commands needed to enter the Espruino source repository,
 review the exported files, and commit them. The output has this form, with the
 actual repository path and XFSM source hash filled in:
 
@@ -86,17 +95,24 @@ git commit \
   -m "XFSM-Source: <actual source hash>"
 ```
 
-The export command checks the copied files before it succeeds. The `--check`
-option is also available when the two directories need to be compared later
-without changing either of them:
+The export command checks the copied files before it succeeds.
+
+### Check Mode
+
+From the root of this repository, run:
 
 ```bash
 ./tools/export-to-espruino.sh --check /path/to/Espruino
 ```
 
-Run this command from the `Espruino-XFSM` repository before building or after
-removing generated files from `libs/xfsm/`. It succeeds only when both
-repositories are clean and the two library directories match.
+Check mode does not copy, remove, stage, or commit any files. It succeeds only
+when both repositories are clean and the two library directories match.
+
+Note: Some tests create temporary files under `libs/xfsm/`, such as
+`tests/native/build/` and `tests/__pycache__/`. These files are not part of the
+XFSM source. Export mode removes them, while check mode reports that the
+directories differ if they are present. Run check mode after committing the
+export and before running the tests, or remove the temporary files first.
 
 Do not edit `libs/xfsm/` as a separate copy of the library. If Espruino testing
 finds a problem in XFSM, make and commit the correction here, then export it
@@ -114,12 +130,22 @@ include:
 
 Keep these changes separate from the exported library commit. This makes it
 clear which files came from XFSM and which changes adapt the Espruino build.
-The current branches and integration status are recorded in
-[Implementation Status](implementation-status.md).
+
+## Updating Project Status
+
+[Implementation Status](implementation-status.md) is the project's living
+summary of the current XFSM and Espruino integration branches and revisions,
+completed qualifications, current work, and blockers. Update it when the active
+branch changes, a revision becomes the current public or qualified version, a
+milestone or qualification is completed, the next major development step
+changes, or a new blocker affects the planned work. Routine exports and test
+runs only need an update when they change that overall status; their detailed
+results belong in the relevant test record or report.
 
 ## Contributing To Espruino
+Changes to XFSM should be shared with espruino master https://github.com/espruino/Espruino via a pull request.
 
-An Espruino pull request should contain `libs/xfsm/` and the smallest Espruino
+The pull request should contain `libs/xfsm/` and the smallest Espruino
 build changes needed to select the library. XFSM specifications, development
 records, and project documents stay in this repository and can be linked from
 the pull request.
@@ -132,8 +158,10 @@ EspruinoDocs under that repository's documentation and example licences.
 
 ## Earlier XFSM Commits
 
-The XFSM commit history before this repository was created was extracted from
-`libs/xfsm/` on the `feature/xfsm-profile2` branch of
-`SimonGAndrews/Espruino`. The extraction preserved the changes, authors,
-dates, and messages, but produced new commit identifiers. Older test results
-therefore continue to name their original Espruino commits.
+Early XFSM development took place in the Espruino repository. When that history
+was copied into this standalone repository, Git assigned new commit hashes
+because the surrounding repository history had changed. Older test reports
+still identify the original commits in `SimonGAndrews/Espruino`; new results
+record both the XFSM source commit and the corresponding Espruino integration
+commit. Use the [XFSM Migrated Commit Map](migrated-commit-map.md) to find the
+corresponding standalone commit for an older Espruino commit.

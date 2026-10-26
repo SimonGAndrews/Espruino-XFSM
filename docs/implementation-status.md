@@ -28,6 +28,9 @@ This is the living status dashboard. The stable milestone definitions and exit
 criteria are in the [Implementation Plan](implementation-plan.md). The [test
 inventory](../tests/test-inventory.md) is the consolidated record of completed
 evidence, target coverage, and remaining release-review work.
+Historical results that cite an implementation commit from the Espruino
+repository can be cross-referenced to the extracted standalone history using
+the [XFSM Migrated Commit Map](migrated-commit-map.md).
 
 ## Public Profile 2 Status
 
