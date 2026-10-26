@@ -27,6 +27,11 @@ STRUCTURED_PREFIXES = (
 )
 
 
+def open_serial(port: str, baud: int) -> serial.Serial:
+    """Open an Espruino console while honoring its XON/XOFF backpressure."""
+    return serial.Serial(port, baud, timeout=0.1, xonxoff=True)
+
+
 def read_available(ser: serial.Serial, duration: float) -> str:
     deadline = time.monotonic() + duration
     chunks: list[bytes] = []
@@ -126,7 +131,7 @@ def query_value(ser: serial.Serial, expr: str, label: str) -> str:
 
 
 def collect_metadata(port: str, baud: int) -> dict[str, str]:
-    with serial.Serial(port, baud, timeout=0.1) as ser:
+    with open_serial(port, baud) as ser:
         sync_repl(ser)
         return {
             "board": query_value(ser, "process.env.BOARD", "BOARD"),
@@ -137,7 +142,7 @@ def collect_metadata(port: str, baud: int) -> dict[str, str]:
 
 def run_direct(test_path: Path, port: str, baud: int, timeout: float) -> str:
     js_test = test_path.read_text()
-    with serial.Serial(port, baud, timeout=0.1) as ser:
+    with open_serial(port, baud) as ser:
         sync_repl(ser)
         reset_output = send_and_capture(ser, "reset();\n", settle=0.2)
         if not reset_output.rstrip().endswith(">"):

@@ -18,6 +18,11 @@ python3 tools/repl/run_test.py xfsm/tests/test_shell.js \
   --port /dev/serial/by-id/DEVICE --baud 115200 --timeout 30 --show-raw
 ```
 
+Direct serial connections enable XON/XOFF flow control. Espruino can pause a
+long UART upload while it processes input; runners and new bench tools must use
+the shared `open_serial()` helper instead of opening an unregulated pyserial
+connection.
+
 `run_service_coexistence.py` coordinates the two-board ESP32 BLE, WiFi, HTTPS,
 and XFSM workload described in
 [`docs/service-coexistence-testing.md`](../../docs/service-coexistence-testing.md).

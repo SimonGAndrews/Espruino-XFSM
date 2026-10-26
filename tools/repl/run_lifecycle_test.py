@@ -17,6 +17,7 @@ import serial
 from run_test import (
     collect_metadata,
     filter_structured_lines,
+    open_serial,
     read_until_prompt,
     send_and_capture,
     send_script_paced,
@@ -51,7 +52,7 @@ def open_when_available(port: str, baud: int, deadline: float) -> serial.Serial:
     last_error: Exception | None = None
     while time.monotonic() < deadline:
         try:
-            return serial.Serial(port, baud, timeout=0.1)
+            return open_serial(port, baud)
         except (OSError, serial.SerialException) as error:
             last_error = error
             time.sleep(0.1)

@@ -58,8 +58,9 @@ python3 tools/repl/run_test.py xfsm/tests/test_shell.js \
 
 The runner synchronizes the REPL, records runtime identity, calls `reset()`,
 uploads the file in paced chunks, and extracts structured result lines. It
-returns status 1 for an emitted `FAIL ` assertion and status 2 for a transport,
-timeout, or result-contract failure.
+also honors Espruino's XON/XOFF backpressure so long UART uploads do not overrun
+the console. It returns status 1 for an emitted `FAIL ` assertion and status 2
+for a transport, timeout, or result-contract failure.
 
 A device test must emit one `TEST=` line, assertion-level `PASS ` or `FAIL `
 lines, and exactly one final `DONE=PASS` or `DONE=FAIL`. Asynchronous tests must

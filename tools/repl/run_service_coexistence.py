@@ -23,6 +23,7 @@ import zlib
 import serial
 
 from run_test import (
+    open_serial,
     query_value,
     read_available,
     read_until_prompt,
@@ -467,8 +468,8 @@ def run_test(
         print(f"RUNNER phase={name} elapsed_s={time.monotonic() - started:.2f}")
 
     try:
-        with serial.Serial(peer_path, peer_baud, timeout=0.1) as peer_repl, \
-             serial.Serial(target_path, target_baud, timeout=0.1) as target_repl:
+        with open_serial(peer_path, peer_baud) as peer_repl, \
+             open_serial(target_path, target_baud) as target_repl:
             phase("serial_open")
             sync_repl(peer_repl)
             sync_repl(target_repl)
