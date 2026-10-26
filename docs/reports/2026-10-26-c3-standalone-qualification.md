@@ -18,6 +18,8 @@ and reset lifecycle using firmware built from the Espruino integration branch.
 | Espruino integration revision | `215fe4e16` |
 | Exported standalone source | `563a3a0a36fc83aab84515481f516dc5738cca9b` |
 | Official Espruino upstream base | `3b5c8d97fa0678ec1da49a322f5f1fa990374a7a` |
+| Specification | Public Profile 2 version 1.0, incorporating Profile 1 version 0.52 |
+| Toolchain | ESP-IDF 5.5.3; `riscv32-esp-elf-gcc` 14.2.0 (`esp-14.2.0_20251107`) |
 | Build | Stock 70 KB native-heap profile, `BOARD=ESP32C3_IDF5 RELEASE=1 USE_XFSM=1` |
 
 The later standalone commits named by the trace and lifecycle records change
@@ -33,6 +35,49 @@ build image have the same SHA-256 value:
 ```text
 0f6b04105ed76f286d06e990f29f30f4b15fbf17004b45ee1c6a36da9ea490eb
 ```
+
+## Method
+
+The firmware was provisioned and built in the Espruino integration checkout:
+
+```bash
+source scripts/provision.sh ESP32_IDF5
+env -u DEBUG make BOARD=ESP32C3_IDF5 clean
+env -u DEBUG make BOARD=ESP32C3_IDF5 RELEASE=1 USE_XFSM=1 -j2
+```
+
+The production manifest and lifecycle were run from the standalone checkout
+using the persistent USB serial/JTAG path:
+
+```bash
+python3 tools/repl/run_qualification_suite.py esp32c3-idf5 \
+  --port /dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_9C:9E:6E:F7:41:64-if00 \
+  --expected-git-commit 215fe4e16 --output /tmp/xfsm-c3-qualification.json
+
+python3 tools/repl/run_qualification_suite.py esp32c3-idf5 --traces-only \
+  --port /dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_9C:9E:6E:F7:41:64-if00 \
+  --expected-git-commit 215fe4e16 \
+  --output tests/results/esp32-riscv/2026-10-26-standalone-traces.json
+
+python3 tools/repl/run_lifecycle_test.py \
+  --port /dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_9C:9E:6E:F7:41:64-if00 \
+  --baud 115200 --expected-board ESP32C3_IDF5 \
+  --expected-git-commit 215fe4e16 \
+  --output tests/results/esp32-riscv/2026-10-26-standalone-lifecycle.json
+```
+
+The first command completed all production suites before the later trace phase
+found the runner assumptions described below. The reviewed production record
+retains that successful suite phase. The corrected trace-only command then
+reran and passed the complete canonical trace set.
+
+The production manifest exercises the physical portions of the API,
+configuration, context, transition, action, snapshot, subscription,
+diagnostic, host, final-state, compatibility, resource, and Profile 2 history
+cases in the [test inventory](../../tests/test-inventory.md). The canonical
+trace result directly covers `XFC-CF-API-002`, `XFC-CF-CONFIG-004`,
+`XFC-CF-CONFIG-005`, `XFC-CF-ACTION-002`, `XFC-CF-SNAP-002`,
+`XFC-CF-TRANS-005`, `XFC-CF-DIAG-006`, and `XFC-CF-COMPAT-006`.
 
 ## Physical Result
 
