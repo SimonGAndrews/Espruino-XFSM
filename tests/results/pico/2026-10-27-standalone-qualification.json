@@ -45,7 +45,11 @@
       "prefixValue": "0xff",
       "payloadMatchesQualifiedApplication": true,
       "sha256": "e3415bee1b806090ba48cff088c8b9bef807a9ba3df7b5b7e7ed553fc58524b7",
-      "physicalFlashFromFile": "pending"
+      "physicalFlashFromFile": "pass",
+      "applicationBootAfterPowerCycle": "pass",
+      "runtimeVersion": "2v29.537",
+      "runtimeCommit": "47c8a155d",
+      "shellTest": "pass"
     },
     "postControlRestore": {
       "method": "Espruino serial bootloader with full readback verification",

@@ -5,8 +5,8 @@
 - Plan status: Profile 1 milestones and evidence closure complete; Profile 2
   history implementation, optimization, qualification, and promotion complete
 - Current milestone: prepare the standalone-to-Espruino integration change
-  series for maintainer review and physically verify the padded Pico Web IDE
-  artifact; current Profile 2 target qualification is complete
+  series for maintainer review; current Profile 2 target qualification and the
+  padded Pico Web IDE delivery check are complete
 - Normative authority: [Profile 2 specification](specification-profile-2.md)
 - Physical format: [Native Format Version 2](native-format-v2.md)
 - Living progress: [Implementation Status](implementation-status.md)

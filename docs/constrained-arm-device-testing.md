@@ -75,8 +75,10 @@ official `espruino_2v29_pico_1r3.bin` from `espruino.com`; it booted as
 `PICO_R1_3`, version `2v29`, commit `6106910b8`. The official image contains
 its bootloader region and application at their absolute file offsets. This
 proves the Web IDE, bootloader, USB connection, and URL route were operational.
-Physical verification of the `PAD_FOR_BOOTLOADER=1` local XFSM artifact is the
-remaining file-flash check.
+The `PAD_FOR_BOOTLOADER=1` local XFSM artifact then passed **Flash from file**.
+After the reported completion and a power cycle, the board had no continuous
+red LED, its normal USB serial port returned, and `test_shell.js` passed while
+reporting `PICO_R1_3`, version `2v29.537`, and commit `47c8a155d`.
 
 After flashing and reset, wait for the normal USB serial port. A successful
 application boot does not leave the red LED continuously on. Run tests at

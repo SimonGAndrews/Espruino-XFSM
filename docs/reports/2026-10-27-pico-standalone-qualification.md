@@ -76,13 +76,20 @@ bootloader. A clean Make build with that option produced a 382,520-byte
 candidate with SHA-256
 `e3415bee1b806090ba48cff088c8b9bef807a9ba3df7b5b7e7ed553fc58524b7`.
 Its prefix is entirely `0xFF` and its remaining bytes exactly match the
-qualified application. Physical **Flash from file** verification of that
-padded artifact remains to be performed.
+qualified application.
 
-The qualified `2v29.537` XFSM image was then restored through the verified
+Before the padded-file check, the qualified `2v29.537` XFSM image was restored
+through the verified
 serial-loader route. Full readback again reported `Verification OK`; after
 reset, `test_shell.js` passed and confirmed `PICO_R1_3`, `2v29.537`, and
-integration commit `47c8a155d`. The board was left running this XFSM image.
+integration commit `47c8a155d`.
+
+The padded artifact was then selected in the Web IDE's **Flash from file**
+operation. The Web IDE reported completion, and after a power cycle the board
+booted without the continuous red LED seen after the unpadded attempts. Its
+normal USB serial port returned, and `test_shell.js` passed while confirming
+`PICO_R1_3`, `2v29.537`, and integration commit `47c8a155d`. The board was left
+running this XFSM image.
 
 ## Physical Result
 

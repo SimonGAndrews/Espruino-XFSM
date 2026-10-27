@@ -24,8 +24,8 @@
   series for maintainer review. The current Linux integration head and all four
   specified physical target profiles pass their applicable Profile 2
   qualification. The Pico application-only image passes serial-loader
-  verification; its `PAD_FOR_BOOTLOADER=1` Web IDE artifact still needs one
-  physical **Flash from file** check
+  verification, and its `PAD_FOR_BOOTLOADER=1` artifact passes the Web IDE
+  **Flash from file** route and subsequent XFSM shell test
 
 This is the living status dashboard. The stable milestone definitions and exit
 criteria are in the [Implementation Plan](implementation-plan.md). The [test
@@ -60,7 +60,7 @@ Its complete standalone host qualification passes.
 Clean production cross-builds of that revision also pass for original ESP32
 IDF5 and ESP32-C3 IDF5. They leave 473,952 bytes (23%) and 323,520 bytes (16%)
 of their application partitions respectively. After fetching official
-Espruino `master`, the integration branch is 40 commits ahead and 0 behind;
+Espruino `master`, the integration branch is 43 commits ahead and 0 behind;
 the upstream base remains `3b5c8d97f`.
 
 The last exported standalone revision is
@@ -432,9 +432,7 @@ fourteen audit-derived closure cases pass.
 Immediate tasks:
 
 1. prepare the standalone-to-Espruino integration change series for maintainer
-   review, keeping host build changes separate from the deployable library;
-2. physically test the current `PAD_FOR_BOOTLOADER=1` Pico artifact through the
-   Web IDE **Flash from file** route, then finalize the public flashing method.
+   review, keeping host build changes separate from the deployable library.
 
 ## Open Issues And Blockers
 
@@ -475,7 +473,7 @@ alone can advance a target only to `Build verified`.
 
 | Date | Change |
 | --- | --- |
-| 2026-10-27 | Current standalone Pico qualification passed on the reduced production profile: the 316,984-byte application leaves 10,696 application bytes; 29 production suites, nine exact canonical traces, and save/reboot/restoration/reset lifecycle pass at runtime revision `47c8a155d`; serial-loader readback recovered the board after unpadded application images were incorrectly given to Web IDE **Flash from file**, an official address-positioned URL image passed as a control, and the verified XFSM application was restored without an engine change |
+| 2026-10-27 | Current standalone Pico qualification passed on the reduced production profile: the 316,984-byte application leaves 10,696 application bytes; 29 production suites, nine exact canonical traces, and save/reboot/restoration/reset lifecycle pass at runtime revision `47c8a155d`; serial-loader readback recovered the board after unpadded application images were incorrectly given to Web IDE **Flash from file**, an official address-positioned URL image passed as a control, and the 382,520-byte `PAD_FOR_BOOTLOADER=1` XFSM artifact subsequently passed **Flash from file**, normal reboot, identity, and shell checks without an engine change |
 | 2026-10-26 | Current standalone MDBT42Q qualification passed on the constrained Bluetooth production profile: the clean 312,728-byte image leaves 2,512 bytes before Storage; 29 production suites, nine exact canonical traces, and save/reboot/restoration/reset lifecycle pass at runtime revision `47c8a155d`; low-speed pacing and exact completion-marker handling corrected runner faults without a native engine change |
 | 2026-10-26 | Current standalone two-board service qualification passed twice in each direction: original ESP32 and ESP32-C3 each ran the depth-24 XFSM actor while BLE GATT remained connected across WiFi association and TLS 1.2 HTTPS; the original ESP32 retained at least 22,672 native-heap bytes and the C3 retained 48,384 bytes; hardened Storage upload and verification corrected pre-workload serial transport faults without a native engine change |
 | 2026-10-26 | Current standalone original-ESP32 qualification passed on stock production firmware: 29 production suites, nine exact canonical traces, and save/reboot/restoration/reset lifecycle pass at runtime revision `0cab2c675`; the image is 1,574,048 bytes with 473,952 application-partition bytes free; Storage-backed trace loading, XON/XOFF handling, and physical diagnostic partitioning corrected harness assumptions without a native engine change |
