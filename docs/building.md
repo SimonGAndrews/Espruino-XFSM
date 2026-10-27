@@ -15,9 +15,8 @@ after it has been run successfully against the recorded revision.
 ## Status
 
 - Build-document status: Profile 2 production builds and physical qualification
-  pass on original ESP32, ESP32-C3, and the constrained Bluetooth MDBT42Q
-  profile. The current reduced Pico Profile 2 capacity build passes and still
-  awaits physical repetition
+  pass on original ESP32, ESP32-C3, reduced Pico, and constrained Bluetooth
+  MDBT42Q profiles
 - Canonical XFSM branch: `main`
 - Last exported canonical XFSM revision:
   `b2ae6b4c85ef8f4e2053d9639c36dc09064ac4c2`
@@ -28,7 +27,7 @@ after it has been run successfully against the recorded revision.
 - Current Espruino integration revision:
   `47c8a155df285e0264373c6578646f80981b8ae3`
 - Latest functional engine change: `0e8d14c8e`
-- Current physically qualified MDBT42Q revision: `47c8a155d`
+- Current constrained-ARM runtime revision: `47c8a155d`
 - Base source: official `espruino/Espruino` `master`
 
 ## Repository Locations
@@ -430,23 +429,27 @@ make BOARD=PICO_R1_3 RELEASE=1 USE_XFSM=1 USE_JIT=0 USE_DEBUGGER=0 \
   SETDEFINES=<(printf '%s\n' 'DEFINES += -DNO_VECTOR_FONT=1') -j2
 ```
 
-At Profile 2 implementation revision `6f4214534`, the enabled image is 316,656
-bytes and passes the 327,680-byte size gate with 11,024 bytes free. The stock
-board file was not changed. See the [Profile 2 capacity
-result](../tests/results/pico/2026-10-21-history-capacity.json). The earlier
-matched Profile 1 comparison remains in the [constrained-target
-report](reports/2026-09-29-m8-constrained-target-builds.md).
+This normal build creates an application-only BIN for a loader that writes to
+the Pico application address `0x08010000`. It is also the artifact used for
+the application-capacity measurement below. Do not give it directly to the Web
+IDE's **Flash from file** operation. For that route, perform a clean build with
+`PAD_FOR_BOOTLOADER=1` as described in
+[Constrained ARM Device Testing](constrained-arm-device-testing.md#espruino-pico).
+The padded file is larger because it preserves the application's absolute file
+offset; its prefix does not count against the application capacity.
 
-The Profile 1 production image is physically qualified in the [Pico
-result](../tests/results/pico/2026-09-29-m8-physical-qualification.json). It
-passes 20 portable suites, nine canonical traces, direct and Storage-backed
-maximum depth, allocation pressure and recovery, host callbacks, GPIO/timer
-integration, save/reboot/reset, cleanup, and the instrumented stack and timing
-measurements. The tested firmware was written at the Pico application address
-`0x08010000`; each write completed loader byte verification. Production
-firmware was restored after the `XFC_MEASURE=1 XFC_TEST=1` run. Profile 2 is
-Build verified on Pico; its history runtime cases have not yet been repeated
-physically there.
+At Espruino integration revision `47c8a155d`, the enabled image is 316,984
+bytes and passes the 327,680-byte size gate with 10,696 bytes free. The stock
+board file was not changed. The current Profile 2 production profile is
+physically qualified in the [Pico
+report](reports/2026-10-27-pico-standalone-qualification.md). It passes 29
+production suites, nine canonical traces, direct and Storage-backed maximum
+depth, shallow and deep history, production allocation pressure, callbacks,
+GPIO/timer integration, exact cleanup, GC, and save/reboot/reset. The firmware
+was written at the Pico application address `0x08010000` and passed complete
+loader readback verification. Earlier matched-build, instrumented stack,
+timing, and deterministic fault evidence remains in the [Profile 1
+report](reports/2026-09-29-m8-pico-physical-qualification.md).
 
 The current MDBT42Q build uses the target provisioning script, its pinned
 EspruinoBuildTools ARM GCC 13.2.1 archive, and the existing nRF5 SDK 12 tree.

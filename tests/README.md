@@ -126,6 +126,9 @@ The current constrained Bluetooth MDBT42Q candidate's 29 production suites,
 nine exact canonical traces, Profile 2 history runtime, and save/reboot/reset
 lifecycle are recorded in the [standalone MDBT42Q qualification
 summary](results/mdbt42q/2026-10-26-standalone-qualification.json).
+The current reduced Pico candidate's corresponding production suites, traces,
+Profile 2 history runtime, and lifecycle are recorded in the [standalone Pico
+qualification summary](results/pico/2026-10-27-standalone-qualification.json).
 The current two-board original ESP32 and ESP32-C3 service run is recorded in
 the [standalone service-coexistence
 result](results/esp32-service/2026-10-26-standalone-service-coexistence.json).

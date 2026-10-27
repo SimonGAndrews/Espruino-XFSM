@@ -38,7 +38,7 @@ runs. Large binaries, transient build trees, and unrestricted console logs do
 not belong in Git. Reviewed interpretations and resource decisions belong in
 [`../../docs/reports/`](../../docs/reports/).
 
-The current constrained ARM records are the [Pico matched
+The earlier constrained ARM records are the [Pico matched
 build](pico/2026-09-29-product-profile-build.json), [Pico physical
 qualification](pico/2026-09-29-m8-physical-qualification.json), and [MDBT42Q
 matched build](mdbt42q/2026-09-29-product-profile-build.json), with its
@@ -49,10 +49,13 @@ qualification](linux/2026-10-26-standalone-qualification.json), the [original
 ESP32 physical
 qualification](esp32-xtensa/2026-10-26-standalone-qualification.json), and the
 [ESP32-C3 physical
-qualification](esp32-riscv/2026-10-26-standalone-qualification.json).
+qualification](esp32-riscv/2026-10-26-standalone-qualification.json), the
+[Pico physical qualification](pico/2026-10-27-standalone-qualification.json),
+and the [MDBT42Q physical
+qualification](mdbt42q/2026-10-26-standalone-qualification.json).
 Each target summary links its separate production-suite, exact-trace, and
-lifecycle records. The implementation status identifies which
-current-candidate physical runs remain outstanding.
+lifecycle records. The implementation status identifies current maintenance
+and release-review work.
 
 The current two-board XFSM, BLE, WiFi, and HTTPS/TLS repetition is recorded in
 the [ESP32 service-coexistence

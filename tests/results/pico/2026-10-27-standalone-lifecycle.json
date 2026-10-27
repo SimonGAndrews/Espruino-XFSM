@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-27T00:15:23.355048+00:00",
+  "runtime": {
+    "board": "PICO_R1_3",
+    "version": "2v29.537",
+    "git_commit": "47c8a155d"
+  },
+  "canonical_source": {
+    "commit": "017ec1cd5f5cb0a018c3a60c0affdf4f2f8ec9b3",
+    "dirty": false
+  },
+  "port": "/dev/serial/by-id/usb-STMicroelectronics_STM32_Virtual_ComPort_00000000001A-if00",
+  "baud": 115200,
+  "save_restore": "pass",
+  "reset_cleanup": "pass",
+  "pass": true
+}

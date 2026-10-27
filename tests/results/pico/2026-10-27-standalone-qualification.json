@@ -1,0 +1,82 @@
+{
+  "schema": "xfc.target-qualification-summary",
+  "version": 1,
+  "date": "2026-10-27",
+  "target": {
+    "board": "PICO_R1_3",
+    "architecture": "ARM Cortex-M4F",
+    "runtimeVersion": "2v29.537",
+    "console": "USB serial at 115200 baud"
+  },
+  "espruinoRevision": "47c8a155df285e0264373c6578646f80981b8ae3",
+  "exportedCanonicalRevision": "b2ae6b4c85ef8f4e2053d9639c36dc09064ac4c2",
+  "evidenceCheckoutRevision": "017ec1cd5f5cb0a018c3a60c0affdf4f2f8ec9b3",
+  "qualificationToolRevision": "008de0bc2c42765e28f5a527247de057fd699eb3",
+  "upstreamBase": "3b5c8d97fa0678ec1da49a322f5f1fa990374a7a",
+  "build": {
+    "profile": "Reduced Pico profile without JIT, debugger, tab completion, vector font, or JavaScript-backed networking",
+    "flags": "BOARD=PICO_R1_3 RELEASE=1 USE_XFSM=1 USE_JIT=0 USE_DEBUGGER=0 USE_TAB_COMPLETE=0 USE_NETWORK_JS=0 SETDEFINES=<NO_VECTOR_FONT> -j2",
+    "applicationBytes": 316984,
+    "applicationLimitBytes": 327680,
+    "freeApplicationBytes": 10696,
+    "applicationAddress": "0x08010000",
+    "binSha256": "2420a2f6ba57db802e6fe868c352b1dcfc571eb65138d1a6bdd0c4e0c04b4e9b",
+    "elfSha256": "eaf0d21ddd1e041904041800f0a0fc5040efb6948c805e52cc27f7b9b39aa5ba",
+    "result": "pass"
+  },
+  "flash": {
+    "method": "Espruino serial bootloader with Python 3-adapted scripts/stm32loader.py",
+    "massErase": true,
+    "readbackVerification": "pass",
+    "applicationBootAfterReset": "pass",
+    "postQualificationControl": {
+      "method": "Web IDE Flash from URL",
+      "url": "https://www.espruino.com/binaries/espruino_2v29_pico_1r3.bin",
+      "imageBytes": 390232,
+      "format": "bootloader region followed by application at file offset 0x10000",
+      "runtimeVersion": "2v29",
+      "runtimeCommit": "6106910b8",
+      "result": "pass"
+    },
+    "webIdePaddedCandidate": {
+      "buildOption": "PAD_FOR_BOOTLOADER=1",
+      "imageBytes": 382520,
+      "prefixBytes": 65536,
+      "prefixValue": "0xff",
+      "payloadMatchesQualifiedApplication": true,
+      "sha256": "e3415bee1b806090ba48cff088c8b9bef807a9ba3df7b5b7e7ed553fc58524b7",
+      "physicalFlashFromFile": "pending"
+    },
+    "postControlRestore": {
+      "method": "Espruino serial bootloader with full readback verification",
+      "runtimeVersion": "2v29.537",
+      "runtimeCommit": "47c8a155d",
+      "shellTest": "pass",
+      "result": "pass"
+    },
+    "boardLeftRunning": "qualified Espruino 2v29.537 with XFSM"
+  },
+  "productionSuites": {
+    "passed": 29,
+    "total": 29,
+    "result": "pass"
+  },
+  "canonicalTraces": {
+    "passed": 9,
+    "total": 9,
+    "storageBacked": false,
+    "result": "pass"
+  },
+  "lifecycle": {
+    "saveRestore": "pass",
+    "resetCleanup": "pass",
+    "result": "pass"
+  },
+  "resultFiles": {
+    "productionAndTraces": "2026-10-27-standalone-production-traces.json",
+    "lifecycle": "2026-10-27-standalone-lifecycle.json"
+  },
+  "nativeEngineChangedDuringQualification": false,
+  "result": "pass",
+  "report": "../../../docs/reports/2026-10-27-pico-standalone-qualification.md"
+}

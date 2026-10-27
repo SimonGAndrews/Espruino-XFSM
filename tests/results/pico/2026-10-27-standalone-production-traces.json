@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-27T00:14:47.399675+00:00",
+  "profile": "pico-reduced",
+  "port": "/dev/serial/by-id/usb-STMicroelectronics_STM32_Virtual_ComPort_00000000001A-if00",
+  "baud": 115200,
+  "runtime": {
+    "board": "PICO_R1_3",
+    "version": "2v29.537",
+    "git_commit": "47c8a155d"
+  },
+  "canonical_source": {
+    "commit": "017ec1cd5f5cb0a018c3a60c0affdf4f2f8ec9b3",
+    "dirty": false
+  },
+  "groups": [
+    "portable",
+    "profile2-history",
+    "host-integration",
+    "production-pressure"
+  ],
+  "traces_requested": true,
+  "trace_storage": false,
+  "results": [
+    {
+      "kind": "suite",
+      "name": "test_shell.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_compile.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_diagnostics.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_runtime.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_completion.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_completion_cascade.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_targets.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_events_migration.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_profile1_diagnostics.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_context_ownership.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_assign_forms.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_context_diagnostics.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_transition_domains.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_transition_depth.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_lifecycle_complete.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_subscriber_complete.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_cross_actor_gc.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_runtime_errors.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_subscriptions.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_strict_validation_embedded.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_history_embedded.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_deep_history.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_history_diagnostics.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_host_application.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_host_memory_cleanup.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_host_event_serialization.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_transition_depth_storage.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_host_allocation_pressure.js",
+      "pass": true
+    },
+    {
+      "kind": "suite",
+      "name": "test_host_diagnostic_pressure.js",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "api_002",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "config_004",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "config_005",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "action_002",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "snapshot_002",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "transition_005",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "diagnostic_006",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "compat_006",
+      "pass": true
+    },
+    {
+      "kind": "trace",
+      "name": "compat_006_v4",
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "lifecycle_required_separately": true
+}
