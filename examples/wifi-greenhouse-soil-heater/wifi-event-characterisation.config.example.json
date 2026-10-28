@@ -1,0 +1,21 @@
+{
+  "startupProfile": null,
+  "connectTimeoutMs": 20000,
+  "profiles": {
+    "valid": {
+      "ssid": "YOUR_2_4_GHZ_WIFI_NAME",
+      "password": "YOUR_WIFI_PASSWORD",
+      "allChannels": true
+    },
+    "incorrectPassword": {
+      "ssid": "YOUR_2_4_GHZ_WIFI_NAME",
+      "password": "INTENTIONALLY_INCORRECT_PASSWORD",
+      "allChannels": true
+    },
+    "unavailable": {
+      "ssid": "XFSM_INTENTIONALLY_UNAVAILABLE_AP",
+      "password": "INTENTIONALLY_UNUSED_PASSWORD",
+      "allChannels": true
+    }
+  }
+}
