@@ -23,6 +23,11 @@ long UART upload while it processes input; runners and new bench tools must use
 the shared `open_serial()` helper instead of opening an unregulated pyserial
 connection.
 
+`capture_interactive.py` loads a program through the same paced transport and
+retains a flushed transcript while forwarding operator commands. Enter
+`.capture-end` on its input to close the evidence boundary without sending that
+control line to Espruino.
+
 `run_service_coexistence.py` coordinates the two-board ESP32 BLE, WiFi, HTTPS,
 and XFSM workload described in
 [`docs/service-coexistence-testing.md`](../../docs/service-coexistence-testing.md).
