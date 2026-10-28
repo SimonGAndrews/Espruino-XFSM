@@ -10,6 +10,12 @@ Files in this directory are reusable application examples licensed under the
 | [`QuickStart.js`](QuickStart.js) | Minimal machine, actor, event, assignment, action, snapshot, and subscription flow |
 | [`thermostat-history.js`](thermostat-history.js) | Nested control states, guards, actions, context, and deep-history restoration |
 
+## Examples In Development
+
+| Example | Status |
+| --- | --- |
+| [`wifi-greenhouse-soil-heater/`](wifi-greenhouse-soil-heater/) | Initial Wi-Fi characterisation and proposed XFSM statechart for later safe soil-heater control |
+
 The Quick Start statechart rendered in the library documentation is stored at
 [`xfsm/images/quick-start-statechart.png`](../xfsm/images/quick-start-statechart.png).
 
