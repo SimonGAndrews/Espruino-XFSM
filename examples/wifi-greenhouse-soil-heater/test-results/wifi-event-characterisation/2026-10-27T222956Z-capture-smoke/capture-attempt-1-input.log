@@ -1,0 +1,3 @@
+Script started on 2026-10-27 22:30:26+00:00 [COMMAND="espruino -q -p /dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_9C:9E:6E:F7:41:64-if00 --sleep 4 examples/wifi-greenhouse-soil-heater/wifi-event-characterisation.js" <not executed on terminal>]
+
+Script done on 2026-10-27 22:30:35+00:00 [COMMAND_EXIT_CODE="0"]

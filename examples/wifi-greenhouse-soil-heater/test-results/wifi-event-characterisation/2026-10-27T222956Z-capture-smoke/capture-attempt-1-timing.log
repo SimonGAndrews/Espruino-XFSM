@@ -1,0 +1,11 @@
+H 0.000000 START_TIME 2026-10-27 22:30:26+00:00
+H 0.000000 SHELL /bin/bash
+H 0.000000 COMMAND espruino -q -p /dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_9C:9E:6E:F7:41:64-if00 --sleep 4 examples/wifi-greenhouse-soil-heater/wifi-event-characterisation.js
+H 0.000000 TIMING_LOG examples/wifi-greenhouse-soil-heater/test-results/wifi-event-characterisation/2026-10-27T222956Z-capture-smoke/terminal.timing
+H 0.000000 OUTPUT_LOG examples/wifi-greenhouse-soil-heater/test-results/wifi-event-characterisation/2026-10-27T222956Z-capture-smoke/raw-serial.log
+H 0.000000 INPUT_LOG examples/wifi-greenhouse-soil-heater/test-results/wifi-event-characterisation/2026-10-27T222956Z-capture-smoke/operator-input.log
+O 0.779328 310
+O 7.667323 108
+O 0.000641 20
+H 0.000000 DURATION 8.484614
+H 0.000000 EXIT_CODE 0

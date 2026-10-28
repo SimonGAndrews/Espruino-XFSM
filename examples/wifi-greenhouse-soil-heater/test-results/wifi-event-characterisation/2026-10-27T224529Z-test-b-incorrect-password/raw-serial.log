@@ -1,0 +1,51 @@
+HOST_CAPTURE transport=paced_pyserial port=/dev/ttyACM0 baud=115200
+HOST_CAPTURE reset_begin
+reset();
+=undefined
+[?7l
+ ____                 _ 
+|  __|___ ___ ___ _ _|_|___ ___ 
+|  __|_ -| . |  _| | | |   | . |
+|____|___|  _|_| |___|_|_|_|___|
+         |_| espruino.com
+ 2v29.535 (c) 2026 G.Williams
+
+Espruino is Open Source. Our work is supported
+only by sales of official boards and donations:
+http://espruino.com/Donate
+
+>HOST_CAPTURE upload_begin
+echo(false);
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":1,"elapsedMs":24,"dateMs":1548018.65599999995,"kind":"diagnostic","name":"started","details":{"board":"ESP32C3_IDF5","version":"2v29.535","gitCommit":"215fe4e16","configFile":"wifi-event-config.json"}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":2,"elapsedMs":120,"dateMs":1548113.86199999996,"kind":"diagnostic","name":"listeners_installed","details":{"events":["associated","connected","disconnected","dhcp_timeout"]}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":3,"elapsedMs":239,"dateMs":1548233.68699999991,"kind":"observation","name":"startup","details":{"wifiDetails":{"status":"ASSOC_LEAVE"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":4,"elapsedMs":349,"dateMs":1548342.85300000011,"kind":"configuration","name":"loaded","details":{"storageFile":"wifi-event-config.json","profiles":["valid","incorrectPassword","unavailable"],"startupProfile":null,"connectTimeoutMs":20000}}
+=undefined
+>HOST_CAPTURE upload_end
+HOST_SEND WifiEventCharacterisation.connect("incorrectPassword");
+WifiEventCharacterisation.connect("incorrectPassword");
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":5,"elapsedMs":913,"dateMs":1548907.52799999993,"kind":"operation","name":"connect_requested","details":{"operation":1,"profile":"incorrectPassword","ssid":"[redacted]","timeoutMs":20000}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":6,"elapsedMs":1067,"dateMs":1549061.10199999995,"kind":"observation","name":"before_connect_1","details":{"wifiDetails":{"status":"ASSOC_LEAVE"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":7,"elapsedMs":1228,"dateMs":1549222.36599999992,"kind":"timer","name":"connect_timeout_armed","details":{"operation":1,"timeoutMs":20000}}
+=true
+>[JWIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":8,"elapsedMs":21229,"dateMs":1569223.044,"kind":"timer","name":"application_connect_timeout","details":{"operation":1,"timeoutMs":20000,"nativeConnectionLeftRunning":true}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":9,"elapsedMs":21334,"dateMs":1569327.78600000008,"kind":"observation","name":"at_application_connect_timeout","details":{"wifiDetails":{"status":"ASSOC_LEAVE"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+>[JWIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":10,"elapsedMs":21878,"dateMs":1569871.946,"kind":"native_event","name":"disconnected","details":{"eventDetails":{"ssid":"[redacted]","mac":"ac:84:c6:18:a3:e8","reason":"15","msg":"4WAY_HANDSHAKE_TIMEOUT"}}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":11,"elapsedMs":22067,"dateMs":1570061.57,"kind":"observation","name":"after_native_disconnected","details":{"wifiDetails":{"status":"4WAY_HANDSHAKE_TIMEOUT"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":12,"elapsedMs":22229,"dateMs":1570223.19100000010,"kind":"callback","name":"connect","details":{"operation":1,"callbackForCurrentOperation":true,"error":"4WAY_HANDSHAKE_TIMEOUT","callbackDetails":null}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":13,"elapsedMs":22387,"dateMs":1570381.52399999997,"kind":"observation","name":"after_connect_callback_1","details":{"wifiDetails":{"status":"4WAY_HANDSHAKE_TIMEOUT"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+>HOST_SEND WifiEventCharacterisation.observe("test_b_capture_end");
+WifiEventCharacterisation.observe("test_b_capture_end");
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":14,"elapsedMs":61247,"dateMs":1609241.51600000006,"kind":"observation","name":"test_b_capture_end","details":{"wifiDetails":{"status":"4WAY_HANDSHAKE_TIMEOUT"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+={ 
+  wifiDetails: { 
+    status: "4WAY_HANDSHAKE_TIMEOUT"
+   }, 
+  ip: { 
+    ip: "0.0.0.0", 
+    netmask: "0.0.0.0", 
+    gw: "0.0.0.0", 
+    mac: "9c:9e:6e:f7:41:64"
+   }
+ }
+>HOST_CAPTURE complete

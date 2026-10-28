@@ -1,0 +1,106 @@
+HOST_CAPTURE transport=paced_pyserial port=/dev/ttyACM0 baud=115200
+HOST_CAPTURE reset_begin
+reset();
+=undefined
+[?7l
+ ____                 _ 
+|  __|___ ___ ___ _ _|_|___ ___ 
+|  __|_ -| . |  _| | | |   | . |
+|____|___|  _|_| |___|_|_|_|___|
+         |_| espruino.com
+ 2v29.535 (c) 2026 G.Williams
+
+Espruino is Open Source. Our work is supported
+only by sales of official boards and donations:
+http://espruino.com/Donate
+
+>HOST_CAPTURE upload_begin
+echo(false);
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":1,"elapsedMs":24,"dateMs":2047721.02099999994,"kind":"diagnostic","name":"started","details":{"board":"ESP32C3_IDF5","version":"2v29.535","gitCommit":"215fe4e16","configFile":"wifi-event-config.json"}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":2,"elapsedMs":127,"dateMs":2047823.86199999996,"kind":"diagnostic","name":"listeners_installed","details":{"events":["associated","connected","disconnected","dhcp_timeout"]}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":3,"elapsedMs":247,"dateMs":2047943.65800000005,"kind":"observation","name":"startup","details":{"wifiDetails":{"status":"NO_AP_FOUND"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":4,"elapsedMs":355,"dateMs":2048051.77200000011,"kind":"configuration","name":"loaded","details":{"storageFile":"wifi-event-config.json","profiles":["valid","incorrectPassword","unavailable"],"startupProfile":null,"connectTimeoutMs":20000}}
+=undefined
+>HOST_CAPTURE upload_end
+HOST_SEND WifiEventCharacterisation.connect("valid");
+WifiEventCharacterisation.connect("valid");
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":5,"elapsedMs":918,"dateMs":2048614.25099999993,"kind":"operation","name":"connect_requested","details":{"operation":1,"profile":"valid","ssid":"[redacted]","timeoutMs":20000}}
+HOST_CAPTURE interactive_ready; enter .capture-end to stop
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":6,"elapsedMs":1075,"dateMs":2048771.84400000004,"kind":"observation","name":"before_connect_1","details":{"wifiDetails":{"status":"NO_AP_FOUND"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":7,"elapsedMs":1236,"dateMs":2048932.34700000006,"kind":"timer","name":"connect_timeout_armed","details":{"operation":1,"timeoutMs":20000}}
+=true
+>[JWIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":8,"elapsedMs":6249,"dateMs":2053945.29200000013,"kind":"native_event","name":"associated","details":{"eventDetails":{"ssid":"[redacted]","mac":"ac:84:c6:18:a3:e8","channel":"6"}}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":9,"elapsedMs":6371,"dateMs":2054067.68700000015,"kind":"observation","name":"after_native_associated","details":{"wifiDetails":{"ssid":"[redacted]","password":"[redacted]","status":"connected","authMode":"wpa2"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+>[JWIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":10,"elapsedMs":7766,"dateMs":2055462.81900000013,"kind":"native_event","name":"connected","details":{"eventDetails":"[function]"}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":11,"elapsedMs":7872,"dateMs":2055568.77200000011,"kind":"observation","name":"after_native_connected","details":{"wifiDetails":{"ssid":"[redacted]","password":"[redacted]","status":"connected","authMode":"wpa2"},"ip":{"ip":"192.168.50.101","netmask":"255.255.255.0","gw":"192.168.50.1","mac":"9c:9e:6e:f7:41:64"}}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":12,"elapsedMs":8046,"dateMs":2055742.74300000001,"kind":"timer","name":"connect_timeout_cancelled","details":{"reason":"connect_callback"}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":13,"elapsedMs":8069,"dateMs":2055765.73399999993,"kind":"callback","name":"connect","details":{"operation":1,"callbackForCurrentOperation":true,"error":null,"callbackDetails":"connect"}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":14,"elapsedMs":8227,"dateMs":2055923.56700000003,"kind":"observation","name":"after_connect_callback_1","details":{"wifiDetails":{"ssid":"[redacted]","password":"[redacted]","status":"connected","authMode":"wpa2"},"ip":{"ip":"192.168.50.101","netmask":"255.255.255.0","gw":"192.168.50.1","mac":"9c:9e:6e:f7:41:64"}}}
+>HOST_SEND WifiEventCharacterisation.observe("operator_about_to_disable_ap");
+WifiEventCharacterisation.observe("operator_about_to_disable_ap");
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":15,"elapsedMs":21208,"dateMs":2068904.22100000013,"kind":"observation","name":"operator_about_to_disable_ap","details":{"wifiDetails":{"ssid":"[redacted]","password":"[redacted]","status":"connected","authMode":"wpa2"},"ip":{"ip":"192.168.50.101","netmask":"255.255.255.0","gw":"192.168.50.1","mac":"9c:9e:6e:f7:41:64"}}}
+={ 
+  wifiDetails: { 
+    ssid: "[redacted]", 
+    password: "[redacted]", 
+    status: "connected", 
+    authMode: "wpa2"
+   }, 
+  ip: { 
+    ip: "192.168.50.101", 
+    netmask: "255.255.255.0", 
+    gw: "192.168.50.1", 
+    mac: "9c:9e:6e:f7:41:64"
+   }
+ }
+>HOST_SEND WifiEventCharacterisation.observe("operator_disabled_ap_complete");
+WifiEventCharacterisation.observe("operator_disabled_ap_complete");
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":16,"elapsedMs":42915,"dateMs":2090611.35400000005,"kind":"observation","name":"operator_disabled_ap_complete","details":{"wifiDetails":{"ssid":"[redacted]","password":"[redacted]","status":"connected","authMode":"wpa2"},"ip":{"ip":"192.168.50.101","netmask":"255.255.255.0","gw":"192.168.50.1","mac":"9c:9e:6e:f7:41:64"}}}
+={ 
+  wifiDetails: { 
+    ssid: "[redacted]", 
+    password: "[redacted]", 
+    status: "connected", 
+    authMode: "wpa2"
+   }, 
+  ip: { 
+    ip: "192.168.50.101", 
+    netmask: "255.255.255.0", 
+    gw: "192.168.50.1", 
+    mac: "9c:9e:6e:f7:41:64"
+   }
+ }
+>HOST_SEND WifiEventCharacterisation.observe("ap_off_observation_75s");
+WifiEventCharacterisation.observe("ap_off_observation_75s");
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":17,"elapsedMs":134873,"dateMs":2182569.24099999992,"kind":"observation","name":"ap_off_observation_75s","details":{"wifiDetails":{"ssid":"[redacted]","password":"[redacted]","status":"connected","authMode":"wpa2"},"ip":{"ip":"192.168.50.101","netmask":"255.255.255.0","gw":"192.168.50.1","mac":"9c:9e:6e:f7:41:64"}}}
+={ 
+  wifiDetails: { 
+    ssid: "[redacted]", 
+    password: "[redacted]", 
+    status: "connected", 
+    authMode: "wpa2"
+   }, 
+  ip: { 
+    ip: "192.168.50.101", 
+    netmask: "255.255.255.0", 
+    gw: "192.168.50.1", 
+    mac: "9c:9e:6e:f7:41:64"
+   }
+ }
+>[JWIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":18,"elapsedMs":181369,"dateMs":2229065.72000000020,"kind":"native_event","name":"disconnected","details":{"eventDetails":{"ssid":"[redacted]","mac":"00:00:00:00:00:00","reason":"201","msg":"NO_AP_FOUND"}}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":19,"elapsedMs":181495,"dateMs":2229191.12399999983,"kind":"observation","name":"after_native_disconnected","details":{"wifiDetails":{"status":"NO_AP_FOUND"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+>HOST_SEND WifiEventCharacterisation.observe("test_d_aborted_ap_disable_not_effective");
+WifiEventCharacterisation.observe("test_d_aborted_ap_disable_not_effective");
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":20,"elapsedMs":479150,"dateMs":2526846.08400000026,"kind":"observation","name":"test_d_aborted_ap_disable_not_effective","details":{"wifiDetails":{"status":"NO_AP_FOUND"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+={ 
+  wifiDetails: { 
+    status: "NO_AP_FOUND"
+   }, 
+  ip: { 
+    ip: "0.0.0.0", 
+    netmask: "0.0.0.0", 
+    gw: "0.0.0.0", 
+    mac: "9c:9e:6e:f7:41:64"
+   }
+ }
+>HOST_CAPTURE complete

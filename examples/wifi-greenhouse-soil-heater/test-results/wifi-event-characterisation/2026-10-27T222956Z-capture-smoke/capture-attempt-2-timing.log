@@ -1,0 +1,20 @@
+H 0.000000 START_TIME 2026-10-27 22:34:08+00:00
+H 0.000000 TERM dumb
+H 0.000000 TTY /dev/pts/1
+H 0.000000 COLUMNS 80
+H 0.000000 LINES 24
+H 0.000000 SHELL /bin/bash
+H 0.000000 COMMAND espruino -q -p /dev/ttyACM0
+H 0.000000 TIMING_LOG examples/wifi-greenhouse-soil-heater/test-results/wifi-event-characterisation/2026-10-27T222956Z-capture-smoke/terminal.timing
+H 0.000000 OUTPUT_LOG examples/wifi-greenhouse-soil-heater/test-results/wifi-event-characterisation/2026-10-27T222956Z-capture-smoke/raw-serial.log
+H 0.000000 INPUT_LOG examples/wifi-greenhouse-soil-heater/test-results/wifi-event-characterisation/2026-10-27T222956Z-capture-smoke/operator-input.log
+O 0.821116 310
+O 2.504716 1
+I 4.257090 120
+O 0.113612 308
+O 0.000926 33
+O 0.108601 1
+I 9.849263 2
+O 0.009816 3
+H 0.000000 DURATION 17.775054
+H 0.000000 EXIT_CODE 0

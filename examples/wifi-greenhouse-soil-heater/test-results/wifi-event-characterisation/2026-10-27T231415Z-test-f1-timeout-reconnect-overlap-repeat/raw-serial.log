@@ -1,0 +1,58 @@
+HOST_CAPTURE transport=paced_pyserial port=/dev/ttyACM0 baud=115200
+HOST_CAPTURE reset_begin
+reset();
+=undefined
+[?7l
+ ____                 _ 
+|  __|___ ___ ___ _ _|_|___ ___ 
+|  __|_ -| . |  _| | | |   | . |
+|____|___|  _|_| |___|_|_|_|___|
+         |_| espruino.com
+ 2v29.535 (c) 2026 G.Williams
+
+Espruino is Open Source. Our work is supported
+only by sales of official boards and donations:
+http://espruino.com/Donate
+
+>HOST_CAPTURE upload_begin
+echo(false);
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":1,"elapsedMs":24,"dateMs":3273691.46700000017,"kind":"diagnostic","name":"started","details":{"board":"ESP32C3_IDF5","version":"2v29.535","gitCommit":"215fe4e16","configFile":"wifi-event-config.json"}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":2,"elapsedMs":116,"dateMs":3273783.77900000009,"kind":"diagnostic","name":"listeners_installed","details":{"events":["associated","connected","disconnected","dhcp_timeout"]}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":3,"elapsedMs":236,"dateMs":3273903.60499999998,"kind":"observation","name":"startup","details":{"wifiDetails":{"status":"NO_AP_FOUND"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":4,"elapsedMs":345,"dateMs":3274011.88200000021,"kind":"configuration","name":"loaded","details":{"storageFile":"wifi-event-config.json","profiles":["valid","incorrectPassword","unavailable"],"startupProfile":null,"connectTimeoutMs":20000}}
+=undefined
+>HOST_CAPTURE upload_end
+HOST_SEND WifiEventCharacterisation.connect("unavailable",5000);setTimeout(function(){WifiEventCharacterisation.observe("f1_board_scheduled_reconnect_without_cleanup");WifiEventCharacterisation.reconnect();},5500);
+WifiEventCharacterisation.connect("unavailable",5000);setTimeout(function(){WifiEventCharacterisation.observe("f1_board_scheduled_reconnect_without_cleanup");WifiEventCharacterisation.reconnect();},5500);
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":5,"elapsedMs":912,"dateMs":3274579.07299999985,"kind":"operation","name":"connect_requested","details":{"operation":1,"profile":"unavailable","ssid":"[redacted]","timeoutMs":5000}}
+HOST_CAPTURE interactive_ready; enter .capture-end to stop
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":6,"elapsedMs":1065,"dateMs":3274732.56700000027,"kind":"observation","name":"before_connect_1","details":{"wifiDetails":{"status":"NO_AP_FOUND"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":7,"elapsedMs":1225,"dateMs":3274892.35199999995,"kind":"timer","name":"connect_timeout_armed","details":{"operation":1,"timeoutMs":5000}}
+=2
+>[JWIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":8,"elapsedMs":6226,"dateMs":3279893.84899999992,"kind":"timer","name":"application_connect_timeout","details":{"operation":1,"timeoutMs":5000,"nativeConnectionLeftRunning":true}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":9,"elapsedMs":6322,"dateMs":3279989.76899999985,"kind":"observation","name":"at_application_connect_timeout","details":{"wifiDetails":{"status":"NO_AP_FOUND"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+>[JWIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":10,"elapsedMs":6819,"dateMs":3280486.19299999997,"kind":"observation","name":"f1_board_scheduled_reconnect_without_cleanup","details":{"wifiDetails":{"status":"NO_AP_FOUND"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":11,"elapsedMs":6979,"dateMs":3280646.45500000007,"kind":"operation","name":"connect_requested","details":{"operation":2,"profile":"unavailable","ssid":"[redacted]","timeoutMs":20000}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":12,"elapsedMs":7090,"dateMs":3280757.50700000021,"kind":"observation","name":"before_connect_2","details":{"wifiDetails":{"status":"NO_AP_FOUND"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+E (3281275) wifi:sta is connecting, cannot set config
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":13,"elapsedMs":7195,"dateMs":3280862.35400000028,"kind":"timer","name":"connect_timeout_armed","details":{"operation":2,"timeoutMs":20000}}
+ERROR: jswrap_wifi_connect: esp_wifi_set_config: 12294(ESP_ERR_WIFI_STATE)
+>[JWIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":14,"elapsedMs":15715,"dateMs":3289382.18099999986,"kind":"native_event","name":"disconnected","details":{"eventDetails":{"ssid":"[redacted]","mac":"00:00:00:00:00:00","reason":"201","msg":"NO_AP_FOUND"}}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":15,"elapsedMs":15874,"dateMs":3289541.43399999989,"kind":"observation","name":"after_native_disconnected","details":{"wifiDetails":{"status":"NO_AP_FOUND"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+>[JWIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":16,"elapsedMs":27196,"dateMs":3300863.00199999986,"kind":"timer","name":"application_connect_timeout","details":{"operation":2,"timeoutMs":20000,"nativeConnectionLeftRunning":true}}
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":17,"elapsedMs":27304,"dateMs":3300971.76200000010,"kind":"observation","name":"at_application_connect_timeout","details":{"wifiDetails":{"status":"NO_AP_FOUND"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+>HOST_SEND WifiEventCharacterisation.observe("test_f1_capture_end");
+WifiEventCharacterisation.observe("test_f1_capture_end");
+WIFI_DIAG {"format":"xfsm-wifi-event-characterisation-v1","sequence":18,"elapsedMs":61478,"dateMs":3335145.34100000001,"kind":"observation","name":"test_f1_capture_end","details":{"wifiDetails":{"status":"NO_AP_FOUND"},"ip":{"ip":"0.0.0.0","netmask":"0.0.0.0","gw":"0.0.0.0","mac":"9c:9e:6e:f7:41:64"}}}
+={ 
+  wifiDetails: { 
+    status: "NO_AP_FOUND"
+   }, 
+  ip: { 
+    ip: "0.0.0.0", 
+    netmask: "0.0.0.0", 
+    gw: "0.0.0.0", 
+    mac: "9c:9e:6e:f7:41:64"
+   }
+ }
+>HOST_CAPTURE complete
